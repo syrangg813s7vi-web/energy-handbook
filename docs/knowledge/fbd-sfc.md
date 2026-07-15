@@ -61,7 +61,8 @@ description: 结合灌装生产线动画，理解FBD的显式状态逻辑与SFC�
 <iframe
   src="../demos/plc/fbd-scan-excerpt.html"
   width="100%"
-  height="720"
+  height="1080"
+  style="height: min(1080px, 160vh);"
   loading="lazy"
   sandbox="allow-scripts"
   referrerpolicy="no-referrer"
