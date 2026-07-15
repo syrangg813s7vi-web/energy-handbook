@@ -310,8 +310,6 @@ IF T2 THEN X2 := FALSE; X3 := TRUE; END_IF;
   title="FBD完整网络扫描演示"
 ></iframe>
 
-如果当前文档阅读器没有显示内嵌内容，请[打开完整PLC执行演示页面](../demos/plc/plc-fbd-sfc-execution.html)。
-
 ## 四、SFC如何表达同一条灌装线
 
 SFC把顺序控制中的三个核心概念直接变成语言结构：
@@ -394,8 +392,6 @@ TRUE ：停用X2，激活X3
   class="demo-frame"
   title="SFC活动步与内部状态演示"
 ></iframe>
-
-如果当前文档阅读器没有显示内嵌内容，请[打开完整PLC执行演示页面](../demos/plc/plc-fbd-sfc-execution.html)。
 
 ## 六、状态表达是关键区别，但不是唯一差别
 
