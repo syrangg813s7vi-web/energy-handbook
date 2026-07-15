@@ -109,3 +109,5 @@
 - 首次真实批阅任务 `task_e_6a579b97fe608324ae2e1d4d2024b3a0` 已到 READY，包含 2 个文件的有效差异，但 GitHub 没有新分支或 PR；这证明 Cloud Codex 的原生 GitHub 集成不会在当前环境中替执行器完成提交。
 - 仓库已有 `.github/workflows/auto-review.yml`：收到 `codex/review-*` push 后会重复执行文件白名单、动画安全策略和 `npm run check`，随后创建 PR 并启用 squash 自动合并。缺口只在 READY diff → 分支 push。
 - GitHub 仓库已开启 `allow_auto_merge` 和合并后删除分支。采用写 Deploy Key 可将 molt 的 GitHub 写权限严格限制在 `syrangg813s7vi-web/energy-handbook`，比复用个人 OAuth/PAT 权限更窄；PR 创建和合并继续由仓库内置 `GITHUB_TOKEN` 完成。
+- 真实任务已完成闭环：READY diff 经发布器推送为 `codex/review-6a579b97fe60`，GitHub Action 通过策略、测试与构建后创建并合并 PR #3。修复同一 job 内 `--auto` 自等待后，烟雾测试 PR #5 在 21 秒内自动创建、squash 合并并删除临时分支。
+- 发布器任务记录持久化在 `/var/lib/energy-review/jobs`，systemd 服务重启后会继续扫描；Cloud 失败和发布失败都有明确状态，发布最多自动尝试 3 次，避免无限失败循环。
