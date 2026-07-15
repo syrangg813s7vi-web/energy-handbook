@@ -40,6 +40,7 @@ export default defineConfig({
       { text: "首页", link: "/" },
       { text: "能源基础", link: "/knowledge/energy-basics" },
       { text: "建设指南", link: "/guides/content-and-animation" },
+      { text: "在线批阅", link: "/guides/online-review" },
     ],
     sidebar: [
       {
@@ -58,6 +59,7 @@ export default defineConfig({
         text: "建设指南",
         items: [
           { text: "内容与动画", link: "/guides/content-and-animation" },
+          { text: "在线批阅", link: "/guides/online-review" },
           { text: "路线图", link: "/roadmap" },
         ],
       },

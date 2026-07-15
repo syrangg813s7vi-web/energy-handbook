@@ -63,6 +63,13 @@
 - 默认分支：`main`
 - 本地 `origin`：`git@github.com:syrangg813s7vi-web/energy-handbook.git`
 
+## 2026-07-15：自定义域名
+
+- 正式站点域名确定为 `energybook.foxtiny.com`。
+- GitHub Pages 已通过 API 登记该域名；子域名 DNS 应使用 CNAME 指向 `syrangg813s7vi-web.github.io`，不要包含仓库路径。
+- `foxtiny.com` 使用 Cloudflare 权威 DNS。为便于 GitHub 完成域名校验和证书签发，初始记录采用 DNS only，证书就绪后再决定是否开启代理。
+- 当前 Wrangler OAuth 会话只有 Zone 读取权限，没有 DNS 写入权限；需要在 Cloudflare 控制台登录后创建记录。
+
 ## 资料链接
 
 - GitHub Pages 发布源：<https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>
@@ -71,3 +78,15 @@
 - Zensical 功能对齐：<https://zensical.org/compatibility/features/>
 - Zensical 自定义 CSS/JavaScript：<https://zensical.org/docs/customization/>
 - Material for MkDocs 维护模式说明：<https://squidfunk.github.io/mkdocs-material/blog/2025/11/11/insiders-now-free-for-everyone/>
+
+## 2026-07-15：在线批阅与自动改稿架构
+
+- 公开站点继续允许匿名阅读；登录只解锁划线批阅和任务状态，不影响搜索与动画。
+- 登录入口采用 Cloudflare Access。Access 身份经过 n8n 验证后只签发一次性授权码；浏览器再换取短期批阅令牌，不保存 GitHub、ChatGPT 或长期服务密钥。
+- 自托管 n8n 位于 `n8n.foxtiny.com`，实际主机为 SSH `molt`。该主机已安装 Codex CLI，并以 ChatGPT 账号登录；CLI 支持实验性的 `codex cloud exec/status/diff/apply`，因此可复用 Codex 套餐额度而无需 OpenAI API Key。
+- n8n 现有 `Codex OAuth Chat` 自定义节点直接调用模型响应接口，不等价于云端 Codex 任务。本项目使用 Codex CLI 云端任务命令，保证任务可追踪且在绑定的 Cloud Environment 中执行。
+- 默认自动修改白名单：`docs/**/*.md`、`docs/.vitepress/theme/components/**/*.{vue,ts,css}`、`docs/public/demos/**/*.{html,js,css,svg,json,csv}`。
+- 默认拒绝 `.github/**`、依赖清单、VitePress 配置、服务器文件、符号链接、子模块和白名单外路径。动画代码还禁止外部脚本、动态执行、凭据读取和未经批准的网络请求。
+- 自动合入采用临时分支与 PR；只有范围检查、安全检查和 VitePress 构建全部通过才启用自动合并，禁止执行器直接推送 `main`。
+- `molt` 上的 Nginx 公开监听 80/443，n8n 本体只绑定 `127.0.0.1:5678`。由于源站仍可通过公网 IP + Host 访问，服务端必须验证 `Cf-Access-Jwt-Assertion` 的签名、受众和过期时间，不能只信任 Cloudflare 身份请求头。
+- `molt` 已有 AI Workbench Codex Runner，绑定 Docker bridge `172.18.0.1:8787`，但它以 root、`danger-full-access` 和任意提示执行本地 Codex，不适合作为公开批阅执行器。能源批阅使用独立低权限用户、独立工作目录和严格参数接口。

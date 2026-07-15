@@ -17,6 +17,165 @@
   --vp-c-brand-3: #249189;
 }
 
+::highlight(energy-review-selection) {
+  color: inherit;
+  background: rgba(244, 185, 66, 0.3);
+  text-decoration: underline 3px #d58a00;
+  text-underline-offset: 3px;
+}
+
+.review-account {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 40;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.review-account button,
+.review-selection-action,
+.review-actions button {
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.review-login,
+.review-mode {
+  padding: 10px 16px;
+  color: white;
+  background: var(--vp-c-brand-1);
+  box-shadow: 0 8px 24px rgba(8, 75, 71, 0.22);
+}
+
+.review-mode:not(.active) {
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg-soft);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.review-logout {
+  padding: 8px 11px;
+  color: var(--vp-c-text-2);
+  background: var(--vp-c-bg-soft);
+}
+
+.review-selection-action {
+  position: fixed;
+  z-index: 55;
+  padding: 8px 13px;
+  color: #2b2108;
+  background: #f4b942;
+  box-shadow: 0 7px 22px rgba(79, 54, 0, 0.25);
+}
+
+.review-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(14, 22, 24, 0.34);
+}
+
+.review-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(440px, 100%);
+  height: 100%;
+  overflow-y: auto;
+  padding: 28px;
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg);
+  box-shadow: -18px 0 50px rgba(0, 0, 0, 0.2);
+}
+
+.review-drawer-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.review-eyebrow {
+  color: var(--vp-c-brand-1);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+}
+
+.review-drawer h2 {
+  margin: 5px 0 20px;
+  border: 0;
+  font-size: 1.35rem;
+}
+
+.review-close {
+  border: 0;
+  color: var(--vp-c-text-2);
+  background: transparent;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.review-quote {
+  max-height: 190px;
+  overflow-y: auto;
+  margin: 0 0 22px;
+  padding: 14px 16px;
+  border-left: 4px solid #d58a00;
+  border-radius: 0 10px 10px 0;
+  background: rgba(244, 185, 66, 0.13);
+  font-size: 0.92rem;
+}
+
+.review-drawer label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.review-drawer textarea {
+  width: 100%;
+  resize: vertical;
+  padding: 12px 14px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg-soft);
+  font: inherit;
+  line-height: 1.6;
+}
+
+.review-drawer textarea:focus {
+  border-color: var(--vp-c-brand-1);
+  outline: 3px solid var(--vp-c-brand-soft);
+}
+
+.review-help,
+.review-message {
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+.review-help { color: var(--vp-c-text-2); }
+.review-message { color: var(--vp-c-brand-1); }
+
+.review-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.review-actions button { padding: 10px 16px; }
+.review-cancel { color: var(--vp-c-text-1); background: var(--vp-c-bg-soft); }
+.review-submit { color: white; background: var(--vp-c-brand-1); }
+.review-submit:disabled { cursor: not-allowed; opacity: 0.5; }
+
 .VPHome .vp-doc {
   max-width: 960px;
   margin: 0 auto;
@@ -46,4 +205,11 @@
   .VPHome .vp-doc {
     padding-inline: 24px;
   }
+
+  .review-account {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .review-drawer { padding: 22px; }
 }

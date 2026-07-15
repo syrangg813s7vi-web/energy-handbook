@@ -40,6 +40,19 @@
 - [ ] 建立贡献指南、审核清单和 issue/PR 模板
 - [ ] 确定首批主题及负责人
 
+### 阶段 2.1：在线登录、批阅与自动改稿 `in_progress`
+
+- [x] 确定公开阅读、登录后批阅的产品形态
+- [x] 确定自托管 n8n → Codex Cloud → GitHub 的执行架构
+- [x] 定义文章与动画代码的修改白名单
+- [x] 在 VitePress 中加入登录状态、文字划选和批阅面板
+- [ ] 建立 Cloudflare Access 登录与短期会话交换
+- [ ] 建立 n8n 批阅接收、任务追踪和错误处理工作流
+- [ ] 在 `molt` 建立低权限 Codex Cloud 执行器
+- [x] 加入文件范围、安全扫描和构建门禁代码
+- [ ] 接通临时分支、PR 与自动合并门禁
+- [ ] 完成端到端验证并发布
+
 ### 阶段 3：核心知识与数据可视化 `pending`
 
 - [ ] 编写能源基础、电力系统、化石能源、可再生能源、储能等核心内容
@@ -50,7 +63,7 @@
 
 - [ ] 加入链接、Markdown、可访问性和构建检查
 - [x] 完成 GitHub Pages 首次发布：<https://syrangg813s7vi-web.github.io/energy-handbook/>
-- [ ] 配置自定义域名（如需）
+- [ ] 完成自定义域名 `energybook.foxtiny.com`（GitHub 已登记，等待 Cloudflare DNS 与 HTTPS 证书）
 - [ ] 建立版本、更新频率、数据时效性和反馈机制
 
 ## 当前关键决策
@@ -60,11 +73,14 @@
 | Markdown 作为主要内容源 | 已确定 | 易于维护、审核和迁移 |
 | 动画实现 | 已更新 | 页内高交互组件使用 Vue + SVG/CSS；大型自包含演示使用 `public/demos/` HTML + iframe |
 | 静态站点生成器 | 已确定 | VitePress 1.6.4 + Vue 3 + Vite 6.4.3 |
+| 在线批阅身份 | 已确定 | 公开可读；Cloudflare Access 登录后才显示并允许批阅 |
+| 自动改稿执行 | 已确定 | `n8n.foxtiny.com`（SSH `molt`）提交 `codex cloud` 任务，检查后自动 PR/合并 |
+| 默认修改边界 | 已确定 | Markdown、VitePress 动画组件及 `public/demos`；禁止工作流、依赖和站点配置 |
 
 ## 待用户确认（不阻塞底座建设）
 
 - [x] GitHub 归属与仓库：`syrangg813s7vi-web/energy-handbook`
-- 是否需要自定义域名
+- [x] 自定义域名：`energybook.foxtiny.com`
 - 首批优先内容和主要读者（公众、学生、从业者或研究人员）
 - 许可证选择（初始建议文本 CC BY 4.0，代码 MIT）
 

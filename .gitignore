@@ -6,5 +6,10 @@ output/
 node_modules/
 docs/.vitepress/dist/
 docs/.vitepress/cache/
+.env
+.env.*
+!.env.example
+automation/*.local.json
+error.log
 __pycache__/
 *.py[cod]

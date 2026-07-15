@@ -20,11 +20,27 @@
 - 将 Vite 安全覆盖到 6.4.3，`npm audit` 从 3 项风险降为 0。
 - 创建 GitHub 公开仓库 `syrangg813s7vi-web/energy-handbook`，完成首次提交并推送 `main`。
 - 启用 GitHub Pages Actions 发布源，首次构建与部署通过，在线首页返回 HTTP 200。
+- 在 GitHub Pages 登记自定义域名 `energybook.foxtiny.com`，并完成 VitePress 根路径、canonical、sitemap 与 `CNAME` 文件配置。
 
 ### 正在进行
 
-- 等待确定主要读者、首批内容、GitHub 归属/仓库名和许可证。
+- 实现公开站点登录后解锁的划线批阅功能。
+- 建立 `n8n.foxtiny.com` → Codex Cloud → GitHub 自动改稿与合并链路。
 - 进入阶段 2：完善分类法、内容模板、引用规范和贡献流程。
+- 在 Cloudflare 为 `energybook.foxtiny.com` 添加指向 `syrangg813s7vi-web.github.io` 的 DNS-only CNAME，并等待 GitHub 签发 HTTPS 证书。
+
+### 在线批阅决策
+
+- 用户确认使用同一公开网站：匿名访问只读，Cloudflare Access 登录后解锁批阅。
+- 用户确认自动修改、自动 PR 和检查通过后自动合并。
+- 用户确认改稿范围包含 Markdown 文章与动画代码。
+- 已验证 SSH `molt` 上运行 n8n，Codex CLI 0.133.0 已安装且 root 账号使用 ChatGPT 登录；云端任务命令可用。
+- 已完成 VitePress 登录态、批阅模式、文字划选、选区高亮、浮动操作按钮和修改要求抽屉。
+- 已通过真实浏览器验证划选与抽屉交互；测试使用临时会话，未调用真实服务端。
+- 已实现批阅负载验证、页面到 Markdown 的路由映射、文章/动画文件白名单和动画静态安全扫描。
+- 已实现 Codex Cloud 提交、应用差异、构建、PR 与自动合并的执行器骨架；在 Cloud Environment 和专用 GitHub 凭据就绪前不部署。
+- 已确认当前 ChatGPT 账号尚无 Codex Cloud Environment，需要先在 Codex Web 为仓库创建环境。
+- 已确认 `molt` 现有研究 Runner 使用 root + `danger-full-access`，能源批阅不会复用；将建立独立低权限服务。
 
 ### 验证记录
 
@@ -45,3 +61,6 @@
 | VitePress 中文本地搜索 | 通过 | “效率”可命中基础文章和首页等内容 |
 | VitePress 390 × 844 移动端 | 通过 | 能量流组件无溢出，文字与控件可读 |
 | GitHub Pages 首次发布 | 通过 | <https://syrangg813s7vi-web.github.io/energy-handbook/> 返回 HTTP 200 |
+| 在线批阅前端生产构建 | 通过 | 未配置 API 时入口隐藏，SSR 构建正常 |
+| 在线批阅浏览器交互 | 通过 | 登录态、开启批阅、正文划选、浮动按钮、抽屉焦点和提交按钮状态正常 |
+| 批阅策略单元测试 | 通过 | 4 项测试：允许范围、禁止范围、路由映射、受限提示词 |
