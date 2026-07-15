@@ -82,3 +82,5 @@
 - 已确认 GitHub 端没有自动出现分支或 PR；开始补充 READY diff 发布器。
 - 决定使用单仓库写 Deploy Key 推送 `codex/review-*`，避免在 molt 保存个人 GitHub OAuth/PAT；现有 GitHub Action 继续负责复检、建 PR 与自动合并。
 - 首次真实发布确认 `codex cloud apply` 会将修改直接加入暂存区；发布器文件检测已调整为比较 `HEAD`，任务保留在持久队列等待自动重试。
+- 修复后真实任务成功推送 `codex/review-6a579b97fe60` 并自动创建 PR #3；文件策略、17 项测试和 VitePress 构建全部通过。
+- PR #3 的 `--auto` 合并步骤因等待当前尚未结束的 job 而返回 `UNSTABLE`；已在所有实质门禁通过后手动 squash 合并，并将工作流改为门禁末尾直接 squash merge。
