@@ -81,3 +81,4 @@
 - 已确认首次真实在线批阅成功触发 Cloud Codex，任务进入 READY 并生成有效差异。
 - 已确认 GitHub 端没有自动出现分支或 PR；开始补充 READY diff 发布器。
 - 决定使用单仓库写 Deploy Key 推送 `codex/review-*`，避免在 molt 保存个人 GitHub OAuth/PAT；现有 GitHub Action 继续负责复检、建 PR 与自动合并。
+- 首次真实发布确认 `codex cloud apply` 会将修改直接加入暂存区；发布器文件检测已调整为比较 `HEAD`，任务保留在持久队列等待自动重试。

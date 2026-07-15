@@ -79,7 +79,7 @@ export function publishJob(job, options = {}) {
   command("git", ["checkout", "-b", job.branch, "origin/main"], { cwd: repositoryRoot, env });
   command(process.env.CODEX_BIN || "codex", ["cloud", "apply", job.jobId], { cwd: repositoryRoot, env });
 
-  const changedFiles = command("git", ["diff", "--name-only"], { cwd: repositoryRoot, env })
+  const changedFiles = command("git", ["diff", "--name-only", "HEAD"], { cwd: repositoryRoot, env })
     .split("\n").filter(Boolean);
   if (!changedFiles.length) throw new Error("Cloud 任务没有可发布的文件修改");
 

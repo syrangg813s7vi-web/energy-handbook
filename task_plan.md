@@ -106,3 +106,4 @@
 | 2026-07-15 | 推送部署提交时远端 `main` 已新增能量管理文章提交，non-fast-forward 被拒绝 | 1 | 检查远端改动无重叠后 rebase 到 `origin/main`，重新运行完整测试与构建 |
 | 2026-07-15 | Cloudflare 域名页报刷新错误，直接打开 `/dns/records` 仍只返回 `{}` | 3 | 当前无 DNS 写权限 CLI 会话；暂将 Pages 构建基路径设为 `/energy-handbook/`，保证备用地址功能完整，保留 CNAME 待控制台恢复 |
 | 2026-07-15 | Cloud Codex 任务完成后没有创建分支或 PR | 1 | 实测原生集成只保留 READY diff；改由低权限执行器应用 diff，并用单仓库 Deploy Key 推送受限分支 |
+| 2026-07-15 | 发布器首次应用 READY diff 后误报没有修改 | 1 | `codex cloud apply` 默认将差异放入暂存区；文件检测改为 `git diff --name-only HEAD`，同时覆盖暂存与未暂存修改 |
