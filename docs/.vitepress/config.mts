@@ -42,6 +42,12 @@ export default defineConfig({
         ],
       },
       {
+        text: "工业控制",
+        items: [
+          { text: "FBD与SFC", link: "/knowledge/fbd-sfc" },
+        ],
+      },
+      {
         text: "建设指南",
         items: [
           { text: "内容与动画", link: "/guides/content-and-animation" },
