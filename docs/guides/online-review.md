@@ -8,9 +8,9 @@
 2. 在文章正文中划选需要修改的文字。
 3. 填写修改要求并提交。
 4. n8n 将页面、选区、上下文和要求整理为云端 Codex 任务。
-5. Codex 修改 Markdown 或动画代码，并生成可审计的差异。
-6. 自动检查文件范围、安全规则和 VitePress 构建。
-7. 检查全部通过后创建并自动合并 PR，GitHub Pages 随后发布新版。
+5. Cloud Codex 修改 Markdown 或动画代码、运行构建，并通过原生 GitHub 集成提交 `codex/review-*` 分支和 PR。
+6. 仓库 Action 自动检查文件范围、安全规则和 VitePress 构建。
+7. 检查全部通过后自动合并 PR，GitHub Pages 随后发布新版。
 
 ## 登录与会话
 
@@ -32,7 +32,7 @@
 
 ## 自动合并门禁
 
-执行器不能直接推送 `main`，也不持有跨仓库 GitHub Token。`molt` 只使用限定到本仓库的 Deploy Key 推送 `codex/review-*` 临时分支；仓库内的 GitHub Action 再创建 PR 和执行自动合并，并依次检查：
+`molt` 不下载或应用代码差异，也不持有 GitHub 写入凭据；它只提交和查询 Cloud Codex 任务。Cloud Codex 使用绑定到本仓库的原生 GitHub 集成提交 `codex/review-*` 临时分支和 PR；仓库内的 GitHub Action 再执行自动合并，并依次检查：
 
 1. 选中的原文仍能在目标文章中唯一定位。
 2. 修改文件全部位于白名单内。

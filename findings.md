@@ -90,4 +90,4 @@
 - 自动合入采用临时分支与 PR；只有范围检查、安全检查和 VitePress 构建全部通过才启用自动合并，禁止执行器直接推送 `main`。
 - `molt` 上的 Nginx 公开监听 80/443，n8n 本体只绑定 `127.0.0.1:5678`。由于源站仍可通过公网 IP + Host 访问，服务端必须验证 `Cf-Access-Jwt-Assertion` 的签名、受众和过期时间，不能只信任 Cloudflare 身份请求头。
 - `molt` 已有 AI Workbench Codex Runner，绑定 Docker bridge `172.18.0.1:8787`，但它以 root、`danger-full-access` 和任意提示执行本地 Codex，不适合作为公开批阅执行器。能源批阅使用独立低权限用户、独立工作目录和严格参数接口。
-- 为避免在 `molt` 保存可访问其他仓库的 PAT，执行器只使用本仓库 Deploy Key 推送 `codex/review-*` 分支。仓库 Action 在 GitHub 内部重复策略与构建检查、创建 PR 并启用 squash 自动合并。
+- 用户要求由 Cloud Codex 提交代码。最终职责调整为：`molt` 只运行 `codex cloud exec/status`；Cloud Codex 通过绑定到 `energy-handbook` 的原生 GitHub 集成提交 `codex/review-*` 分支和 PR；仓库 Action 在 GitHub 内部重复策略与构建检查并启用 squash 自动合并。`molt` 不保存 GitHub 写入凭据，也不下载或应用任务差异。

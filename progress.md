@@ -38,7 +38,7 @@
 - 已完成 VitePress 登录态、批阅模式、文字划选、选区高亮、浮动操作按钮和修改要求抽屉。
 - 已通过真实浏览器验证划选与抽屉交互；测试使用临时会话，未调用真实服务端。
 - 已实现批阅负载验证、页面到 Markdown 的路由映射、文章/动画文件白名单和动画静态安全扫描。
-- 已实现 Codex Cloud 提交、应用差异、构建、PR 与自动合并的执行器骨架；在 Cloud Environment 和专用 GitHub 凭据就绪前不部署。
+- 已按用户最新要求将执行器收窄为 Codex Cloud 任务提交与状态查询；代码提交和 PR 由 Cloud Codex 的原生 GitHub 集成完成，`molt` 不再应用差异或保存 GitHub 写入凭据。
 - 已确认当前 ChatGPT 账号尚无 Codex Cloud Environment，需要先在 Codex Web 为仓库创建环境。
 - 已确认 `molt` 现有研究 Runner 使用 root + `danger-full-access`，能源批阅不会复用；将建立独立低权限服务。
 

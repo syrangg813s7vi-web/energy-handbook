@@ -15,6 +15,7 @@ const payload = {
   after: "因此，一台设备。",
   instruction: "增加一个交互动画。",
   siteOrigin: "https://syrangg813s7vi-web.github.io",
+  requestId: "abcd1234",
 };
 
 test("允许文章与动画路径", () => {
@@ -41,4 +42,5 @@ test("验证批阅负载并构造受限提示", () => {
   assert.match(prompt, /docs\/knowledge\/energy-basics\.md/);
   assert.match(prompt, /增加一个交互动画/);
   assert.match(prompt, /不得修改 \.github/);
+  assert.match(prompt, /codex\/review-abcd1234/);
 });
