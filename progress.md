@@ -39,7 +39,7 @@
 - 已通过真实浏览器验证划选与抽屉交互；测试使用临时会话，未调用真实服务端。
 - 已实现批阅负载验证、页面到 Markdown 的路由映射、文章/动画文件白名单和动画静态安全扫描。
 - 已按用户最新要求将执行器收窄为 Codex Cloud 任务提交与状态查询；代码提交和 PR 由 Cloud Codex 的原生 GitHub 集成完成，`molt` 不再应用差异或保存 GitHub 写入凭据。
-- 已确认当前 ChatGPT 账号尚无 Codex Cloud Environment，需要先在 Codex Web 为仓库创建环境。
+- 已在 Codex Web 为 `syrangg813s7vi-web/energy-handbook` 创建唯一 Cloud Environment；重复环境已删除，环境 ID 将只作为 `molt` 的部署变量保存，不写入公开仓库。
 - 已确认 `molt` 现有研究 Runner 使用 root + `danger-full-access`，能源批阅不会复用；将建立独立低权限服务。
 
 ### 验证记录
@@ -64,3 +64,4 @@
 | 在线批阅前端生产构建 | 通过 | 未配置 API 时入口隐藏，SSR 构建正常 |
 | 在线批阅浏览器交互 | 通过 | 登录态、开启批阅、正文划选、浮动按钮、抽屉焦点和提交按钮状态正常 |
 | 批阅策略单元测试 | 通过 | 4 项测试：允许范围、禁止范围、路由映射、受限提示词 |
+| Codex Cloud Environment | 通过 | 浏览器端仅保留 1 个 `energy-handbook` 环境；`molt` 上 Codex CLI 可识别 |
