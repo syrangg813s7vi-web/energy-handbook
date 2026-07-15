@@ -98,6 +98,6 @@
 - n8n 2.19.5 的 HTTP Request 错误对象使用 `$json.error.status` 表示状态码，工作流表达式需要同时兼容 `error.status`、`error.httpCode` 和顶层 `httpCode`。
 - 工作流发布仍需等待 Cloudflare Access 和公开会话网关完成；之后再经用户确认执行一次会真实创建 Codex Cloud 任务的端到端测试。
 - Cloudflare 官方允许按路径保护自托管应用，但该账户所有 Cloudflare One 初始化路径都直接返回 `{}`。用户同意将身份层替换为 GitHub OAuth，n8n、Codex Cloud 和 GitHub 自动合并架构保持不变。
-- 登录网关已改为 GitHub OAuth Web Flow：使用随机 `state` 防 CSRF、PKCE S256 保护授权码，不请求 OAuth scope；每次登录通过 `GET /user` 重新核验身份，只允许不可变数字 ID `264539087`（`syrangg813s7vi-web`）。
+- 登录网关已改为 GitHub OAuth Web Flow：使用随机 `state` 防 CSRF、PKCE S256 保护授权码，不请求 OAuth scope；每次登录通过 `GET /user` 重新核验身份，并读取 `GET /repos/syrangg813s7vi-web/energy-handbook` 返回的当前用户权限，只有 `permissions.push=true`（含 maintain/admin）时放行。
 - 一次性授权码使用后立即删除，批阅令牌用服务端 HMAC 签发并限制为 15 分钟；GitHub OAuth 临时访问令牌不写入浏览器、n8n 或磁盘。
 - Cloudflare 账户当前尚未完成 Zero Trust 初始化：入口显示 “Welcome to Cloudflare Zero Trust / Get started”，进入 Cloudflare One 后持续 Loading。现有 Wrangler OAuth 仅有 account read、zone read 和 Workers 等权限，没有 Access 管理权限，无法用该令牌替代控制台初始化。

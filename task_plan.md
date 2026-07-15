@@ -47,7 +47,7 @@
 - [x] 定义文章与动画代码的修改白名单
 - [x] 在 VitePress 中加入登录状态、文字划选和批阅面板
 - [ ] 建立 GitHub OAuth 登录与短期会话交换
-- [x] 实现短期会话网关、OAuth state/PKCE、GitHub ID 白名单、CORS 和提交限流
+- [x] 实现短期会话网关、OAuth state/PKCE、GitHub 仓库写权限校验、CORS 和提交限流
 - [x] 建立 n8n 批阅接收、任务追踪和错误处理工作流（已验证，待身份网关完成后发布）
 - [x] 在 `molt` 建立低权限 Codex Cloud 执行器
 - [x] 加入文件范围、安全扫描和构建门禁代码
@@ -74,10 +74,10 @@
 | Markdown 作为主要内容源 | 已确定 | 易于维护、审核和迁移 |
 | 动画实现 | 已更新 | 页内高交互组件使用 Vue + SVG/CSS；大型自包含演示使用 `public/demos/` HTML + iframe |
 | 静态站点生成器 | 已确定 | VitePress 1.6.4 + Vue 3 + Vite 6.4.3 |
-| 在线批阅身份 | 已更新 | 公开可读；GitHub OAuth 登录后才显示并允许批阅，仅授权固定数字用户 ID |
+| 在线批阅身份 | 已更新 | 公开可读；GitHub OAuth 登录后才显示并允许批阅，仅授权本仓库具有 push/maintain/admin 权限的用户 |
 | 自动改稿执行 | 已确定 | `n8n.foxtiny.com`（SSH `molt`）提交 `codex cloud` 任务，检查后自动 PR/合并 |
 | 默认修改边界 | 已确定 | Markdown、VitePress 动画组件及 `public/demos`；禁止工作流、依赖和站点配置 |
-| 登录会话网关 | 已实现待部署 | OAuth state + PKCE；GitHub ID `264539087`；一次性码 2 分钟，批阅令牌 15 分钟 |
+| 登录会话网关 | 已实现待部署 | OAuth state + PKCE；实时校验 `energy-handbook` 的 `permissions.push`；一次性码 2 分钟，批阅令牌 15 分钟 |
 
 ## 待用户确认（不阻塞底座建设）
 

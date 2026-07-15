@@ -123,7 +123,7 @@ export function createReviewGateway(options = {}) {
   const publicBaseUrl = String(options.publicBaseUrl ?? process.env.REVIEW_PUBLIC_BASE_URL ?? "").replace(/\/$/, "");
   const githubClientId = options.githubClientId ?? process.env.GITHUB_OAUTH_CLIENT_ID ?? "";
   const githubClientSecret = options.githubClientSecret ?? process.env.GITHUB_OAUTH_CLIENT_SECRET ?? "";
-  const allowedGithubIds = new Set(options.allowedGithubIds ?? parseCsv(process.env.REVIEW_ALLOWED_GITHUB_IDS));
+  const githubRepository = options.githubRepository ?? process.env.REVIEW_GITHUB_REPOSITORY ?? "";
   const fetchImpl = options.fetchImpl ?? fetch;
   const codeTtlMs = options.codeTtlMs ?? 2 * 60 * 1000;
   const sessionTtlSeconds = options.sessionTtlSeconds ?? 15 * 60;
@@ -175,17 +175,24 @@ export function createReviewGateway(options = {}) {
     });
     const tokenBody = await tokenResponse.json();
     if (!tokenResponse.ok || !tokenBody.access_token) return null;
+    const githubHeaders = {
+      accept: "application/vnd.github+json",
+      authorization: `Bearer ${tokenBody.access_token}`,
+      "user-agent": "energy-handbook-review-gateway",
+      "x-github-api-version": "2022-11-28",
+    };
     const userResponse = await fetchImpl("https://api.github.com/user", {
-      headers: {
-        accept: "application/vnd.github+json",
-        authorization: `Bearer ${tokenBody.access_token}`,
-        "user-agent": "energy-handbook-review-gateway",
-        "x-github-api-version": "2022-11-28",
-      },
+      headers: githubHeaders,
       signal: AbortSignal.timeout(10_000),
     });
     const user = await userResponse.json();
     if (!userResponse.ok || !user.id || !user.login) return null;
+    const repositoryResponse = await fetchImpl(`https://api.github.com/repos/${githubRepository}`, {
+      headers: githubHeaders,
+      signal: AbortSignal.timeout(10_000),
+    });
+    const repository = await repositoryResponse.json();
+    if (!repositoryResponse.ok || repository.permissions?.push !== true) return null;
     return { id: String(user.id), login: String(user.login).slice(0, 100) };
   }
 
@@ -230,7 +237,7 @@ export function createReviewGateway(options = {}) {
           return fail(response, 400, "invalid_oauth_callback", "GitHub 登录请求无效或已过期");
         }
         const identity = await authenticateGithub(url.searchParams.get("code"), grant.codeVerifier);
-        if (!identity || !allowedGithubIds.has(identity.id)) {
+        if (!identity) {
           return fail(response, 403, "github_user_not_allowed", "该 GitHub 账户没有批阅权限");
         }
         const code = randomBytes(32).toString("base64url");
@@ -287,7 +294,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     "REVIEW_ALLOWED_ORIGINS",
     "GITHUB_OAUTH_CLIENT_ID",
     "GITHUB_OAUTH_CLIENT_SECRET",
-    "REVIEW_ALLOWED_GITHUB_IDS",
+    "REVIEW_GITHUB_REPOSITORY",
   ];
   const missing = required.filter((name) => !process.env[name]);
   if (missing.length) throw new Error(`Missing required environment variables: ${missing.join(", ")}`);

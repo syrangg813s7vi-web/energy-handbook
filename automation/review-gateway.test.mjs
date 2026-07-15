@@ -7,6 +7,7 @@ const siteOrigin = "https://syrangg813s7vi-web.github.io";
 async function withGateway(run, options = {}) {
   const upstreamCalls = [];
   const githubUser = options.githubUser ?? { id: 12345678, login: "energy-owner" };
+  const repositoryPermissions = options.repositoryPermissions ?? { admin: false, push: true, pull: true };
   const server = createReviewGateway({
     allowedOrigins: [siteOrigin],
     sessionSecret: "a-test-secret-with-enough-entropy",
@@ -15,7 +16,7 @@ async function withGateway(run, options = {}) {
     publicBaseUrl: "https://review.example.test",
     githubClientId: "test-client-id",
     githubClientSecret: "test-client-secret",
-    allowedGithubIds: options.allowedGithubIds ?? ["12345678"],
+    githubRepository: "syrangg813s7vi-web/energy-handbook",
     fetchImpl: async (url, init = {}) => {
       upstreamCalls.push([String(url), init]);
       if (url === "https://github.com/login/oauth/access_token") {
@@ -26,6 +27,12 @@ async function withGateway(run, options = {}) {
       }
       if (url === "https://api.github.com/user") {
         return new Response(JSON.stringify(githubUser), {
+          status: 200,
+          headers: { "content-type": "application/json" },
+        });
+      }
+      if (url === "https://api.github.com/repos/syrangg813s7vi-web/energy-handbook") {
+        return new Response(JSON.stringify({ full_name: "syrangg813s7vi-web/energy-handbook", permissions: repositoryPermissions }), {
           status: 200,
           headers: { "content-type": "application/json" },
         });
@@ -78,13 +85,13 @@ test("只接受允许站点并使用 state 与 PKCE 发起 GitHub 登录", async
   assert.equal(authorizeUrl.searchParams.has("scope"), false);
 }));
 
-test("拒绝伪造 state 和未授权的 GitHub 数字用户 ID", async () => withGateway(async (origin) => {
+test("拒绝伪造 state 和没有仓库修改权限的 GitHub 用户", async () => withGateway(async (origin) => {
   const fakeState = await fetch(`${origin}/auth/callback?code=test-code&state=fake`, { redirect: "manual" });
   assert.equal(fakeState.status, 400);
   const { authorizeUrl } = await beginLogin(origin);
   const denied = await fetch(`${origin}/auth/callback?code=test-code&state=${authorizeUrl.searchParams.get("state")}`, { redirect: "manual" });
   assert.equal(denied.status, 403);
-}, { allowedGithubIds: ["99999999"] }));
+}, { repositoryPermissions: { admin: false, push: false, pull: true } }));
 
 test("一次性授权码只能交换一次", async () => withGateway(async (origin) => {
   const { authorizeUrl } = await beginLogin(origin);
