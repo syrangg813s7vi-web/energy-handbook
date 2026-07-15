@@ -74,3 +74,4 @@
 | n8n 工作流发布 | 通过 | `energy-handbook-review-api` 已发布并激活，GitHub 身份由网关覆盖；无效样例沿完整错误链路返回脱敏 HTTP 400，未创建 Cloud 任务 |
 | 公开接口隔离 | 通过 | Nginx 仅公开 `/energy-review/`；直连 `/webhook/energy-handbook/` 返回 404 |
 | Pages 批阅入口配置 | 完成待部署 | Pages 构建注入 `VITE_REVIEW_API_URL=https://n8n.foxtiny.com/energy-review` |
+| Pages 临时可用地址 | 完成待部署 | Cloudflare DNS 仍不可写，构建暂用 `BASE_PATH=/energy-handbook/`，确保 GitHub Pages 子路径加载客户端功能 |

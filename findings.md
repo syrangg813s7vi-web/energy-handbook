@@ -105,3 +105,4 @@
 - `energy-review-gateway.service` 已部署并绑定 `127.0.0.1:8790`；Nginx 将 `/energy-review/` 反向代理到该端口，同时对公网隐藏 `/webhook/energy-handbook/`。因此浏览器只能经过 GitHub OAuth、短期会话、来源限制和提交限流后的网关访问批阅链路。
 - n8n 工作流已从 Cloudflare 身份头切换为网关写入的 `actorEmail`，并已发布激活。无效负载从 n8n 到隔离执行器的完整链路稳定返回脱敏 HTTP 400，不会创建 Cloud Codex 任务。
 - 服务器上的 systemd `nginx.service` 存在既有 PrivateTmp mount namespace 故障，`systemctl reload nginx` 会返回 `226/NAMESPACE`；主进程本身正常，配置经 `nginx -t` 验证后可用 `nginx -s reload` 安全重载。
+- Cloudflare 普通域名控制台与 Zero Trust 控制台出现相同异常：`foxtiny.com` 页面报刷新错误，直接访问 DNS 记录路由只返回 `{}`；本机也没有可用的 DNS 写权限 CLI 会话。正式 CNAME 继续保留为待办，Pages 构建暂时使用 `/energy-handbook/` 基路径，使 GitHub Pages 备用地址能够加载完整客户端资源。

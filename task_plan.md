@@ -64,7 +64,7 @@
 
 - [ ] 加入链接、Markdown、可访问性和构建检查
 - [x] 完成 GitHub Pages 首次发布：<https://syrangg813s7vi-web.github.io/energy-handbook/>
-- [ ] 完成自定义域名 `energybook.foxtiny.com`（GitHub 已登记，等待 Cloudflare DNS 与 HTTPS 证书）
+- [ ] 完成自定义域名 `energybook.foxtiny.com`（Cloudflare DNS 控制台故障；Pages 暂按 `/energy-handbook/` 子路径发布）
 - [ ] 建立版本、更新频率、数据时效性和反馈机制
 
 ## 当前关键决策
@@ -101,3 +101,4 @@
 | 2026-07-15 | `systemctl reload nginx` 因既有 PrivateTmp mount namespace 缺少 `/tmp` 而失败 | 1 | 配置已先通过 `nginx -t`；改由现有 master 进程执行 `nginx -s reload`，避免中断服务 |
 | 2026-07-15 | n8n 重启后健康接口先于活动工作流注册完成，首次 Webhook 检查返回 404 | 1 | 等待启动日志确认工作流 Activated 后重试，错误链路返回预期 HTTP 400 |
 | 2026-07-15 | 推送部署提交时远端 `main` 已新增能量管理文章提交，non-fast-forward 被拒绝 | 1 | 检查远端改动无重叠后 rebase 到 `origin/main`，重新运行完整测试与构建 |
+| 2026-07-15 | Cloudflare 域名页报刷新错误，直接打开 `/dns/records` 仍只返回 `{}` | 3 | 当前无 DNS 写权限 CLI 会话；暂将 Pages 构建基路径设为 `/energy-handbook/`，保证备用地址功能完整，保留 CNAME 待控制台恢复 |
