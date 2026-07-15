@@ -121,7 +121,6 @@ export function scanChangedFiles(repositoryRoot, changedFiles) {
 export function buildCloudPrompt(payload) {
   const sourceFile = pagePathToMarkdown(payload.pagePath);
   if (!payload.requestId) throw new Error("缺少安全的批阅请求 ID");
-  const branch = `codex/review-${payload.requestId}`;
   return [
     "你正在维护 energy-handbook 能源知识库。请完成一条经过授权的在线批阅。",
     `目标文章：${sourceFile}`,
@@ -134,8 +133,7 @@ export function buildCloudPrompt(payload) {
     "可以按需修改文章 Markdown、VitePress 动画组件或 public/demos 下的动画。",
     "不得修改 .github、依赖文件、VitePress 全局配置或白名单外文件，不得新增依赖。",
     "动画必须自包含、支持移动端和减弱动画偏好，不得加入外部脚本、凭据访问或网络请求。",
-    `从 main 创建分支 ${branch}，不得使用其他分支名。`,
-    "完成后运行 npm run check。检查成功后提交修改、推送该分支，并通过 Codex Cloud 的原生 GitHub 集成创建以 main 为目标的 PR。",
-    "不要直接推送 main，不要合并 PR。仓库的 GitHub Action 会重复安全检查并自动合并。",
+    "完成后运行 npm run check，并将修改保留在 Cloud 任务差异中。",
+    "不要提交、推送或创建 PR。受限发布器会应用任务差异、创建临时分支；仓库的 GitHub Action 会复检、创建 PR 并自动合并。",
   ].join("\n");
 }

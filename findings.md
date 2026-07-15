@@ -106,3 +106,6 @@
 - n8n 工作流已从 Cloudflare 身份头切换为网关写入的 `actorEmail`，并已发布激活。无效负载从 n8n 到隔离执行器的完整链路稳定返回脱敏 HTTP 400，不会创建 Cloud Codex 任务。
 - 服务器上的 systemd `nginx.service` 存在既有 PrivateTmp mount namespace 故障，`systemctl reload nginx` 会返回 `226/NAMESPACE`；主进程本身正常，配置经 `nginx -t` 验证后可用 `nginx -s reload` 安全重载。
 - Cloudflare 普通域名控制台与 Zero Trust 控制台出现相同异常：`foxtiny.com` 页面报刷新错误，直接访问 DNS 记录路由只返回 `{}`；本机也没有可用的 DNS 写权限 CLI 会话。正式 CNAME 继续保留为待办，Pages 构建暂时使用 `/energy-handbook/` 基路径，使 GitHub Pages 备用地址能够加载完整客户端资源。
+- 首次真实批阅任务 `task_e_6a579b97fe608324ae2e1d4d2024b3a0` 已到 READY，包含 2 个文件的有效差异，但 GitHub 没有新分支或 PR；这证明 Cloud Codex 的原生 GitHub 集成不会在当前环境中替执行器完成提交。
+- 仓库已有 `.github/workflows/auto-review.yml`：收到 `codex/review-*` push 后会重复执行文件白名单、动画安全策略和 `npm run check`，随后创建 PR 并启用 squash 自动合并。缺口只在 READY diff → 分支 push。
+- GitHub 仓库已开启 `allow_auto_merge` 和合并后删除分支。采用写 Deploy Key 可将 molt 的 GitHub 写权限严格限制在 `syrangg813s7vi-web/energy-handbook`，比复用个人 OAuth/PAT 权限更窄；PR 创建和合并继续由仓库内置 `GITHUB_TOKEN` 完成。

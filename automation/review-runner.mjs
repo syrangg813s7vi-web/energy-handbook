@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 import { execFileSync } from "node:child_process";
 import { randomUUID } from "node:crypto";
+import { mkdirSync, renameSync, writeFileSync } from "node:fs";
+import path from "node:path";
 import process from "node:process";
 import {
   buildCloudPrompt,
@@ -31,6 +33,15 @@ function parseTaskId(output) {
   return matches.at(-1);
 }
 
+function persistJob(job) {
+  const jobsDirectory = process.env.REVIEW_JOBS_DIRECTORY || "/var/lib/energy-review/jobs";
+  mkdirSync(jobsDirectory, { recursive: true, mode: 0o700 });
+  const destination = path.join(jobsDirectory, `${job.jobId}.json`);
+  const temporary = `${destination}.${process.pid}.tmp`;
+  writeFileSync(temporary, `${JSON.stringify(job, null, 2)}\n`, { mode: 0o600 });
+  renameSync(temporary, destination);
+}
+
 function submit(encoded) {
   const payload = { ...parsePayload(encoded), requestId: randomUUID().replaceAll("-", "").slice(0, 12) };
   const environmentId = process.env.CODEX_CLOUD_ENV_ID;
@@ -38,7 +49,17 @@ function submit(encoded) {
   const output = run(process.env.CODEX_BIN || "codex", [
     "cloud", "exec", "--env", environmentId, "--branch", "main", buildCloudPrompt(payload),
   ]);
-  return { jobId: parseTaskId(output), actorEmail: payload.actorEmail, output };
+  const jobId = parseTaskId(output);
+  persistJob({
+    jobId,
+    requestId: payload.requestId,
+    branch: `codex/review-${payload.requestId}`,
+    actorEmail: payload.actorEmail,
+    state: "submitted",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  });
+  return { jobId, actorEmail: payload.actorEmail, output };
 }
 
 function status(taskId) {

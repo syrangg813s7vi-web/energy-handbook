@@ -42,5 +42,5 @@ test("验证批阅负载并构造受限提示", () => {
   assert.match(prompt, /docs\/knowledge\/energy-basics\.md/);
   assert.match(prompt, /增加一个交互动画/);
   assert.match(prompt, /不得修改 \.github/);
-  assert.match(prompt, /codex\/review-abcd1234/);
+  assert.match(prompt, /不要提交、推送或创建 PR/);
 });
