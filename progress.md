@@ -68,4 +68,4 @@
 | 低权限 Cloud 执行器 | 通过 | `energy-review` 系统账号、Docker 网桥来源限制、Header 令牌、32 KiB 请求上限、单任务并发和命令超时 |
 | n8n 批阅工作流草稿 | 通过 | 已导入 `Submit energy handbook review`，保持未发布；4 条主/错误输出连接已回读核验 |
 | n8n 到隔离执行器穿透测试 | 通过 | 使用空修改要求触发参数校验；公开测试 Webhook 返回脱敏 HTTP 400，Codex Cloud 任务列表保持为空 |
-| 登录网关单元测试 | 通过 | 一次性授权码、短期会话、来源限制、限流前置、身份覆盖、n8n 网关凭据和 Access RS256/issuer/AUD 校验 |
+| 登录网关单元测试 | 通过 | OAuth state/PKCE、GitHub 数字 ID 白名单、一次性授权码、短期会话、来源限制、身份覆盖和 n8n 网关凭据 |
