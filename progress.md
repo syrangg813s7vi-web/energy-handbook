@@ -84,3 +84,5 @@
 - 首次真实发布确认 `codex cloud apply` 会将修改直接加入暂存区；发布器文件检测已调整为比较 `HEAD`，任务保留在持久队列等待自动重试。
 - 修复后真实任务成功推送 `codex/review-6a579b97fe60` 并自动创建 PR #3；文件策略、17 项测试和 VitePress 构建全部通过。
 - PR #3 的 `--auto` 合并步骤因等待当前尚未结束的 job 而返回 `UNSTABLE`；已在所有实质门禁通过后手动 squash 合并，并将工作流改为门禁末尾直接 squash merge。
+- 自动合并修复经 PR #5 烟雾测试验证：GitHub Action 在 21 秒内依次完成范围/安全检查、17 项测试、VitePress 构建、PR 创建、squash 合并和临时分支删除。
+- 阶段 2.1 已完成：公开阅读、GitHub 权限登录、划线批阅、n8n 转发、Cloud Codex 改稿、持久化 READY 发布、单仓库 Deploy Key、PR 门禁和自动合并全部贯通。
