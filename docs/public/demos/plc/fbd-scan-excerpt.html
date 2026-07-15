@@ -754,13 +754,11 @@ html&gt;body{padding:0}&lt;/style&gt;
     #fbd-scan-excerpt .head { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px; }
     #fbd-scan-excerpt .head b { font-weight:500; }
     #fbd-scan-excerpt .head span { color:var(--muted-foreground); }
-    #fbd-scan-excerpt .networks { display:grid; grid-template-columns:1.1fr 1.1fr .9fr; gap:12px; }
-    #fbd-scan-excerpt .network-label { margin-bottom:6px; color:var(--muted-foreground); }
-    #fbd-scan-excerpt .nodes { display:flex; flex-wrap:wrap; gap:5px; }
-    #fbd-scan-excerpt .node { flex:1 1 38px; padding:7px 3px; text-align:center; border:1px solid var(--border); border-radius:5px; color:var(--muted-foreground); }
-    #fbd-scan-excerpt .node.visited { color:var(--foreground); }
-    #fbd-scan-excerpt .node.scanning { border-color:var(--viz-series-1); background:color-mix(in srgb,var(--viz-series-1) 16%,var(--card)); color:var(--foreground); }
-    #fbd-scan-excerpt .node.hit { border-color:var(--viz-series-3); background:color-mix(in srgb,var(--viz-series-3) 18%,var(--card)); color:var(--foreground); }
+    #fbd-scan-excerpt .code-block { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; }
+    #fbd-scan-excerpt .code-line { display:block; padding:2px 6px; border-left:3px solid transparent; color:var(--muted-foreground); }
+    #fbd-scan-excerpt .code-line.visited { color:var(--foreground); }
+    #fbd-scan-excerpt .code-line.scanning { border-left-color:var(--viz-series-1); background:color-mix(in srgb,var(--viz-series-1) 16%,transparent); color:var(--foreground); }
+    #fbd-scan-excerpt .code-line.hit { border-left-color:var(--viz-series-3); background:color-mix(in srgb,var(--viz-series-3) 18%,transparent); color:var(--foreground); }
     #fbd-scan-excerpt .runtime { display:grid; grid-template-columns:1fr 1.35fr; gap:16px; margin-top:14px; padding-top:10px; border-top:1px solid var(--border); }
     #fbd-scan-excerpt .runtime-label { margin-bottom:6px; color:var(--muted-foreground); }
     #fbd-scan-excerpt .values { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:5px; }
@@ -770,15 +768,14 @@ html&gt;body{padding:0}&lt;/style&gt;
     #fbd-scan-excerpt .value.on { border-top-color:var(--viz-series-3); background:color-mix(in srgb,var(--viz-series-3) 13%,transparent); color:var(--foreground); }
     #fbd-scan-excerpt .footer { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:12px; flex-wrap:wrap; }
     #fbd-scan-excerpt .status { color:var(--muted-foreground); }
-    @media (max-width:560px) { #fbd-scan-excerpt .networks, #fbd-scan-excerpt .runtime { grid-template-columns:1fr; } }
-    @media (prefers-reduced-motion:reduce) { #fbd-scan-excerpt .node { transition:none; } }
+    @media (max-width:560px) { #fbd-scan-excerpt .runtime { grid-template-columns:1fr; } }
+    @media (prefers-reduced-motion:reduce) { #fbd-scan-excerpt .code-line { transition:none; } }
   &lt;/style&gt;
-  &lt;div class=&quot;head&quot;&gt;&lt;b&gt;FBD：每个PLC周期扫描全部网络&lt;/b&gt;&lt;span&gt;蓝色=正在执行 · 绿色=本周期命中&lt;/span&gt;&lt;/div&gt;
-  &lt;div class=&quot;networks&quot;&gt;
-    &lt;div&gt;&lt;div class=&quot;network-label&quot;&gt;Network 1 · 全部转换&lt;/div&gt;&lt;div class=&quot;nodes&quot;&gt;&lt;span class=&quot;node&quot; data-kind=&quot;T&quot;&gt;T0&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;T&quot;&gt;T1&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;T&quot;&gt;T2&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;T&quot;&gt;T3&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;T&quot;&gt;T4&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
-    &lt;div&gt;&lt;div class=&quot;network-label&quot;&gt;Network 2 · 全部状态锁存&lt;/div&gt;&lt;div class=&quot;nodes&quot;&gt;&lt;span class=&quot;node&quot; data-kind=&quot;X&quot;&gt;X0→X1&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;X&quot;&gt;X1→X2&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;X&quot;&gt;X2→X3&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;X&quot;&gt;X3→X4&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;X&quot;&gt;X4→X0&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
-    &lt;div&gt;&lt;div class=&quot;network-label&quot;&gt;Network 3 · 全部输出&lt;/div&gt;&lt;div class=&quot;nodes&quot;&gt;&lt;span class=&quot;node&quot; data-kind=&quot;O&quot;&gt;许可&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;O&quot;&gt;输送&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;O&quot;&gt;夹具&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;O&quot;&gt;灌装&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;O&quot;&gt;封盖&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
-  &lt;/div&gt;
+  &lt;div class=&quot;head&quot;&gt;&lt;b&gt;FBD：逐行扫描完整代码&lt;/b&gt;&lt;span&gt;蓝色=正在执行 · 绿色=本周期生效&lt;/span&gt;&lt;/div&gt;
+  &lt;pre class=&quot;code-block&quot;&gt;&lt;code&gt;// Network 1 · 计算全部转换
+&lt;span class=&quot;code-line&quot; data-kind=&quot;T&quot; data-index=&quot;0&quot;&gt;T0 := X0 AND 到瓶;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-kind=&quot;T&quot; data-index=&quot;1&quot;&gt;T1 := X1 AND 夹紧到位;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-kind=&quot;T&quot; data-index=&quot;2&quot;&gt;T2 := X2 AND 液位满;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-kind=&quot;T&quot; data-index=&quot;3&quot;&gt;T3 := X3 AND 封盖完成;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-kind=&quot;T&quot; data-index=&quot;4&quot;&gt;T4 := X4 AND 瓶离开;&lt;/span&gt;// Network 2 · 更新状态BOOL
+&lt;span class=&quot;code-line&quot; data-kind=&quot;X&quot; data-index=&quot;0&quot;&gt;IF T0 THEN X0:=FALSE; X1:=TRUE; END_IF;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-kind=&quot;X&quot; data-index=&quot;1&quot;&gt;IF T1 THEN X1:=FALSE; X2:=TRUE; END_IF;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-kind=&quot;X&quot; data-index=&quot;2&quot;&gt;IF T2 THEN X2:=FALSE; X3:=TRUE; END_IF;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-kind=&quot;X&quot; data-index=&quot;3&quot;&gt;IF T3 THEN X3:=FALSE; X4:=TRUE; END_IF;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-kind=&quot;X&quot; data-index=&quot;4&quot;&gt;IF T4 THEN X4:=FALSE; X0:=TRUE; END_IF;&lt;/span&gt;// Network 3 · 重新计算全部输出
+&lt;span class=&quot;code-line&quot; data-kind=&quot;O&quot; data-index=&quot;0&quot;&gt;RunOK := 自动模式 AND 安全允许;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-kind=&quot;O&quot; data-index=&quot;1&quot;&gt;输送带请求 := (X0 OR X4) AND RunOK;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-kind=&quot;O&quot; data-index=&quot;2&quot;&gt;夹具请求 := (X1 OR X2 OR X3) AND RunOK;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-kind=&quot;O&quot; data-index=&quot;3&quot;&gt;灌装阀请求 := X2 AND RunOK;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-kind=&quot;O&quot; data-index=&quot;4&quot;&gt;封盖机请求 := X3 AND RunOK;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
   &lt;div class=&quot;runtime&quot; aria-label=&quot;FBD状态变量和输出变量&quot;&gt;
     &lt;div&gt;&lt;div class=&quot;runtime-label&quot;&gt;状态BOOL&lt;/div&gt;&lt;div class=&quot;values&quot;&gt;
       &lt;div class=&quot;value&quot; data-state-value=&quot;0&quot;&gt;&lt;b&gt;X0&lt;/b&gt;&lt;span&gt;FALSE&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;value&quot; data-state-value=&quot;1&quot;&gt;&lt;b&gt;X1&lt;/b&gt;&lt;span&gt;FALSE&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;value on&quot; data-state-value=&quot;2&quot;&gt;&lt;b&gt;X2&lt;/b&gt;&lt;span&gt;TRUE&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;value&quot; data-state-value=&quot;3&quot;&gt;&lt;b&gt;X3&lt;/b&gt;&lt;span&gt;FALSE&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;value&quot; data-state-value=&quot;4&quot;&gt;&lt;b&gt;X4&lt;/b&gt;&lt;span&gt;FALSE&lt;/span&gt;&lt;/div&gt;
@@ -791,7 +788,7 @@ html&gt;body{padding:0}&lt;/style&gt;
   &lt;script&gt;
     (() =&gt; {
       const root = document.getElementById(&#x27;fbd-scan-excerpt&#x27;);
-      const nodes = [...root.querySelectorAll(&#x27;.node&#x27;)];
+      const nodes = [...root.querySelectorAll(&#x27;.code-line&#x27;)];
       const status = root.querySelector(&#x27;.status&#x27;);
       const button = document.getElementById(&#x27;fbd-run-scan&#x27;);
       const stateValues = [...root.querySelectorAll(&#x27;[data-state-value]&#x27;)];
@@ -810,7 +807,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         nodes.forEach((node,index) =&gt; timers.push(setTimeout(() =&gt; {
           nodes.forEach(n =&gt; n.classList.remove(&#x27;scanning&#x27;));
           node.classList.add(&#x27;visited&#x27;,&#x27;scanning&#x27;);
-          const local = index % 5;
+          const local = Number(node.dataset.index);
           if ((node.dataset.kind === &#x27;T&#x27; || node.dataset.kind === &#x27;X&#x27;) &amp;&amp; local === 2) node.classList.add(&#x27;hit&#x27;);
           if (node.dataset.kind === &#x27;O&#x27; &amp;&amp; (local === 0 || local === 2)) node.classList.add(&#x27;hit&#x27;);
           if (node.dataset.kind === &#x27;X&#x27; &amp;&amp; local === 2) {

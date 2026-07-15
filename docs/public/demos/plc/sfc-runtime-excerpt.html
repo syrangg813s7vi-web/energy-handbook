@@ -759,19 +759,27 @@ html&gt;body{padding:0}&lt;/style&gt;
     #sfc-runtime-excerpt .step b { display:block; font-weight:500; }
     #sfc-runtime-excerpt .step span { display:block; margin-top:3px; }
     #sfc-runtime-excerpt .step.active { border-top-color:var(--viz-series-2); background:color-mix(in srgb,var(--viz-series-2) 13%,transparent); color:var(--foreground); }
+    #sfc-runtime-excerpt .execution-grid { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(240px,.65fr); gap:16px; margin-top:14px; }
+    #sfc-runtime-excerpt .code-block { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; }
+    #sfc-runtime-excerpt .code-line { display:block; padding:2px 6px; border-left:3px solid transparent; color:var(--muted-foreground); }
+    #sfc-runtime-excerpt .code-line.executing { border-left-color:var(--viz-series-1); background:color-mix(in srgb,var(--viz-series-1) 16%,transparent); color:var(--foreground); }
+    #sfc-runtime-excerpt .code-line.hit { background:color-mix(in srgb,var(--viz-series-3) 18%,transparent); color:var(--foreground); }
     #sfc-runtime-excerpt .cycle { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; margin-top:14px; }
     #sfc-runtime-excerpt .phase { padding:8px 5px; text-align:center; border-bottom:2px solid var(--border); color:var(--muted-foreground); }
     #sfc-runtime-excerpt .phase b { display:block; margin-top:3px; font-weight:500; }
     #sfc-runtime-excerpt .phase.active { border-bottom-color:var(--viz-series-1); background:color-mix(in srgb,var(--viz-series-1) 14%,transparent); color:var(--foreground); }
     #sfc-runtime-excerpt .phase.done { color:var(--foreground); }
-    #sfc-runtime-excerpt .memory { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:6px; margin-top:14px; padding-top:10px; border-top:1px solid var(--border); }
+    #sfc-runtime-excerpt .memory { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:4px; margin-top:10px; padding-top:8px; border-top:1px solid var(--border); }
     #sfc-runtime-excerpt .bit { padding:7px 3px; text-align:center; color:var(--muted-foreground); }
     #sfc-runtime-excerpt .bit b { display:block; font-weight:500; }
     #sfc-runtime-excerpt .bit.active { background:color-mix(in srgb,var(--viz-series-2) 13%,transparent); color:var(--foreground); }
+    #sfc-runtime-excerpt .outputs { display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-top:10px; }
+    #sfc-runtime-excerpt .output { display:flex; justify-content:space-between; gap:6px; padding:5px 4px; border-bottom:1px solid var(--border); color:var(--muted-foreground); }
+    #sfc-runtime-excerpt .output.on { background:color-mix(in srgb,var(--viz-series-3) 13%,transparent); color:var(--foreground); }
     #sfc-runtime-excerpt .footer { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:12px; flex-wrap:wrap; }
     #sfc-runtime-excerpt .status { color:var(--muted-foreground); }
     @media (max-width:560px) {
-      #sfc-runtime-excerpt .rail, #sfc-runtime-excerpt .memory { grid-template-columns:1fr; }
+      #sfc-runtime-excerpt .rail, #sfc-runtime-excerpt .memory, #sfc-runtime-excerpt .execution-grid { grid-template-columns:1fr; }
       #sfc-runtime-excerpt .step, #sfc-runtime-excerpt .bit { display:grid; grid-template-columns:1fr 1fr; text-align:left; }
       #sfc-runtime-excerpt .cycle { grid-template-columns:1fr 1fr; }
     }
@@ -784,7 +792,9 @@ html&gt;body{padding:0}&lt;/style&gt;
     &lt;div class=&quot;step&quot; data-step=&quot;3&quot;&gt;&lt;b&gt;X3 封盖&lt;/b&gt;&lt;span&gt;→ 封盖完成&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;step&quot; data-step=&quot;4&quot;&gt;&lt;b&gt;X4 放行&lt;/b&gt;&lt;span&gt;→ 瓶离开&lt;/span&gt;&lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class=&quot;cycle&quot; aria-label=&quot;SFC一个扫描周期的四个阶段&quot;&gt;
+  &lt;div class=&quot;execution-grid&quot;&gt;
+    &lt;pre class=&quot;code-block&quot;&gt;&lt;code&gt;&lt;span class=&quot;code-line&quot; data-code-step=&quot;0&quot;&gt;INITIAL_STEP X0_等待&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-code-action=&quot;0&quot;&gt;  ACTION N: 输送带请求:=TRUE;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-code-transition=&quot;0&quot;&gt;TRANSITION X0→X1 WHEN 到瓶;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-code-step=&quot;1&quot;&gt;STEP X1_夹紧&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-code-action=&quot;1&quot;&gt;  ACTION N: 夹具请求:=TRUE;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-code-transition=&quot;1&quot;&gt;TRANSITION X1→X2 WHEN 夹紧到位;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-code-step=&quot;2&quot;&gt;STEP X2_灌装&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-code-action=&quot;2&quot;&gt;  ACTION N: 夹具:=TRUE; 灌装阀:=TRUE;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-code-transition=&quot;2&quot;&gt;TRANSITION X2→X3 WHEN 液位满;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-code-step=&quot;3&quot;&gt;STEP X3_封盖&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-code-action=&quot;3&quot;&gt;  ACTION N: 夹具:=TRUE; 封盖机:=TRUE;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-code-transition=&quot;3&quot;&gt;TRANSITION X3→X4 WHEN 封盖完成;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-code-step=&quot;4&quot;&gt;STEP X4_放行&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-code-action=&quot;4&quot;&gt;  ACTION N: 输送带请求:=TRUE;&lt;/span&gt;&lt;span class=&quot;code-line&quot; data-code-transition=&quot;4&quot;&gt;TRANSITION X4→X0 WHEN 瓶离开;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+    &lt;div&gt;&lt;div class=&quot;cycle&quot; aria-label=&quot;SFC一个扫描周期的四个阶段&quot;&gt;
     &lt;div class=&quot;phase&quot; data-phase=&quot;0&quot;&gt;① 读取活动步&lt;b&gt;活动步集合&lt;/b&gt;&lt;/div&gt;
     &lt;div class=&quot;phase&quot; data-phase=&quot;1&quot;&gt;② 执行步动作&lt;b&gt;当前ACTION&lt;/b&gt;&lt;/div&gt;
     &lt;div class=&quot;phase&quot; data-phase=&quot;2&quot;&gt;③ 检查转换&lt;b&gt;相邻条件&lt;/b&gt;&lt;/div&gt;
@@ -797,6 +807,9 @@ html&gt;body{padding:0}&lt;/style&gt;
     &lt;div class=&quot;bit&quot; data-bit=&quot;3&quot;&gt;&lt;b&gt;X3.X&lt;/b&gt;&lt;span&gt;FALSE&lt;/span&gt;&lt;/div&gt;
     &lt;div class=&quot;bit&quot; data-bit=&quot;4&quot;&gt;&lt;b&gt;X4.X&lt;/b&gt;&lt;span&gt;FALSE&lt;/span&gt;&lt;/div&gt;
   &lt;/div&gt;
+  &lt;div class=&quot;outputs&quot; aria-label=&quot;SFC动作产生的输出请求&quot;&gt;
+    &lt;div class=&quot;output on&quot; data-output=&quot;0&quot;&gt;&lt;span&gt;RunOK&lt;/span&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/div&gt;&lt;div class=&quot;output on&quot; data-output=&quot;1&quot;&gt;&lt;span&gt;输送带&lt;/span&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/div&gt;&lt;div class=&quot;output&quot; data-output=&quot;2&quot;&gt;&lt;span&gt;夹具&lt;/span&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/div&gt;&lt;div class=&quot;output&quot; data-output=&quot;3&quot;&gt;&lt;span&gt;灌装阀&lt;/span&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/div&gt;&lt;div class=&quot;output&quot; data-output=&quot;4&quot;&gt;&lt;span&gt;封盖机&lt;/span&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
   &lt;div class=&quot;footer&quot;&gt;&lt;span class=&quot;status&quot; aria-live=&quot;polite&quot;&gt;活动步集合={X0}；只检查“到瓶”转换&lt;/span&gt;&lt;button class=&quot;btn btn-primary&quot; type=&quot;button&quot; id=&quot;sfc-next-step&quot;&gt;令当前转换成立&lt;/button&gt;&lt;/div&gt;
   &lt;script&gt;
     (() =&gt; {
@@ -804,31 +817,45 @@ html&gt;body{padding:0}&lt;/style&gt;
       const steps = [...root.querySelectorAll(&#x27;[data-step]&#x27;)];
       const phases = [...root.querySelectorAll(&#x27;[data-phase]&#x27;)];
       const bits = [...root.querySelectorAll(&#x27;[data-bit]&#x27;)];
+      const codeSteps = [...root.querySelectorAll(&#x27;[data-code-step]&#x27;)];
+      const codeActions = [...root.querySelectorAll(&#x27;[data-code-action]&#x27;)];
+      const codeTransitions = [...root.querySelectorAll(&#x27;[data-code-transition]&#x27;)];
+      const codeLines = [...codeSteps,...codeActions,...codeTransitions];
+      const outputs = [...root.querySelectorAll(&#x27;[data-output]&#x27;)];
       const status = root.querySelector(&#x27;.status&#x27;);
       const button = document.getElementById(&#x27;sfc-next-step&#x27;);
       const names = [&#x27;等待&#x27;,&#x27;夹紧&#x27;,&#x27;灌装&#x27;,&#x27;封盖&#x27;,&#x27;放行&#x27;];
       const guards = [&#x27;到瓶&#x27;,&#x27;夹紧到位&#x27;,&#x27;液位满&#x27;,&#x27;封盖完成&#x27;,&#x27;瓶离开&#x27;];
+      const outputMatrix = [[true,true,false,false,false],[true,false,true,false,false],[true,false,true,true,false],[true,false,true,false,true],[true,true,false,false,false]];
       let active = 0;
       let timers = [];
+      function showOutputs(index) { outputMatrix[index].forEach((on,i) =&gt; { outputs[i].classList.toggle(&#x27;on&#x27;,on); outputs[i].querySelector(&#x27;b&#x27;).textContent = on ? &#x27;TRUE&#x27; : &#x27;FALSE&#x27;; }); }
       button.addEventListener(&#x27;click&#x27;, () =&gt; {
         timers.forEach(clearTimeout); timers = [];
         button.disabled = true;
         phases.forEach(p =&gt; p.classList.remove(&#x27;active&#x27;,&#x27;done&#x27;));
+        codeLines.forEach(line =&gt; line.classList.remove(&#x27;executing&#x27;,&#x27;hit&#x27;));
         phases.forEach((phase,index) =&gt; timers.push(setTimeout(() =&gt; {
           phases.forEach(p =&gt; p.classList.remove(&#x27;active&#x27;));
+          codeLines.forEach(line =&gt; line.classList.remove(&#x27;executing&#x27;));
           phase.classList.add(&#x27;active&#x27;);
           phases.slice(0,index).forEach(p =&gt; p.classList.add(&#x27;done&#x27;));
           status.textContent = index === 0 ? `读取活动步集合={X${active}}` : index === 1 ? `执行X${active}“${names[active]}”的ACTION` : index === 2 ? `检查已使能转换“${guards[active]}=TRUE”` : `停用X${active}，激活X${(active + 1) % 5}`;
+          if (index === 0) codeSteps[active].classList.add(&#x27;executing&#x27;);
+          if (index === 1) { codeActions[active].classList.add(&#x27;executing&#x27;,&#x27;hit&#x27;); showOutputs(active); }
+          if (index === 2) codeTransitions[active].classList.add(&#x27;executing&#x27;,&#x27;hit&#x27;);
           if (index === 3) {
             active = (active + 1) % 5;
             steps.forEach((s,i) =&gt; s.classList.toggle(&#x27;active&#x27;,i === active));
             bits.forEach((bit,i) =&gt; { bit.classList.toggle(&#x27;active&#x27;,i === active); bit.querySelector(&#x27;span&#x27;).textContent = i === active ? &#x27;TRUE&#x27; : &#x27;FALSE&#x27;; });
+            codeSteps[active].classList.add(&#x27;hit&#x27;);
           }
         }, index * 420)));
         timers.push(setTimeout(() =&gt; {
           phases.forEach(p =&gt; p.classList.remove(&#x27;active&#x27;));
           phases.forEach(p =&gt; p.classList.add(&#x27;done&#x27;));
-          status.textContent = `活动步集合={X${active}}；下一周期只检查“${guards[active]}”转换`;
+          codeLines.forEach(line =&gt; line.classList.remove(&#x27;executing&#x27;));
+          status.textContent = `活动步集合={X${active}}；新步ACTION将在下一扫描周期执行`;
           button.disabled = false;
         }, 1750));
       });
