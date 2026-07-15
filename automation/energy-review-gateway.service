@@ -1,0 +1,29 @@
+[Unit]
+Description=Energy Handbook review authentication gateway
+After=network-online.target n8n.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=energy-review
+Group=energy-review
+EnvironmentFile=/etc/energy-review-gateway.env
+ExecStart=/opt/energy-review-executor/bin/node /opt/energy-review-executor/review-gateway.mjs
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictNamespaces=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+CapabilityBoundingSet=
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=multi-user.target

@@ -47,6 +47,7 @@
 - [x] 定义文章与动画代码的修改白名单
 - [x] 在 VitePress 中加入登录状态、文字划选和批阅面板
 - [ ] 建立 Cloudflare Access 登录与短期会话交换
+- [x] 实现短期会话网关、Access JWT 验证、CORS 和提交限流
 - [x] 建立 n8n 批阅接收、任务追踪和错误处理工作流（已验证，待身份网关完成后发布）
 - [x] 在 `molt` 建立低权限 Codex Cloud 执行器
 - [x] 加入文件范围、安全扫描和构建门禁代码
@@ -76,6 +77,7 @@
 | 在线批阅身份 | 已确定 | 公开可读；Cloudflare Access 登录后才显示并允许批阅 |
 | 自动改稿执行 | 已确定 | `n8n.foxtiny.com`（SSH `molt`）提交 `codex cloud` 任务，检查后自动 PR/合并 |
 | 默认修改边界 | 已确定 | Markdown、VitePress 动画组件及 `public/demos`；禁止工作流、依赖和站点配置 |
+| 登录会话网关 | 已实现待部署 | Access JWT 经 RS256、issuer、AUD、exp 校验；一次性码 2 分钟，批阅令牌 15 分钟 |
 
 ## 待用户确认（不阻塞底座建设）
 
@@ -93,3 +95,4 @@
 | 2026-07-15 | 专用执行器以低权限账号启动时 systemd 返回 `203/EXEC` | 1 | `/usr/local/bin/node` 实际指向不可穿越的 `/root/.nvm`；将 Node 二进制复制到受保护的 `/opt/energy-review-executor/bin` 并改用该路径 |
 | 2026-07-15 | n8n 无副作用 Webhook 测试返回 `ERR_INVALID_HTTP_TOKEN` | 1 | Header Auth 的 Name 字段误填为带空格的凭据名称；改为合法 Header 名 `x-review-executor-token`，并用无换行方式重贴令牌 |
 | 2026-07-15 | 执行器正确返回 400，但 n8n 脱敏响应误映射为 502 | 1 | n8n 2.19.5 的 HTTP Request 错误状态位于 `$json.error.status`；响应表达式增加该字段并保留旧版兼容回退 |
+| 2026-07-15 | Cloudflare One 控制台进入 `/one/overview` 后持续停留在 Loading | 2 | 已刷新并改用可视化浏览器确认；账户仍显示 Zero Trust “Get started”，需要完成组织初始化后才能创建 Access 应用 |
