@@ -761,9 +761,16 @@ html&gt;body{padding:0}&lt;/style&gt;
     #fbd-scan-excerpt .node.visited { color:var(--foreground); }
     #fbd-scan-excerpt .node.scanning { border-color:var(--viz-series-1); background:color-mix(in srgb,var(--viz-series-1) 16%,var(--card)); color:var(--foreground); }
     #fbd-scan-excerpt .node.hit { border-color:var(--viz-series-3); background:color-mix(in srgb,var(--viz-series-3) 18%,var(--card)); color:var(--foreground); }
+    #fbd-scan-excerpt .runtime { display:grid; grid-template-columns:1fr 1.35fr; gap:16px; margin-top:14px; padding-top:10px; border-top:1px solid var(--border); }
+    #fbd-scan-excerpt .runtime-label { margin-bottom:6px; color:var(--muted-foreground); }
+    #fbd-scan-excerpt .values { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:5px; }
+    #fbd-scan-excerpt .value { padding:7px 3px; text-align:center; color:var(--muted-foreground); border-top:2px solid var(--border); }
+    #fbd-scan-excerpt .value b { display:block; font-weight:500; }
+    #fbd-scan-excerpt .value span { display:block; margin-top:2px; overflow-wrap:anywhere; }
+    #fbd-scan-excerpt .value.on { border-top-color:var(--viz-series-3); background:color-mix(in srgb,var(--viz-series-3) 13%,transparent); color:var(--foreground); }
     #fbd-scan-excerpt .footer { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:12px; flex-wrap:wrap; }
     #fbd-scan-excerpt .status { color:var(--muted-foreground); }
-    @media (max-width:560px) { #fbd-scan-excerpt .networks { grid-template-columns:1fr; } }
+    @media (max-width:560px) { #fbd-scan-excerpt .networks, #fbd-scan-excerpt .runtime { grid-template-columns:1fr; } }
     @media (prefers-reduced-motion:reduce) { #fbd-scan-excerpt .node { transition:none; } }
   &lt;/style&gt;
   &lt;div class=&quot;head&quot;&gt;&lt;b&gt;FBD：每个PLC周期扫描全部网络&lt;/b&gt;&lt;span&gt;蓝色=正在执行 · 绿色=本周期命中&lt;/span&gt;&lt;/div&gt;
@@ -772,6 +779,14 @@ html&gt;body{padding:0}&lt;/style&gt;
     &lt;div&gt;&lt;div class=&quot;network-label&quot;&gt;Network 2 · 全部状态锁存&lt;/div&gt;&lt;div class=&quot;nodes&quot;&gt;&lt;span class=&quot;node&quot; data-kind=&quot;X&quot;&gt;X0→X1&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;X&quot;&gt;X1→X2&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;X&quot;&gt;X2→X3&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;X&quot;&gt;X3→X4&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;X&quot;&gt;X4→X0&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
     &lt;div&gt;&lt;div class=&quot;network-label&quot;&gt;Network 3 · 全部输出&lt;/div&gt;&lt;div class=&quot;nodes&quot;&gt;&lt;span class=&quot;node&quot; data-kind=&quot;O&quot;&gt;许可&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;O&quot;&gt;输送&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;O&quot;&gt;夹具&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;O&quot;&gt;灌装&lt;/span&gt;&lt;span class=&quot;node&quot; data-kind=&quot;O&quot;&gt;封盖&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
   &lt;/div&gt;
+  &lt;div class=&quot;runtime&quot; aria-label=&quot;FBD状态变量和输出变量&quot;&gt;
+    &lt;div&gt;&lt;div class=&quot;runtime-label&quot;&gt;状态BOOL&lt;/div&gt;&lt;div class=&quot;values&quot;&gt;
+      &lt;div class=&quot;value&quot; data-state-value=&quot;0&quot;&gt;&lt;b&gt;X0&lt;/b&gt;&lt;span&gt;FALSE&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;value&quot; data-state-value=&quot;1&quot;&gt;&lt;b&gt;X1&lt;/b&gt;&lt;span&gt;FALSE&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;value on&quot; data-state-value=&quot;2&quot;&gt;&lt;b&gt;X2&lt;/b&gt;&lt;span&gt;TRUE&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;value&quot; data-state-value=&quot;3&quot;&gt;&lt;b&gt;X3&lt;/b&gt;&lt;span&gt;FALSE&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;value&quot; data-state-value=&quot;4&quot;&gt;&lt;b&gt;X4&lt;/b&gt;&lt;span&gt;FALSE&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;div class=&quot;runtime-label&quot;&gt;输出请求&lt;/div&gt;&lt;div class=&quot;values&quot;&gt;
+      &lt;div class=&quot;value on&quot; data-output-value=&quot;0&quot;&gt;&lt;b&gt;RunOK&lt;/b&gt;&lt;span&gt;TRUE&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;value&quot; data-output-value=&quot;1&quot;&gt;&lt;b&gt;输送带&lt;/b&gt;&lt;span&gt;FALSE&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;value on&quot; data-output-value=&quot;2&quot;&gt;&lt;b&gt;夹具&lt;/b&gt;&lt;span&gt;TRUE&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;value on&quot; data-output-value=&quot;3&quot;&gt;&lt;b&gt;灌装阀&lt;/b&gt;&lt;span&gt;TRUE&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;value&quot; data-output-value=&quot;4&quot;&gt;&lt;b&gt;封盖机&lt;/b&gt;&lt;span&gt;FALSE&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;&lt;/div&gt;
+  &lt;/div&gt;
   &lt;div class=&quot;footer&quot;&gt;&lt;span class=&quot;status&quot; aria-live=&quot;polite&quot;&gt;当前X2=TRUE；本周期假设“液位满”到来&lt;/span&gt;&lt;button class=&quot;btn btn-primary&quot; type=&quot;button&quot; id=&quot;fbd-run-scan&quot;&gt;执行一次完整扫描&lt;/button&gt;&lt;/div&gt;
   &lt;script&gt;
     (() =&gt; {
@@ -779,10 +794,18 @@ html&gt;body{padding:0}&lt;/style&gt;
       const nodes = [...root.querySelectorAll(&#x27;.node&#x27;)];
       const status = root.querySelector(&#x27;.status&#x27;);
       const button = document.getElementById(&#x27;fbd-run-scan&#x27;);
+      const stateValues = [...root.querySelectorAll(&#x27;[data-state-value]&#x27;)];
+      const outputValues = [...root.querySelectorAll(&#x27;[data-output-value]&#x27;)];
       let timers = [];
+      function setValue(el,on) { el.classList.toggle(&#x27;on&#x27;,on); el.querySelector(&#x27;span&#x27;).textContent = on ? &#x27;TRUE&#x27; : &#x27;FALSE&#x27;; }
+      function showBefore() {
+        stateValues.forEach((el,i) =&gt; setValue(el,i === 2));
+        [true,false,true,true,false].forEach((on,i) =&gt; setValue(outputValues[i],on));
+      }
       button.addEventListener(&#x27;click&#x27;, () =&gt; {
         timers.forEach(clearTimeout); timers = [];
         nodes.forEach(n =&gt; n.classList.remove(&#x27;visited&#x27;,&#x27;scanning&#x27;,&#x27;hit&#x27;));
+        showBefore();
         button.disabled = true;
         nodes.forEach((node,index) =&gt; timers.push(setTimeout(() =&gt; {
           nodes.forEach(n =&gt; n.classList.remove(&#x27;scanning&#x27;));
@@ -790,11 +813,18 @@ html&gt;body{padding:0}&lt;/style&gt;
           const local = index % 5;
           if ((node.dataset.kind === &#x27;T&#x27; || node.dataset.kind === &#x27;X&#x27;) &amp;&amp; local === 2) node.classList.add(&#x27;hit&#x27;);
           if (node.dataset.kind === &#x27;O&#x27; &amp;&amp; (local === 0 || local === 2)) node.classList.add(&#x27;hit&#x27;);
+          if (node.dataset.kind === &#x27;X&#x27; &amp;&amp; local === 2) {
+            stateValues.forEach((el,i) =&gt; setValue(el,i === 3));
+          }
+          if (node.dataset.kind === &#x27;O&#x27;) {
+            const after = [true,false,true,false,true];
+            setValue(outputValues[local],after[local]);
+          }
           status.textContent = node.dataset.kind === &#x27;T&#x27; ? `正在计算T${local}：T0～T4都会计算` : node.dataset.kind === &#x27;X&#x27; ? `正在扫描状态切换${local + 1}/5` : `正在重新计算输出${local + 1}/5`;
         }, index * 170)));
         timers.push(setTimeout(() =&gt; {
           nodes.forEach(n =&gt; n.classList.remove(&#x27;scanning&#x27;));
-          status.textContent = &#x27;扫描完成：虽然只有T2成立，但三个Network全部执行了一遍&#x27;;
+          status.textContent = &#x27;扫描完成：X2→FALSE，X3→TRUE；灌装阀关闭，封盖机启动&#x27;;
           button.disabled = false;
         }, nodes.length * 170 + 80));
       });
