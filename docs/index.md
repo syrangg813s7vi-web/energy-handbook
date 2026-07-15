@@ -19,9 +19,9 @@ features:
     link: /knowledge/energy-basics
     linkText: 阅读能源基础
   - title: 看见系统运行
-    details: 用动画和可调参数演示发电、输配、储能和用能过程。
-    link: /guides/content-and-animation
-    linkText: 了解动画架构
+    details: 看EMS如何协调光伏、电网、负荷和储能，在一天中动态改变策略。
+    link: /knowledge/energy-management
+    linkText: 理解能量管理
   - title: 追溯每个结论
     details: 为数据和关键结论记录发布机构、时间、口径、原始链接和访问日期。
     link: /roadmap
