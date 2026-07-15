@@ -46,9 +46,9 @@
 - [x] 确定自托管 n8n → Codex Cloud → GitHub 的执行架构
 - [x] 定义文章与动画代码的修改白名单
 - [x] 在 VitePress 中加入登录状态、文字划选和批阅面板
-- [ ] 建立 GitHub OAuth 登录与短期会话交换
+- [x] 建立 GitHub OAuth 登录与短期会话交换
 - [x] 实现短期会话网关、OAuth state/PKCE、GitHub 仓库写权限校验、CORS 和提交限流
-- [x] 建立 n8n 批阅接收、任务追踪和错误处理工作流（已验证，待身份网关完成后发布）
+- [x] 建立并发布 n8n 批阅接收、任务追踪和错误处理工作流
 - [x] 在 `molt` 建立低权限 Codex Cloud 执行器
 - [x] 加入文件范围、安全扫描和构建门禁代码
 - [ ] 接通临时分支、PR 与自动合并门禁
@@ -77,7 +77,7 @@
 | 在线批阅身份 | 已更新 | 公开可读；GitHub OAuth 登录后才显示并允许批阅，仅授权本仓库具有 push/maintain/admin 权限的用户 |
 | 自动改稿执行 | 已确定 | `n8n.foxtiny.com`（SSH `molt`）提交 `codex cloud` 任务，检查后自动 PR/合并 |
 | 默认修改边界 | 已确定 | Markdown、VitePress 动画组件及 `public/demos`；禁止工作流、依赖和站点配置 |
-| 登录会话网关 | 已实现待部署 | OAuth state + PKCE；实时校验 `energy-handbook` 的 `permissions.push`；一次性码 2 分钟，批阅令牌 15 分钟 |
+| 登录会话网关 | 已部署 | `n8n.foxtiny.com/energy-review`；OAuth state + PKCE；实时校验 `energy-handbook` 的 `permissions.push`；一次性码 2 分钟，批阅令牌 15 分钟 |
 
 ## 待用户确认（不阻塞底座建设）
 
@@ -97,3 +97,7 @@
 | 2026-07-15 | 执行器正确返回 400，但 n8n 脱敏响应误映射为 502 | 1 | n8n 2.19.5 的 HTTP Request 错误状态位于 `$json.error.status`；响应表达式增加该字段并保留旧版兼容回退 |
 | 2026-07-15 | Cloudflare One 控制台进入 `/one/overview` 后持续停留在 Loading | 2 | 已刷新并改用可视化浏览器确认；账户仍显示 Zero Trust “Get started”，需要完成组织初始化后才能创建 Access 应用 |
 | 2026-07-15 | Cloudflare Zero Trust 的 `/one/`、`/one/overview`、`/one/get-started` 均直接返回 JSON `{}` | 4 | 官方状态正常且新旧入口结果相同，判定为账户/新版控制台初始化故障；经用户同意改用无仓库 scope 的 GitHub OAuth 身份登录 |
+| 2026-07-15 | 登录网关启用 `MemoryDenyWriteExecute` 后 Node.js V8 以 `TRAP` 退出 | 1 | 移除与 JIT 不兼容的单项限制，保留只读文件系统、无提权、能力清空等 systemd 隔离 |
+| 2026-07-15 | `systemctl reload nginx` 因既有 PrivateTmp mount namespace 缺少 `/tmp` 而失败 | 1 | 配置已先通过 `nginx -t`；改由现有 master 进程执行 `nginx -s reload`，避免中断服务 |
+| 2026-07-15 | n8n 重启后健康接口先于活动工作流注册完成，首次 Webhook 检查返回 404 | 1 | 等待启动日志确认工作流 Activated 后重试，错误链路返回预期 HTTP 400 |
+| 2026-07-15 | 推送部署提交时远端 `main` 已新增能量管理文章提交，non-fast-forward 被拒绝 | 1 | 检查远端改动无重叠后 rebase 到 `origin/main`，重新运行完整测试与构建 |

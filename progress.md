@@ -69,3 +69,8 @@
 | n8n 批阅工作流草稿 | 通过 | 已导入 `Submit energy handbook review`，保持未发布；4 条主/错误输出连接已回读核验 |
 | n8n 到隔离执行器穿透测试 | 通过 | 使用空修改要求触发参数校验；公开测试 Webhook 返回脱敏 HTTP 400，Codex Cloud 任务列表保持为空 |
 | 登录网关单元测试 | 通过 | OAuth state/PKCE、GitHub 仓库写权限、一次性授权码、短期会话、来源限制、身份覆盖和 n8n 网关凭据 |
+| GitHub OAuth App | 通过 | `Energy Handbook Review` 已创建；客户端密钥仅保存于 `molt` 的 root/energy-review 可读环境文件 |
+| 登录网关生产部署 | 通过 | `energy-review-gateway.service` 监听 `127.0.0.1:8790`；公开健康接口 `https://n8n.foxtiny.com/energy-review/healthz` 返回 200 |
+| n8n 工作流发布 | 通过 | `energy-handbook-review-api` 已发布并激活，GitHub 身份由网关覆盖；无效样例沿完整错误链路返回脱敏 HTTP 400，未创建 Cloud 任务 |
+| 公开接口隔离 | 通过 | Nginx 仅公开 `/energy-review/`；直连 `/webhook/energy-handbook/` 返回 404 |
+| Pages 批阅入口配置 | 完成待部署 | Pages 构建注入 `VITE_REVIEW_API_URL=https://n8n.foxtiny.com/energy-review` |

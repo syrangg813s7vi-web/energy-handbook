@@ -34,7 +34,7 @@
           "sendBody": true,
           "contentType": "json",
           "specifyBody": "json",
-          "jsonBody": "={{ { ...$json.body, actorEmail: $json.headers?.['cf-access-authenticated-user-email'] || '' } }}",
+          "jsonBody": "={{ { ...$('Receive inline review').item.json.body, actorEmail: $('Receive inline review').item.json.body.actorEmail || '' } }}",
           "options": { "timeout": 960000 }
         },
         "credentials": {
@@ -143,7 +143,7 @@
         "typeVersion": 1,
         "position": [-780, -360],
         "parameters": {
-          "content": "### Submit an inline review\nCloudflare Access supplies the reviewer identity. The isolated executor performs the authoritative schema and repository-boundary checks.",
+          "content": "### Submit an inline review\nThe GitHub OAuth gateway supplies the verified reviewer identity. The isolated executor performs the authoritative schema and repository-boundary checks.",
           "height": 320,
           "width": 1080,
           "color": 5

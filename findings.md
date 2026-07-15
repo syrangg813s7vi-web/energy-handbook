@@ -101,3 +101,7 @@
 - 登录网关已改为 GitHub OAuth Web Flow：使用随机 `state` 防 CSRF、PKCE S256 保护授权码，不请求 OAuth scope；每次登录通过 `GET /user` 重新核验身份，并读取 `GET /repos/syrangg813s7vi-web/energy-handbook` 返回的当前用户权限，只有 `permissions.push=true`（含 maintain/admin）时放行。
 - 一次性授权码使用后立即删除，批阅令牌用服务端 HMAC 签发并限制为 15 分钟；GitHub OAuth 临时访问令牌不写入浏览器、n8n 或磁盘。
 - Cloudflare 账户当前尚未完成 Zero Trust 初始化：入口显示 “Welcome to Cloudflare Zero Trust / Get started”，进入 Cloudflare One 后持续 Loading。现有 Wrangler OAuth 仅有 account read、zone read 和 Workers 等权限，没有 Access 管理权限，无法用该令牌替代控制台初始化。
+- GitHub OAuth App `Energy Handbook Review` 已创建，回调地址为 `https://n8n.foxtiny.com/energy-review/auth/callback`。客户端密钥只部署在 `molt:/etc/energy-review-gateway.env`，权限为 `root:energy-review 0640`，不进入仓库或 n8n 工作流。
+- `energy-review-gateway.service` 已部署并绑定 `127.0.0.1:8790`；Nginx 将 `/energy-review/` 反向代理到该端口，同时对公网隐藏 `/webhook/energy-handbook/`。因此浏览器只能经过 GitHub OAuth、短期会话、来源限制和提交限流后的网关访问批阅链路。
+- n8n 工作流已从 Cloudflare 身份头切换为网关写入的 `actorEmail`，并已发布激活。无效负载从 n8n 到隔离执行器的完整链路稳定返回脱敏 HTTP 400，不会创建 Cloud Codex 任务。
+- 服务器上的 systemd `nginx.service` 存在既有 PrivateTmp mount namespace 故障，`systemctl reload nginx` 会返回 `226/NAMESPACE`；主进程本身正常，配置经 `nginx -t` 验证后可用 `nginx -s reload` 安全重载。
