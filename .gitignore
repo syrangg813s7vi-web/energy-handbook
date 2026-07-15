@@ -1,0 +1,10 @@
+.DS_Store
+.venv/
+site/
+output/
+.playwright-cli/
+node_modules/
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+__pycache__/
+*.py[cod]
