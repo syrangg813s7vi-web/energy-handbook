@@ -49,7 +49,8 @@
 ### 阶段 4：质量、发布与运营 `pending`
 
 - [ ] 加入链接、Markdown、可访问性和构建检查
-- [ ] 完成 GitHub Pages 首次发布与域名配置（如需）
+- [x] 完成 GitHub Pages 首次发布：<https://syrangg813s7vi-web.github.io/energy-handbook/>
+- [ ] 配置自定义域名（如需）
 - [ ] 建立版本、更新频率、数据时效性和反馈机制
 
 ## 当前关键决策

@@ -19,6 +19,7 @@
 - 更新首页、中文导航、本地搜索、主题、说明文档和 GitHub Pages 工作流。
 - 将 Vite 安全覆盖到 6.4.3，`npm audit` 从 3 项风险降为 0。
 - 创建 GitHub 公开仓库 `syrangg813s7vi-web/energy-handbook`，完成首次提交并推送 `main`。
+- 启用 GitHub Pages Actions 发布源，首次构建与部署通过，在线首页返回 HTTP 200。
 
 ### 正在进行
 
@@ -43,3 +44,4 @@
 | Vue 组件 SSR/激活 | 通过 | 首屏有内容，滑块可交互 |
 | VitePress 中文本地搜索 | 通过 | “效率”可命中基础文章和首页等内容 |
 | VitePress 390 × 844 移动端 | 通过 | 能量流组件无溢出，文字与控件可读 |
+| GitHub Pages 首次发布 | 通过 | <https://syrangg813s7vi-web.github.io/energy-handbook/> 返回 HTTP 200 |
