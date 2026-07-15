@@ -57,6 +57,12 @@
 - VitePress 静态资源和 `public`：<https://vitepress.dev/guide/asset-handling>
 - VitePress GitHub Pages 部署：<https://vitepress.dev/guide/deploy>
 
+## 2026-07-15：GitHub 仓库
+
+- 公开仓库：<https://github.com/syrangg813s7vi-web/energy-handbook>
+- 默认分支：`main`
+- 本地 `origin`：`git@github.com:syrangg813s7vi-web/energy-handbook.git`
+
 ## 资料链接
 
 - GitHub Pages 发布源：<https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>

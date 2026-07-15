@@ -18,6 +18,7 @@
 - 建立 `docs/public/demos/` 独立 HTML 演示目录、iframe 模板与验收要求。
 - 更新首页、中文导航、本地搜索、主题、说明文档和 GitHub Pages 工作流。
 - 将 Vite 安全覆盖到 6.4.3，`npm audit` 从 3 项风险降为 0。
+- 创建 GitHub 公开仓库 `syrangg813s7vi-web/energy-handbook`，完成首次提交并推送 `main`。
 
 ### 正在进行
 
