@@ -75,3 +75,9 @@
 | 公开接口隔离 | 通过 | Nginx 仅公开 `/energy-review/`；直连 `/webhook/energy-handbook/` 返回 404 |
 | Pages 批阅入口配置 | 完成待部署 | Pages 构建注入 `VITE_REVIEW_API_URL=https://n8n.foxtiny.com/energy-review` |
 | Pages 临时可用地址 | 完成待部署 | Cloudflare DNS 仍不可写，构建暂用 `BASE_PATH=/energy-handbook/`，确保 GitHub Pages 子路径加载客户端功能 |
+
+### 自动 PR 桥接
+
+- 已确认首次真实在线批阅成功触发 Cloud Codex，任务进入 READY 并生成有效差异。
+- 已确认 GitHub 端没有自动出现分支或 PR；开始补充 READY diff 发布器。
+- 决定使用单仓库写 Deploy Key 推送 `codex/review-*`，避免在 molt 保存个人 GitHub OAuth/PAT；现有 GitHub Action 继续负责复检、建 PR 与自动合并。
