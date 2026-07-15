@@ -2,6 +2,8 @@
 
 一个以 Markdown 为内容源、支持 Vue 组件和独立 HTML 动画的中文能源知识库。站点由 VitePress 构建，并通过 GitHub Actions 发布到 GitHub Pages。
 
+正式站点：<https://energybook.foxtiny.com/>
+
 ## 本地预览
 
 需要 Node.js 18 或更高版本，建议使用 Node.js 22 LTS：
@@ -34,7 +36,7 @@ npm run docs:preview
 
 1. 在 GitHub 创建仓库并推送 `main` 分支。
 2. 在 **Settings → Pages → Build and deployment** 中选择 **GitHub Actions**。
-3. 工作流会自动识别项目 Pages 的仓库子路径；也可通过 `BASE_PATH` 环境变量显式覆盖。
-4. 如使用自定义域名，还需在 Pages 设置中配置域名和 DNS。
+3. 站点使用自定义域名 `energybook.foxtiny.com`，因此生产基路为 `/`。
+4. `BASE_PATH` 仅用于本地或临时预览时覆盖基路。
 
 项目级计划见 `task_plan.md`，技术判断见 `findings.md`，进度记录见 `progress.md`。

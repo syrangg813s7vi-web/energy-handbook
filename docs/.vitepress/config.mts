@@ -1,16 +1,23 @@
 import { defineConfig } from "vitepress";
 
-const repository = process.env.GITHUB_REPOSITORY?.split("/")[1];
-const owner = process.env.GITHUB_REPOSITORY_OWNER;
-const isUserOrOrganizationPage = repository === `${owner}.github.io`;
-const base = process.env.BASE_PATH
-  ?? (repository && !isUserOrOrganizationPage ? `/${repository}/` : "/");
+const base = process.env.BASE_PATH ?? "/";
+const siteUrl = "https://energybook.foxtiny.com";
 
 export default defineConfig({
   lang: "zh-CN",
   title: "能源知识库",
   description: "用可追溯的文本和可交互的视觉演示，解释能源如何生产、转换、储存与使用。",
   base,
+  sitemap: {
+    hostname: siteUrl,
+  },
+  transformHead({ pageData }) {
+    const canonicalPath = pageData.relativePath
+      .replace(/(^|\/)index\.md$/, "$1")
+      .replace(/\.md$/, "");
+
+    return [["link", { rel: "canonical", href: `${siteUrl}/${canonicalPath}` }]];
+  },
   cleanUrls: true,
   lastUpdated: true,
   head: [
