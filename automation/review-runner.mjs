@@ -12,6 +12,7 @@ import {
 } from "./review-policy.mjs";
 
 const repository = "syrangg813s7vi-web/energy-handbook";
+const gitUrl = process.env.ENERGY_REVIEW_GIT_URL || `git@github.com:${repository}.git`;
 
 function run(command, args, options = {}) {
   return execFileSync(command, args, {
@@ -54,7 +55,7 @@ function applyTask(taskId) {
   const workspace = mkdtempSync(path.join(tmpdir(), "energy-review-"));
   const branch = `codex/review-${randomUUID().slice(0, 8)}`;
   try {
-    run("git", ["clone", "--depth", "1", `https://github.com/${repository}.git`, workspace]);
+    run("git", ["clone", "--depth", "1", gitUrl, workspace]);
     run("git", ["checkout", "-b", branch], { cwd: workspace });
     run("codex", ["cloud", "apply", taskId], { cwd: workspace });
     const changedFiles = run("git", ["diff", "--name-only", "--diff-filter=ACMRT"], { cwd: workspace })
@@ -69,13 +70,7 @@ function applyTask(taskId) {
     run("git", ["add", "--", ...changedFiles], { cwd: workspace });
     run("git", ["commit", "-m", `docs: apply online review ${taskId}`], { cwd: workspace });
     run("git", ["push", "--set-upstream", "origin", branch], { cwd: workspace });
-    const prUrl = run("gh", [
-      "pr", "create", "--repo", repository, "--base", "main", "--head", branch,
-      "--title", `在线批阅：${taskId}`,
-      "--body", `由登录批阅任务 \`${taskId}\` 自动生成。文件范围、安全规则和 VitePress 构建已通过。`,
-    ], { cwd: workspace });
-    run("gh", ["pr", "merge", prUrl, "--repo", repository, "--auto", "--squash", "--delete-branch"], { cwd: workspace });
-    return { jobId: taskId, branch, prUrl, state: "merge_queued" };
+    return { jobId: taskId, branch, state: "pushed_for_repository_checks" };
   } finally {
     rmSync(workspace, { recursive: true, force: true });
   }

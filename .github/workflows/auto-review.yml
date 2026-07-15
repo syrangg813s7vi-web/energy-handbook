@@ -1,0 +1,67 @@
+name: Validate and merge online review
+
+on:
+  push:
+    branches:
+      - "codex/review-*"
+
+concurrency:
+  group: online-review-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  validate-and-merge:
+    name: Validate online review
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out review branch
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Fetch main branch
+        run: git fetch --no-tags origin main:refs/remotes/origin/main
+
+      - name: Enforce review file and animation policy
+        run: node automation/validate-review-diff.mjs origin/main HEAD
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Build and test knowledge base
+        run: npm run check
+
+      - name: Create pull request if needed
+        id: pull-request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REVIEW_BRANCH: ${{ github.ref_name }}
+          REVIEW_SHA: ${{ github.sha }}
+        run: |
+          pr_url="$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$REVIEW_BRANCH" --state open --json url --jq '.[0].url // empty')"
+          if [ -z "$pr_url" ]; then
+            pr_url="$(gh pr create \
+              --repo "$GITHUB_REPOSITORY" \
+              --base main \
+              --head "$REVIEW_BRANCH" \
+              --title "在线批阅：${REVIEW_SHA:0:8}" \
+              --body "由登录批阅任务自动生成。文件范围、动画安全策略和 VitePress 构建均已通过。")"
+          fi
+          echo "url=$pr_url" >> "$GITHUB_OUTPUT"
+
+      - name: Enable automatic squash merge
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_URL: ${{ steps.pull-request.outputs.url }}
+        run: gh pr merge "$PR_URL" --repo "$GITHUB_REPOSITORY" --auto --squash --delete-branch
