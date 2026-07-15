@@ -93,4 +93,7 @@
 - 用户要求由 Cloud Codex 提交代码。最终职责调整为：`molt` 只运行 `codex cloud exec/status`；Cloud Codex 通过绑定到 `energy-handbook` 的原生 GitHub 集成提交 `codex/review-*` 分支和 PR；仓库 Action 在 GitHub 内部重复策略与构建检查并启用 squash 自动合并。`molt` 不保存 GitHub 写入凭据，也不下载或应用任务差异。
 - `energy-handbook` 的 Codex Cloud Environment 已创建并通过 `molt` 上的 Codex CLI 环境选择器核验。环境 ID 不进入公开仓库，部署时通过 `CODEX_CLOUD_ENV_ID` 注入独立执行器。
 - `molt` 已部署 `energy-review-executor.service`：服务仅监听 n8n 所在 Docker 网桥 `172.18.0.1:8791`，只接受固定容器来源和 `x-review-executor-token`，进程使用无登录 shell 的 `energy-review` 系统账号。Codex 登录状态复制到该账号的 0700 私有目录，n8n 无法直接读取 ChatGPT 凭据或执行任意命令。
-- n8n 2.19.5 已导入未发布工作流 `energy-handbook-review-api`，包含提交与状态查询两条 Webhook 路径、每个 HTTP 节点的错误输出和脱敏响应。发布前仍需在 UI 创建 `Header Auth` 凭据并绑定两个 HTTP Request 节点，然后执行一次真实 Cloud 任务端到端测试。
+- n8n 2.19.5 已导入未发布工作流 `energy-handbook-review-api`，包含提交与状态查询两条 Webhook 路径、每个 HTTP 节点的错误输出和脱敏响应。两个 HTTP Request 节点已绑定 `x-review-executor-token` Header Auth 凭据。
+- 通过 n8n 测试 Webhook 完成了不创建任务的穿透验证：请求到达隔离执行器，执行器的参数校验 400 被 n8n 脱敏并保持为 400；Codex Cloud 任务列表仍为空。
+- n8n 2.19.5 的 HTTP Request 错误对象使用 `$json.error.status` 表示状态码，工作流表达式需要同时兼容 `error.status`、`error.httpCode` 和顶层 `httpCode`。
+- 工作流发布仍需等待 Cloudflare Access 和公开会话网关完成；之后再经用户确认执行一次会真实创建 Codex Cloud 任务的端到端测试。

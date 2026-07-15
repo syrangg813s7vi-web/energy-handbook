@@ -37,6 +37,12 @@
           "jsonBody": "={{ { ...$json.body, actorEmail: $json.headers?.['cf-access-authenticated-user-email'] || '' } }}",
           "options": { "timeout": 960000 }
         },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "altrxedev7AWiWTD",
+            "name": "Header Auth account"
+          }
+        },
         "notes": "Select the Header Auth credential whose header is x-review-executor-token. Submission is intentionally not retried because a retry could create a duplicate Cloud task."
       },
       {
@@ -59,9 +65,9 @@
         "position": [-80, -100],
         "parameters": {
           "respondWith": "json",
-          "responseBody": "={{ { ok: false, error: Number($json.error?.httpCode || $json.httpCode || 0) === 429 ? 'busy' : (Number($json.error?.httpCode || $json.httpCode || 0) >= 400 && Number($json.error?.httpCode || $json.httpCode || 0) < 500 ? 'validation_error' : 'executor_error'), message: Number($json.error?.httpCode || $json.httpCode || 0) === 429 ? '批阅任务繁忙，请稍后重试' : (Number($json.error?.httpCode || $json.httpCode || 0) >= 400 && Number($json.error?.httpCode || $json.httpCode || 0) < 500 ? '批阅请求不符合要求' : 'Codex Cloud 执行器暂时不可用') } }}",
+          "responseBody": "={{ { ok: false, error: Number($json.error?.status || $json.error?.httpCode || $json.httpCode || 0) === 429 ? 'busy' : (Number($json.error?.status || $json.error?.httpCode || $json.httpCode || 0) >= 400 && Number($json.error?.status || $json.error?.httpCode || $json.httpCode || 0) < 500 ? 'validation_error' : 'executor_error'), message: Number($json.error?.status || $json.error?.httpCode || $json.httpCode || 0) === 429 ? '批阅任务繁忙，请稍后重试' : (Number($json.error?.status || $json.error?.httpCode || $json.httpCode || 0) >= 400 && Number($json.error?.status || $json.error?.httpCode || $json.httpCode || 0) < 500 ? '批阅请求不符合要求' : 'Codex Cloud 执行器暂时不可用') } }}",
           "options": {
-            "responseCode": "={{ (() => { const code = Number($json.error?.httpCode || $json.httpCode || 0); return code === 429 ? 429 : (code >= 400 && code < 500 ? 400 : 502); })() }}"
+            "responseCode": "={{ (() => { const code = Number($json.error?.status || $json.error?.httpCode || $json.httpCode || 0); return code === 429 ? 429 : (code >= 400 && code < 500 ? 400 : 502); })() }}"
           }
         }
       },
@@ -96,6 +102,12 @@
           "genericAuthType": "httpHeaderAuth",
           "options": { "timeout": 30000 }
         },
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "altrxedev7AWiWTD",
+            "name": "Header Auth account"
+          }
+        },
         "notes": "Status reads are safe to retry. Select the same Header Auth credential as the submit node."
       },
       {
@@ -118,9 +130,9 @@
         "position": [-80, 300],
         "parameters": {
           "respondWith": "json",
-          "responseBody": "={{ { ok: false, error: Number($json.error?.httpCode || $json.httpCode || 0) === 404 ? 'not_found' : 'executor_error', message: Number($json.error?.httpCode || $json.httpCode || 0) === 404 ? '未找到该批阅任务' : '暂时无法查询任务状态' } }}",
+          "responseBody": "={{ { ok: false, error: Number($json.error?.status || $json.error?.httpCode || $json.httpCode || 0) === 404 ? 'not_found' : 'executor_error', message: Number($json.error?.status || $json.error?.httpCode || $json.httpCode || 0) === 404 ? '未找到该批阅任务' : '暂时无法查询任务状态' } }}",
           "options": {
-            "responseCode": "={{ Number($json.error?.httpCode || $json.httpCode || 0) === 404 ? 404 : 502 }}"
+            "responseCode": "={{ Number($json.error?.status || $json.error?.httpCode || $json.httpCode || 0) === 404 ? 404 : 502 }}"
           }
         }
       },

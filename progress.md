@@ -67,3 +67,4 @@
 | Codex Cloud Environment | 通过 | 浏览器端仅保留 1 个 `energy-handbook` 环境；`molt` 上 Codex CLI 可识别 |
 | 低权限 Cloud 执行器 | 通过 | `energy-review` 系统账号、Docker 网桥来源限制、Header 令牌、32 KiB 请求上限、单任务并发和命令超时 |
 | n8n 批阅工作流草稿 | 通过 | 已导入 `Submit energy handbook review`，保持未发布；4 条主/错误输出连接已回读核验 |
+| n8n 到隔离执行器穿透测试 | 通过 | 使用空修改要求触发参数校验；公开测试 Webhook 返回脱敏 HTTP 400，Codex Cloud 任务列表保持为空 |
