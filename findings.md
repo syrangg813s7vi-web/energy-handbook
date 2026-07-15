@@ -92,3 +92,5 @@
 - `molt` 已有 AI Workbench Codex Runner，绑定 Docker bridge `172.18.0.1:8787`，但它以 root、`danger-full-access` 和任意提示执行本地 Codex，不适合作为公开批阅执行器。能源批阅使用独立低权限用户、独立工作目录和严格参数接口。
 - 用户要求由 Cloud Codex 提交代码。最终职责调整为：`molt` 只运行 `codex cloud exec/status`；Cloud Codex 通过绑定到 `energy-handbook` 的原生 GitHub 集成提交 `codex/review-*` 分支和 PR；仓库 Action 在 GitHub 内部重复策略与构建检查并启用 squash 自动合并。`molt` 不保存 GitHub 写入凭据，也不下载或应用任务差异。
 - `energy-handbook` 的 Codex Cloud Environment 已创建并通过 `molt` 上的 Codex CLI 环境选择器核验。环境 ID 不进入公开仓库，部署时通过 `CODEX_CLOUD_ENV_ID` 注入独立执行器。
+- `molt` 已部署 `energy-review-executor.service`：服务仅监听 n8n 所在 Docker 网桥 `172.18.0.1:8791`，只接受固定容器来源和 `x-review-executor-token`，进程使用无登录 shell 的 `energy-review` 系统账号。Codex 登录状态复制到该账号的 0700 私有目录，n8n 无法直接读取 ChatGPT 凭据或执行任意命令。
+- n8n 2.19.5 已导入未发布工作流 `energy-handbook-review-api`，包含提交与状态查询两条 Webhook 路径、每个 HTTP 节点的错误输出和脱敏响应。发布前仍需在 UI 创建 `Header Auth` 凭据并绑定两个 HTTP Request 节点，然后执行一次真实 Cloud 任务端到端测试。

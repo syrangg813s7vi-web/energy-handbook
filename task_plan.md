@@ -48,7 +48,7 @@
 - [x] 在 VitePress 中加入登录状态、文字划选和批阅面板
 - [ ] 建立 Cloudflare Access 登录与短期会话交换
 - [ ] 建立 n8n 批阅接收、任务追踪和错误处理工作流
-- [ ] 在 `molt` 建立低权限 Codex Cloud 执行器
+- [x] 在 `molt` 建立低权限 Codex Cloud 执行器
 - [x] 加入文件范围、安全扫描和构建门禁代码
 - [ ] 接通临时分支、PR 与自动合并门禁
 - [ ] 完成端到端验证并发布
@@ -90,3 +90,4 @@
 |---|---|---:|---|
 | 2026-07-15 | Playwright `fill` 将纯数字参数解析为 number，而命令要求 string | 1 | 改用元素级 `eval` 设置 range 值并派发原生 `input` 事件 |
 | 2026-07-15 | VitePress 1.6.4 默认依赖 Vite 5.4.21，`npm audit` 报告 3 项开发服务器漏洞 | 1 | 通过 npm `overrides` 升级到与 Vue 插件兼容的 Vite 6.4.3，构建通过且审计归零 |
+| 2026-07-15 | 专用执行器以低权限账号启动时 systemd 返回 `203/EXEC` | 1 | `/usr/local/bin/node` 实际指向不可穿越的 `/root/.nvm`；将 Node 二进制复制到受保护的 `/opt/energy-review-executor/bin` 并改用该路径 |

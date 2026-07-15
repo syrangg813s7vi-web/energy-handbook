@@ -1,0 +1,178 @@
+[
+  {
+    "id": "energy-handbook-review-api",
+    "name": "Submit energy handbook review",
+    "description": "Receives authenticated inline review requests from the public Energy Handbook and forwards only structured payloads to the isolated Codex Cloud executor. Returns task IDs for polling while keeping ChatGPT and GitHub credentials outside n8n.",
+    "active": false,
+    "nodes": [
+      {
+        "id": "review-submit-webhook",
+        "name": "Receive inline review",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [-720, -180],
+        "webhookId": "energy-handbook-review-submit",
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "energy-handbook/reviews",
+          "responseMode": "responseNode",
+          "options": {}
+        }
+      },
+      {
+        "id": "review-submit-executor",
+        "name": "Submit to isolated Codex executor",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [-400, -180],
+        "onError": "continueErrorOutput",
+        "parameters": {
+          "method": "POST",
+          "url": "http://172.18.0.1:8791/v1/reviews/submit",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "contentType": "json",
+          "specifyBody": "json",
+          "jsonBody": "={{ { ...$json.body, actorEmail: $json.headers?.['cf-access-authenticated-user-email'] || '' } }}",
+          "options": { "timeout": 960000 }
+        },
+        "notes": "Select the Header Auth credential whose header is x-review-executor-token. Submission is intentionally not retried because a retry could create a duplicate Cloud task."
+      },
+      {
+        "id": "review-submit-success",
+        "name": "Return accepted task",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.5,
+        "position": [-80, -260],
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { ok: true, jobId: $json.jobId, requestId: $json.requestId } }}",
+          "options": { "responseCode": 202 }
+        }
+      },
+      {
+        "id": "review-submit-error",
+        "name": "Return sanitized submit error",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.5,
+        "position": [-80, -100],
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { ok: false, error: Number($json.error?.httpCode || $json.httpCode || 0) === 429 ? 'busy' : (Number($json.error?.httpCode || $json.httpCode || 0) >= 400 && Number($json.error?.httpCode || $json.httpCode || 0) < 500 ? 'validation_error' : 'executor_error'), message: Number($json.error?.httpCode || $json.httpCode || 0) === 429 ? '批阅任务繁忙，请稍后重试' : (Number($json.error?.httpCode || $json.httpCode || 0) >= 400 && Number($json.error?.httpCode || $json.httpCode || 0) < 500 ? '批阅请求不符合要求' : 'Codex Cloud 执行器暂时不可用') } }}",
+          "options": {
+            "responseCode": "={{ (() => { const code = Number($json.error?.httpCode || $json.httpCode || 0); return code === 429 ? 429 : (code >= 400 && code < 500 ? 400 : 502); })() }}"
+          }
+        }
+      },
+      {
+        "id": "review-status-webhook",
+        "name": "Receive task status query",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [-720, 220],
+        "webhookId": "energy-handbook-review-status",
+        "parameters": {
+          "httpMethod": "GET",
+          "path": "energy-handbook/reviews/:jobId",
+          "responseMode": "responseNode",
+          "options": {}
+        }
+      },
+      {
+        "id": "review-status-executor",
+        "name": "Query isolated Codex executor",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [-400, 220],
+        "onError": "continueErrorOutput",
+        "retryOnFail": true,
+        "maxTries": 3,
+        "waitBetweenTries": 5000,
+        "parameters": {
+          "method": "GET",
+          "url": "={{ 'http://172.18.0.1:8791/v1/reviews/status/' + encodeURIComponent($json.params.jobId || '') }}",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "options": { "timeout": 30000 }
+        },
+        "notes": "Status reads are safe to retry. Select the same Header Auth credential as the submit node."
+      },
+      {
+        "id": "review-status-success",
+        "name": "Return task status",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.5,
+        "position": [-80, 140],
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { ok: true, jobId: $json.jobId, status: $json.status, requestId: $json.requestId } }}",
+          "options": { "responseCode": 200 }
+        }
+      },
+      {
+        "id": "review-status-error",
+        "name": "Return sanitized status error",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.5,
+        "position": [-80, 300],
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { ok: false, error: Number($json.error?.httpCode || $json.httpCode || 0) === 404 ? 'not_found' : 'executor_error', message: Number($json.error?.httpCode || $json.httpCode || 0) === 404 ? '未找到该批阅任务' : '暂时无法查询任务状态' } }}",
+          "options": {
+            "responseCode": "={{ Number($json.error?.httpCode || $json.httpCode || 0) === 404 ? 404 : 502 }}"
+          }
+        }
+      },
+      {
+        "id": "review-submit-note",
+        "name": "Submit path note",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [-780, -360],
+        "parameters": {
+          "content": "### Submit an inline review\nCloudflare Access supplies the reviewer identity. The isolated executor performs the authoritative schema and repository-boundary checks.",
+          "height": 320,
+          "width": 1080,
+          "color": 5
+        }
+      },
+      {
+        "id": "review-status-note",
+        "name": "Status path note",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [-780, 40],
+        "parameters": {
+          "content": "### Poll Codex Cloud task status\nStatus reads retry transient failures and return only sanitized public fields.",
+          "height": 380,
+          "width": 1080,
+          "color": 5
+        }
+      }
+    ],
+    "connections": {
+      "Receive inline review": {
+        "main": [[{ "node": "Submit to isolated Codex executor", "type": "main", "index": 0 }]]
+      },
+      "Submit to isolated Codex executor": {
+        "main": [
+          [{ "node": "Return accepted task", "type": "main", "index": 0 }],
+          [{ "node": "Return sanitized submit error", "type": "main", "index": 0 }]
+        ]
+      },
+      "Receive task status query": {
+        "main": [[{ "node": "Query isolated Codex executor", "type": "main", "index": 0 }]]
+      },
+      "Query isolated Codex executor": {
+        "main": [
+          [{ "node": "Return task status", "type": "main", "index": 0 }],
+          [{ "node": "Return sanitized status error", "type": "main", "index": 0 }]
+        ]
+      }
+    },
+    "settings": { "executionOrder": "v1" },
+    "pinData": {},
+    "tags": []
+  }
+]

@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /opt/energy-review-executor/bin/node /opt/energy-review-executor/vendor/codex/bin/codex.js "$@"

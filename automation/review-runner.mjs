@@ -11,6 +11,7 @@ function run(command, args, options = {}) {
   return execFileSync(command, args, {
     encoding: "utf8",
     maxBuffer: 10 * 1024 * 1024,
+    timeout: Number(process.env.CODEX_COMMAND_TIMEOUT_MS || 15 * 60 * 1000),
     stdio: ["ignore", "pipe", "pipe"],
     ...options,
   }).trim();
@@ -34,7 +35,7 @@ function submit(encoded) {
   const payload = { ...parsePayload(encoded), requestId: randomUUID().replaceAll("-", "").slice(0, 12) };
   const environmentId = process.env.CODEX_CLOUD_ENV_ID;
   if (!environmentId) throw new Error("缺少 CODEX_CLOUD_ENV_ID");
-  const output = run("codex", [
+  const output = run(process.env.CODEX_BIN || "codex", [
     "cloud", "exec", "--env", environmentId, "--branch", "main", buildCloudPrompt(payload),
   ]);
   return { jobId: parseTaskId(output), actorEmail: payload.actorEmail, output };
@@ -42,7 +43,7 @@ function submit(encoded) {
 
 function status(taskId) {
   if (!/^[a-zA-Z0-9_-]{12,}$/.test(taskId || "")) throw new Error("任务 ID 非法");
-  return { jobId: taskId, status: run("codex", ["cloud", "status", taskId]) };
+  return { jobId: taskId, status: run(process.env.CODEX_BIN || "codex", ["cloud", "status", taskId]) };
 }
 
 try {

@@ -1,0 +1,27 @@
+[Unit]
+Description=Energy Handbook Codex Cloud Review Executor
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=energy-review
+Group=energy-review
+WorkingDirectory=/opt/energy-review-executor
+EnvironmentFile=/etc/energy-review-executor.env
+ExecStart=/opt/energy-review-executor/bin/node /opt/energy-review-executor/automation/review-api-server.mjs
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/energy-review
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+CapabilityBoundingSet=
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=multi-user.target

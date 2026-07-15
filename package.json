@@ -7,7 +7,7 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "test:review": "node --test automation/review-policy.test.mjs",
+    "test:review": "node --test automation/*.test.mjs",
     "check": "npm run test:review && npm run docs:build"
   },
   "devDependencies": {
