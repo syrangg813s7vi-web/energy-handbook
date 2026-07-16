@@ -40,6 +40,7 @@ export default defineConfig({
       { text: "首页", link: "/" },
       { text: "能源基础", link: "/knowledge/energy-basics" },
       { text: "能量管理", link: "/knowledge/energy-management" },
+      { text: "车桩协议", link: "/knowledge/ev-charging-protocols" },
       { text: "建设指南", link: "/guides/content-and-animation" },
       { text: "在线批阅", link: "/guides/online-review" },
     ],
@@ -49,6 +50,7 @@ export default defineConfig({
         items: [
           { text: "能量、功率与效率", link: "/knowledge/energy-basics" },
           { text: "能量管理是在做什么", link: "/knowledge/energy-management" },
+          { text: "车桩协议：从第一性原理出发", link: "/knowledge/ev-charging-protocols" },
         ],
       },
       {
