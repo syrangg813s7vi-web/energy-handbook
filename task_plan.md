@@ -117,3 +117,4 @@
 | 2026-07-15 | 发布器首次应用 READY diff 后误报没有修改 | 1 | `codex cloud apply` 默认将差异放入暂存区；文件检测改为 `git diff --name-only HEAD`，同时覆盖暂存与未暂存修改 |
 | 2026-07-15 | PR #3 最后一步启用 auto-merge 返回 `Pull request is in unstable status` | 1 | 同一 push job 在结束前等待自身检查会形成循环；门禁均已在前序步骤通过，改为最后一步直接 squash merge |
 | 2026-07-16 | Playwright `run-code` 用两个顶层语句注入本地测试会话时报语法错误 | 1 | 改为单个 async IIFE，保证 CLI 接收一个完整表达式 |
+| 2026-07-16 | 重启批阅执行器后立即探测健康端口返回连接失败 | 1 | systemd 已 active 但 Node 尚在绑定端口；等待启动日志后重试，健康接口返回 200 |
