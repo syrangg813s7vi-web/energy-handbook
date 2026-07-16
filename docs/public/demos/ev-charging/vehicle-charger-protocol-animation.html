@@ -1,0 +1,1545 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Vehicle Charger Protocol Animation</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;max-width:736px;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="Vehicle Charger Protocol Animation" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Vehicle Charger Protocol Animation&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(--background) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: light-dark(rgb(255 255 255), rgb(24 24 24));
+  --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
+  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --card-foreground: var(--foreground);
+  --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
+  --popover-foreground: var(--foreground);
+  --primary: light-dark(rgb(51 156 255), rgb(131 195 255));
+  --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
+  --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: light-dark(
+    rgb(26 28 31 / 49.4%),
+    rgb(255 255 255 / 49.8%)
+  );
+  --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
+  --accent-foreground: var(--primary);
+  --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
+  --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
+  --input: light-dark(
+    rgb(26 28 31 / 11.8%),
+    color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+  );
+  --ring: light-dark(rgb(51 156 255), rgb(131 195 255 / 76%));
+  --font-size-base: 14px;
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: 12.5px;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+  --color-background-primary: var(--background);
+  --color-text-primary: var(--foreground);
+  --color-border-secondary: var(--border);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--viz-font-weight-medium);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed=&quot;true&quot;],
+    [aria-selected=&quot;true&quot;],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;vehicle-charger-protocol-animation&quot;&gt;
+  &lt;div class=&quot;viz-controls&quot; aria-label=&quot;动画控制&quot;&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;vc-prev&quot;&gt;
+      &lt;i data-lucide=&quot;skip-back&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+      上一步
+    &lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;vc-play&quot;&gt;
+      &lt;i data-lucide=&quot;play&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+      自动演示
+    &lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;vc-next&quot;&gt;
+      下一步
+      &lt;i data-lucide=&quot;skip-forward&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+    &lt;/button&gt;
+    &lt;span class=&quot;viz-badge&quot; id=&quot;vc-phase&quot;&gt;1 / 8　物理连接&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;vc-stage&quot;&gt;
+    &lt;svg id=&quot;vc-svg&quot; viewBox=&quot;0 0 920 430&quot; role=&quot;img&quot; aria-labelledby=&quot;vc-title vc-desc&quot;&gt;
+      &lt;title id=&quot;vc-title&quot;&gt;车辆与直流充电桩协议交互动画&lt;/title&gt;
+      &lt;desc id=&quot;vc-desc&quot;&gt;以传统国标直流充电为例，逐步展示车辆BMS与充电桩之间从连接、握手、参数协商、实时充电到安全停止的交互。&lt;/desc&gt;
+      &lt;defs&gt;
+        &lt;marker id=&quot;vc-arrow-car&quot; markerWidth=&quot;8&quot; markerHeight=&quot;8&quot; refX=&quot;7&quot; refY=&quot;4&quot; orient=&quot;auto&quot;&gt;
+          &lt;path d=&quot;M0 0L8 4L0 8Z&quot; fill=&quot;currentColor&quot;&gt;&lt;/path&gt;
+        &lt;/marker&gt;
+        &lt;marker id=&quot;vc-arrow-pile&quot; markerWidth=&quot;8&quot; markerHeight=&quot;8&quot; refX=&quot;7&quot; refY=&quot;4&quot; orient=&quot;auto&quot;&gt;
+          &lt;path d=&quot;M0 0L8 4L0 8Z&quot; fill=&quot;currentColor&quot;&gt;&lt;/path&gt;
+        &lt;/marker&gt;
+        &lt;marker id=&quot;vc-arrow-energy&quot; markerWidth=&quot;9&quot; markerHeight=&quot;9&quot; refX=&quot;8&quot; refY=&quot;4.5&quot; orient=&quot;auto&quot;&gt;
+          &lt;path d=&quot;M0 0L9 4.5L0 9Z&quot; fill=&quot;currentColor&quot;&gt;&lt;/path&gt;
+        &lt;/marker&gt;
+      &lt;/defs&gt;
+
+      &lt;g class=&quot;vc-device vc-car&quot; transform=&quot;translate(35 48)&quot;&gt;
+        &lt;rect width=&quot;235&quot; height=&quot;125&quot; rx=&quot;18&quot;&gt;&lt;/rect&gt;
+        &lt;g class=&quot;vc-icon&quot; transform=&quot;translate(25 26)&quot;&gt;
+          &lt;path d=&quot;M3 31h52l-6-18H13z&quot;&gt;&lt;/path&gt;
+          &lt;circle cx=&quot;15&quot; cy=&quot;35&quot; r=&quot;6&quot;&gt;&lt;/circle&gt;
+          &lt;circle cx=&quot;44&quot; cy=&quot;35&quot; r=&quot;6&quot;&gt;&lt;/circle&gt;
+        &lt;/g&gt;
+        &lt;text x=&quot;112&quot; y=&quot;44&quot;&gt;电动汽车&lt;/text&gt;
+        &lt;text class=&quot;vc-sub&quot; x=&quot;112&quot; y=&quot;69&quot;&gt;BMS：计算电池允许能力&lt;/text&gt;
+        &lt;text class=&quot;vc-live&quot; id=&quot;vc-car-live&quot; x=&quot;112&quot; y=&quot;98&quot;&gt;等待插枪&lt;/text&gt;
+      &lt;/g&gt;
+
+      &lt;g class=&quot;vc-device vc-pile&quot; transform=&quot;translate(650 48)&quot;&gt;
+        &lt;rect width=&quot;235&quot; height=&quot;125&quot; rx=&quot;18&quot;&gt;&lt;/rect&gt;
+        &lt;g class=&quot;vc-icon&quot; transform=&quot;translate(28 22)&quot;&gt;
+          &lt;rect x=&quot;4&quot; y=&quot;2&quot; width=&quot;42&quot; height=&quot;48&quot; rx=&quot;6&quot;&gt;&lt;/rect&gt;
+          &lt;path d=&quot;M28 10l-10 16h10l-7 14 16-20H27z&quot;&gt;&lt;/path&gt;
+        &lt;/g&gt;
+        &lt;text x=&quot;105&quot; y=&quot;44&quot;&gt;直流充电桩&lt;/text&gt;
+        &lt;text class=&quot;vc-sub&quot; x=&quot;105&quot; y=&quot;69&quot;&gt;控制器：执行安全输出&lt;/text&gt;
+        &lt;text class=&quot;vc-live&quot; id=&quot;vc-pile-live&quot; x=&quot;105&quot; y=&quot;98&quot;&gt;高压输出关闭&lt;/text&gt;
+      &lt;/g&gt;
+
+      &lt;line class=&quot;vc-lane&quot; x1=&quot;152&quot; y1=&quot;188&quot; x2=&quot;152&quot; y2=&quot;385&quot;&gt;&lt;/line&gt;
+      &lt;line class=&quot;vc-lane&quot; x1=&quot;768&quot; y1=&quot;188&quot; x2=&quot;768&quot; y2=&quot;385&quot;&gt;&lt;/line&gt;
+
+      &lt;g id=&quot;vc-data-line&quot;&gt;
+        &lt;line id=&quot;vc-data-path&quot; x1=&quot;185&quot; y1=&quot;245&quot; x2=&quot;735&quot; y2=&quot;245&quot;&gt;&lt;/line&gt;
+        &lt;circle id=&quot;vc-packet&quot; cx=&quot;185&quot; cy=&quot;245&quot; r=&quot;9&quot;&gt;&lt;/circle&gt;
+        &lt;text id=&quot;vc-message&quot; x=&quot;460&quot; y=&quot;225&quot; text-anchor=&quot;middle&quot;&gt;控制导引：确认插枪、接地与电子锁&lt;/text&gt;
+        &lt;text class=&quot;vc-message-sub&quot; id=&quot;vc-message-sub&quot; x=&quot;460&quot; y=&quot;273&quot; text-anchor=&quot;middle&quot;&gt;此时CAN尚未开始，高压不会输出&lt;/text&gt;
+      &lt;/g&gt;
+
+      &lt;g id=&quot;vc-energy&quot;&gt;
+        &lt;line x1=&quot;735&quot; y1=&quot;325&quot; x2=&quot;185&quot; y2=&quot;325&quot;&gt;&lt;/line&gt;
+        &lt;circle id=&quot;vc-energy-pulse&quot; cx=&quot;735&quot; cy=&quot;325&quot; r=&quot;8&quot;&gt;&lt;/circle&gt;
+        &lt;text x=&quot;460&quot; y=&quot;307&quot; text-anchor=&quot;middle&quot;&gt;直流能量&lt;/text&gt;
+        &lt;text class=&quot;vc-message-sub&quot; id=&quot;vc-energy-value&quot; x=&quot;460&quot; y=&quot;352&quot; text-anchor=&quot;middle&quot;&gt;0 V · 0 A · 0 kW&lt;/text&gt;
+      &lt;/g&gt;
+
+      &lt;g class=&quot;vc-safety&quot; transform=&quot;translate(326 374)&quot;&gt;
+        &lt;circle id=&quot;vc-safety-dot&quot; cx=&quot;0&quot; cy=&quot;0&quot; r=&quot;6&quot;&gt;&lt;/circle&gt;
+        &lt;text id=&quot;vc-safety-text&quot; x=&quot;15&quot; y=&quot;5&quot;&gt;安全联锁：未允许输出&lt;/text&gt;
+      &lt;/g&gt;
+    &lt;/svg&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;vc-progress&quot; aria-label=&quot;充电阶段&quot;&gt;
+    &lt;button type=&quot;button&quot; data-step=&quot;0&quot; aria-current=&quot;step&quot;&gt;&lt;span&gt;1&lt;/span&gt;连接&lt;/button&gt;
+    &lt;button type=&quot;button&quot; data-step=&quot;1&quot;&gt;&lt;span&gt;2&lt;/span&gt;握手&lt;/button&gt;
+    &lt;button type=&quot;button&quot; data-step=&quot;2&quot;&gt;&lt;span&gt;3&lt;/span&gt;辨识&lt;/button&gt;
+    &lt;button type=&quot;button&quot; data-step=&quot;3&quot;&gt;&lt;span&gt;4&lt;/span&gt;协商&lt;/button&gt;
+    &lt;button type=&quot;button&quot; data-step=&quot;4&quot;&gt;&lt;span&gt;5&lt;/span&gt;就绪&lt;/button&gt;
+    &lt;button type=&quot;button&quot; data-step=&quot;5&quot;&gt;&lt;span&gt;6&lt;/span&gt;充电&lt;/button&gt;
+    &lt;button type=&quot;button&quot; data-step=&quot;6&quot;&gt;&lt;span&gt;7&lt;/span&gt;停止&lt;/button&gt;
+    &lt;button type=&quot;button&quot; data-step=&quot;7&quot;&gt;&lt;span&gt;8&lt;/span&gt;统计&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;card vc-detail&quot; aria-live=&quot;polite&quot;&gt;
+    &lt;strong id=&quot;vc-detail-title&quot;&gt;物理连接：先确认安全，再建立数字通信&lt;/strong&gt;
+    &lt;span id=&quot;vc-detail-text&quot;&gt;车辆和充电桩通过控制导引确认插枪、接地和锁止状态；所有条件满足前，桩端高压接触器保持断开。&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;vc-legend text-small&quot;&gt;
+    &lt;span&gt;&lt;i class=&quot;vc-swatch vc-from-car&quot;&gt;&lt;/i&gt;车辆 → 充电桩：需求与电池状态&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;vc-swatch vc-from-pile&quot;&gt;&lt;/i&gt;充电桩 → 车辆：能力与实际输出&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;vc-swatch vc-power&quot;&gt;&lt;/i&gt;充电桩 → 电池：直流能量&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+  #vehicle-charger-protocol-animation {
+    width: 100%;
+    color: var(--foreground);
+  }
+  #vehicle-charger-protocol-animation .vc-stage {
+    width: 100%;
+    margin: 8px 0 2px;
+  }
+  #vehicle-charger-protocol-animation #vc-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  #vehicle-charger-protocol-animation .vc-device rect {
+    fill: color-mix(in srgb, var(--card) 92%, transparent);
+    stroke: var(--border);
+    stroke-width: 1.5;
+  }
+  #vehicle-charger-protocol-animation .vc-device text {
+    fill: var(--foreground);
+    font-weight: 500;
+  }
+  #vehicle-charger-protocol-animation .vc-device .vc-sub {
+    fill: var(--muted-foreground);
+    font-weight: 400;
+  }
+  #vehicle-charger-protocol-animation .vc-device .vc-live {
+    fill: var(--foreground);
+    font-weight: 500;
+  }
+  #vehicle-charger-protocol-animation .vc-icon path,
+  #vehicle-charger-protocol-animation .vc-icon rect,
+  #vehicle-charger-protocol-animation .vc-icon circle {
+    fill: none;
+    stroke: var(--foreground);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  #vehicle-charger-protocol-animation .vc-lane {
+    stroke: var(--border);
+    stroke-width: 1.5;
+    stroke-dasharray: 5 7;
+  }
+  #vehicle-charger-protocol-animation #vc-data-path {
+    stroke: var(--viz-series-1);
+    stroke-width: 3;
+    color: var(--viz-series-1);
+    marker-end: url(#vc-arrow-car);
+    transition: stroke 220ms ease;
+  }
+  #vehicle-charger-protocol-animation #vc-packet {
+    fill: var(--viz-series-1);
+    transition: fill 220ms ease;
+  }
+  #vehicle-charger-protocol-animation #vc-message {
+    fill: var(--foreground);
+    font-weight: 500;
+  }
+  #vehicle-charger-protocol-animation .vc-message-sub {
+    fill: var(--muted-foreground);
+  }
+  #vehicle-charger-protocol-animation #vc-energy {
+    opacity: .24;
+    color: var(--viz-series-3);
+    transition: opacity 300ms ease;
+  }
+  #vehicle-charger-protocol-animation #vc-energy.is-active {
+    opacity: 1;
+  }
+  #vehicle-charger-protocol-animation #vc-energy line {
+    stroke: currentColor;
+    stroke-width: 5;
+    marker-end: url(#vc-arrow-energy);
+  }
+  #vehicle-charger-protocol-animation #vc-energy text {
+    fill: var(--foreground);
+    font-weight: 500;
+  }
+  #vehicle-charger-protocol-animation #vc-energy .vc-message-sub {
+    fill: var(--muted-foreground);
+    font-weight: 400;
+  }
+  #vehicle-charger-protocol-animation #vc-energy-pulse {
+    fill: currentColor;
+    opacity: 0;
+  }
+  #vehicle-charger-protocol-animation .vc-safety text {
+    fill: var(--foreground);
+    font-weight: 500;
+  }
+  #vehicle-charger-protocol-animation #vc-safety-dot {
+    fill: var(--muted-foreground);
+    transition: fill 240ms ease;
+  }
+  #vehicle-charger-protocol-animation #vc-safety-dot.is-safe {
+    fill: var(--viz-series-2);
+  }
+  #vehicle-charger-protocol-animation #vc-safety-dot.is-stop {
+    fill: var(--destructive);
+  }
+  #vehicle-charger-protocol-animation .vc-progress {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 4px;
+    margin: 0 0 12px;
+  }
+  #vehicle-charger-protocol-animation .vc-progress button {
+    appearance: none;
+    border: 0;
+    border-top: 3px solid var(--border);
+    background: transparent;
+    color: var(--muted-foreground);
+    padding: 8px 2px 2px;
+    cursor: pointer;
+  }
+  #vehicle-charger-protocol-animation .vc-progress button span {
+    display: none;
+  }
+  #vehicle-charger-protocol-animation .vc-progress button[aria-current=&quot;step&quot;] {
+    border-top-color: var(--viz-series-1);
+    color: var(--foreground);
+    font-weight: 500;
+  }
+  #vehicle-charger-protocol-animation .vc-progress button.is-done {
+    border-top-color: var(--viz-series-2);
+    color: var(--foreground);
+  }
+  #vehicle-charger-protocol-animation .vc-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  #vehicle-charger-protocol-animation .vc-detail strong {
+    font-weight: 500;
+  }
+  #vehicle-charger-protocol-animation .vc-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin-top: 10px;
+    color: var(--muted-foreground);
+  }
+  #vehicle-charger-protocol-animation .vc-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+  #vehicle-charger-protocol-animation .vc-swatch {
+    width: 18px;
+    height: 4px;
+    border-radius: 99px;
+    background: var(--viz-series-1);
+  }
+  #vehicle-charger-protocol-animation .vc-from-pile {
+    background: var(--viz-series-4);
+  }
+  #vehicle-charger-protocol-animation .vc-power {
+    background: var(--viz-series-3);
+  }
+  @media (max-width: 600px) {
+    #vehicle-charger-protocol-animation .vc-progress {
+      grid-template-columns: repeat(4, 1fr);
+      row-gap: 8px;
+    }
+    #vehicle-charger-protocol-animation .vc-progress button span {
+      display: inline;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #vehicle-charger-protocol-animation * {
+      transition-duration: 0.01ms !important;
+    }
+  }
+&lt;/style&gt;
+
+&lt;script&gt;
+(() =&gt; {
+  const root = document.getElementById(&#x27;vehicle-charger-protocol-animation&#x27;);
+  const steps = [
+    {
+      phase: &#x27;物理连接&#x27;,
+      direction: &#x27;pile&#x27;,
+      message: &#x27;控制导引：确认插枪、接地与电子锁&#x27;,
+      sub: &#x27;此时CAN尚未开始，高压不会输出&#x27;,
+      car: &#x27;检测到充电枪&#x27;,
+      pile: &#x27;高压输出关闭&#x27;,
+      safety: &#x27;安全联锁：检查连接条件&#x27;,
+      safetyMode: &#x27;off&#x27;,
+      power: false,
+      energy: &#x27;0 V · 0 A · 0 kW&#x27;,
+      title: &#x27;物理连接：先确认安全，再建立数字通信&#x27;,
+      detail: &#x27;车辆和充电桩通过控制导引确认插枪、接地和锁止状态；所有条件满足前，桩端高压接触器保持断开。&#x27;
+    },
+    {
+      phase: &#x27;通信握手&#x27;,
+      direction: &#x27;both&#x27;,
+      message: &#x27;CHM ⇄ BHM：协议版本与通信握手&#x27;,
+      sub: &#x27;双方确认CAN通信正常、协议能够兼容&#x27;,
+      car: &#x27;BMS上线，回应握手&#x27;,
+      pile: &#x27;发送协议版本&#x27;,
+      safety: &#x27;安全联锁：通信已建立&#x27;,
+      safetyMode: &#x27;safe&#x27;,
+      power: false,
+      energy: &#x27;0 V · 0 A · 0 kW&#x27;,
+      title: &#x27;通信握手：确认双方“听得懂”&#x27;,
+      detail: &#x27;充电桩和BMS周期交换握手报文。报文超时、版本不兼容或CAN故障时，流程终止且禁止高压输出。&#x27;
+    },
+    {
+      phase: &#x27;车辆辨识&#x27;,
+      direction: &#x27;car&#x27;,
+      message: &#x27;BRM：车辆与电池基本信息&#x27;,
+      sub: &#x27;电池类型、容量、额定电压及车辆标识&#x27;,
+      car: &#x27;上报电池基本参数&#x27;,
+      pile: &#x27;校验车辆信息&#x27;,
+      safety: &#x27;安全联锁：绝缘检测进行中&#x27;,
+      safetyMode: &#x27;off&#x27;,
+      power: false,
+      energy: &#x27;绝缘检测 · 尚未供能&#x27;,
+      title: &#x27;车辆辨识：充电桩了解正在服务的电池&#x27;,
+      detail: &#x27;BMS上报电池类型、容量、额定电压等信息；充电桩同时完成绝缘、接触器粘连和输出端异常电压检查。&#x27;
+    },
+    {
+      phase: &#x27;参数协商&#x27;,
+      direction: &#x27;both&#x27;,
+      message: &#x27;BCP ⇄ CML：电池限制与充电桩能力&#x27;,
+      sub: &#x27;实际可用能力取车辆、桩、线缆和站级限制的最小值&#x27;,
+      car: &#x27;允许最高 450 V / 200 A&#x27;,
+      pile: &#x27;可提供 500 V / 250 A&#x27;,
+      safety: &#x27;安全联锁：能力范围匹配&#x27;,
+      safetyMode: &#x27;safe&#x27;,
+      power: false,
+      energy: &#x27;协商上限：≤ 90 kW&#x27;,
+      title: &#x27;参数协商：不是桩有多大，就一定输出多大&#x27;,
+      detail: &#x27;车辆给出电池允许电压、电流和温度边界，桩给出自身输出范围；最终功率由所有限制条件共同决定。&#x27;
+    },
+    {
+      phase: &#x27;准备与预充&#x27;,
+      direction: &#x27;both&#x27;,
+      message: &#x27;BRO ⇄ CRO：双方准备就绪&#x27;,
+      sub: &#x27;桩先建立接近电池电压的输出，再闭合高压回路&#x27;,
+      car: &#x27;电池侧 350 V，准备就绪&#x27;,
+      pile: &#x27;预充至约 350 V&#x27;,
+      safety: &#x27;安全联锁：允许闭合接触器&#x27;,
+      safetyMode: &#x27;safe&#x27;,
+      power: true,
+      energy: &#x27;350 V · 约 0 A · 预充&#x27;,
+      title: &#x27;预充：先对齐电压，再接通高压&#x27;,
+      detail: &#x27;充电桩缓慢建立与电池接近的输出电压，确认电压差处于安全范围后，车辆和桩按时序闭合接触器。&#x27;
+    },
+    {
+      phase: &#x27;实时充电&#x27;,
+      direction: &#x27;loop&#x27;,
+      message: &#x27;BCL / BCS →　← CCS：需求、状态与实际输出&#x27;,
+      sub: &#x27;BMS不断提出目标，充电桩限幅后执行并反馈&#x27;,
+      car: &#x27;请求 400 V / 180 A · SOC 48%&#x27;,
+      pile: &#x27;实际 398 V / 176 A&#x27;,
+      safety: &#x27;安全联锁：持续监控，允许供能&#x27;,
+      safetyMode: &#x27;safe&#x27;,
+      power: true,
+      energy: &#x27;398 V · 176 A · 70.0 kW&#x27;,
+      title: &#x27;实时充电：车辆提需求，充电桩执行并反馈&#x27;,
+      detail: &#x27;BMS根据单体电压、温度和SOC周期调整目标电压、电流；桩经过自身额定值、枪温和站级功率限制后控制功率模块。&#x27;
+    },
+    {
+      phase: &#x27;安全停止&#x27;,
+      direction: &#x27;car&#x27;,
+      message: &#x27;BST → CST：停止原因与停止确认&#x27;,
+      sub: &#x27;先降电流，再关功率、断接触器和泄放残压&#x27;,
+      car: &#x27;达到目标SOC，请求停止&#x27;,
+      pile: &#x27;输出电流正在下降&#x27;,
+      safety: &#x27;安全联锁：执行受控停机&#x27;,
+      safetyMode: &#x27;stop&#x27;,
+      power: true,
+      energy: &#x27;398 V · 176 → 0 A&#x27;,
+      title: &#x27;安全停止：不能带着大电流直接断开&#x27;,
+      detail: &#x27;收到正常停止或故障请求后，充电桩先停止升功率并降低电流，随后关闭功率模块、断开接触器并确认枪口无危险电压。&#x27;
+    },
+    {
+      phase: &#x27;统计与结束&#x27;,
+      direction: &#x27;both&#x27;,
+      message: &#x27;BSD ⇄ CSD：最终状态与充电统计&#x27;,
+      sub: &#x27;SOC、时间、电量和停止原因用于记录与结算&#x27;,
+      car: &#x27;最终 SOC 80%&#x27;,
+      pile: &#x27;本次充电 32.6 kWh&#x27;,
+      safety: &#x27;安全联锁：高压已断开，可解锁&#x27;,
+      safetyMode: &#x27;safe&#x27;,
+      power: false,
+      energy: &#x27;0 V · 0 A · 会话结束&#x27;,
+      title: &#x27;统计结束：车桩协议完成，运营系统继续结算&#x27;,
+      detail: &#x27;双方交换最终SOC、温度、停止原因等统计数据；桩再通过桩云协议上传电量和订单，确认安全后解除电子锁。&#x27;
+    }
+  ];
+
+  const ui = {
+    prev: root.querySelector(&#x27;#vc-prev&#x27;),
+    play: root.querySelector(&#x27;#vc-play&#x27;),
+    next: root.querySelector(&#x27;#vc-next&#x27;),
+    phase: root.querySelector(&#x27;#vc-phase&#x27;),
+    path: root.querySelector(&#x27;#vc-data-path&#x27;),
+    packet: root.querySelector(&#x27;#vc-packet&#x27;),
+    message: root.querySelector(&#x27;#vc-message&#x27;),
+    messageSub: root.querySelector(&#x27;#vc-message-sub&#x27;),
+    carLive: root.querySelector(&#x27;#vc-car-live&#x27;),
+    pileLive: root.querySelector(&#x27;#vc-pile-live&#x27;),
+    energy: root.querySelector(&#x27;#vc-energy&#x27;),
+    energyPulse: root.querySelector(&#x27;#vc-energy-pulse&#x27;),
+    energyValue: root.querySelector(&#x27;#vc-energy-value&#x27;),
+    safetyDot: root.querySelector(&#x27;#vc-safety-dot&#x27;),
+    safetyText: root.querySelector(&#x27;#vc-safety-text&#x27;),
+    detailTitle: root.querySelector(&#x27;#vc-detail-title&#x27;),
+    detailText: root.querySelector(&#x27;#vc-detail-text&#x27;),
+    progress: [...root.querySelectorAll(&#x27;.vc-progress button&#x27;)]
+  };
+
+  let index = 0;
+  let playing = false;
+  let timer = null;
+  let run = 0;
+  const reduced = window.matchMedia(&#x27;(prefers-reduced-motion: reduce)&#x27;).matches;
+
+  function refreshIcons() {
+    if (window.lucide) window.lucide.createIcons({ attrs: { width: 16, height: 16 } });
+  }
+
+  function packetColor(direction) {
+    return direction === &#x27;pile&#x27; ? &#x27;var(--viz-series-4)&#x27; : &#x27;var(--viz-series-1)&#x27;;
+  }
+
+  function animatePacket(step, currentRun) {
+    const duration = reduced ? 30 : 850;
+    const start = step.direction === &#x27;pile&#x27; ? 735 : 185;
+    const end = step.direction === &#x27;pile&#x27; ? 185 : 735;
+    ui.path.style.stroke = packetColor(step.direction);
+    ui.packet.style.fill = packetColor(step.direction);
+    ui.packet.style.transition = &#x27;none&#x27;;
+    ui.packet.setAttribute(&#x27;cx&#x27;, String(start));
+    ui.packet.getBoundingClientRect();
+    ui.packet.style.transition = reduced ? &#x27;none&#x27; : `cx ${duration}ms cubic-bezier(.2,.7,.3,1)`;
+    ui.packet.setAttribute(&#x27;cx&#x27;, String(end));
+
+    if (step.direction === &#x27;both&#x27; || step.direction === &#x27;loop&#x27;) {
+      window.setTimeout(() =&gt; {
+        if (currentRun !== run) return;
+        ui.path.style.stroke = &#x27;var(--viz-series-4)&#x27;;
+        ui.packet.style.fill = &#x27;var(--viz-series-4)&#x27;;
+        ui.packet.style.transition = &#x27;none&#x27;;
+        ui.packet.setAttribute(&#x27;cx&#x27;, &#x27;735&#x27;);
+        ui.packet.getBoundingClientRect();
+        ui.packet.style.transition = reduced ? &#x27;none&#x27; : `cx ${duration}ms cubic-bezier(.2,.7,.3,1)`;
+        ui.packet.setAttribute(&#x27;cx&#x27;, &#x27;185&#x27;);
+      }, duration + (reduced ? 10 : 180));
+    }
+
+    if (step.power) {
+      ui.energyPulse.style.opacity = &#x27;1&#x27;;
+      ui.energyPulse.style.transition = &#x27;none&#x27;;
+      ui.energyPulse.setAttribute(&#x27;cx&#x27;, &#x27;735&#x27;);
+      ui.energyPulse.getBoundingClientRect();
+      ui.energyPulse.style.transition = reduced ? &#x27;none&#x27; : `cx ${duration * 1.25}ms linear`;
+      ui.energyPulse.setAttribute(&#x27;cx&#x27;, &#x27;185&#x27;);
+    } else {
+      ui.energyPulse.style.opacity = &#x27;0&#x27;;
+    }
+  }
+
+  function render(animate = true) {
+    const step = steps[index];
+    run += 1;
+    const currentRun = run;
+    ui.phase.textContent = `${index + 1} / ${steps.length}　${step.phase}`;
+    ui.message.textContent = step.message;
+    ui.messageSub.textContent = step.sub;
+    ui.carLive.textContent = step.car;
+    ui.pileLive.textContent = step.pile;
+    ui.energy.classList.toggle(&#x27;is-active&#x27;, step.power);
+    ui.energyValue.textContent = step.energy;
+    ui.safetyText.textContent = step.safety;
+    ui.safetyDot.classList.remove(&#x27;is-safe&#x27;, &#x27;is-stop&#x27;);
+    if (step.safetyMode === &#x27;safe&#x27;) ui.safetyDot.classList.add(&#x27;is-safe&#x27;);
+    if (step.safetyMode === &#x27;stop&#x27;) ui.safetyDot.classList.add(&#x27;is-stop&#x27;);
+    ui.detailTitle.textContent = step.title;
+    ui.detailText.textContent = step.detail;
+    ui.prev.disabled = index === 0;
+    ui.next.disabled = index === steps.length - 1;
+    ui.progress.forEach((button, buttonIndex) =&gt; {
+      button.toggleAttribute(&#x27;aria-current&#x27;, buttonIndex === index);
+      if (buttonIndex === index) button.setAttribute(&#x27;aria-current&#x27;, &#x27;step&#x27;);
+      button.classList.toggle(&#x27;is-done&#x27;, buttonIndex &lt; index);
+    });
+    if (animate) animatePacket(step, currentRun);
+  }
+
+  function stop() {
+    playing = false;
+    window.clearTimeout(timer);
+    ui.play.innerHTML = &#x27;&lt;i data-lucide=&quot;play&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; 自动演示&#x27;;
+    refreshIcons();
+  }
+
+  function schedule() {
+    if (!playing) return;
+    timer = window.setTimeout(() =&gt; {
+      if (index &gt;= steps.length - 1) {
+        stop();
+        return;
+      }
+      index += 1;
+      render(true);
+      schedule();
+    }, reduced ? 500 : 2600);
+  }
+
+  ui.prev.addEventListener(&#x27;click&#x27;, () =&gt; {
+    stop();
+    index = Math.max(0, index - 1);
+    render(true);
+  });
+  ui.next.addEventListener(&#x27;click&#x27;, () =&gt; {
+    stop();
+    index = Math.min(steps.length - 1, index + 1);
+    render(true);
+  });
+  ui.play.addEventListener(&#x27;click&#x27;, () =&gt; {
+    if (playing) {
+      stop();
+      return;
+    }
+    if (index === steps.length - 1) index = 0;
+    playing = true;
+    ui.play.innerHTML = &#x27;&lt;i data-lucide=&quot;pause&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; 暂停&#x27;;
+    refreshIcons();
+    render(true);
+    schedule();
+  });
+  ui.progress.forEach(button =&gt; {
+    button.addEventListener(&#x27;click&#x27;, () =&gt; {
+      stop();
+      index = Number(button.dataset.step);
+      render(true);
+    });
+  });
+
+  render(false);
+})();
+&lt;/script&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>
