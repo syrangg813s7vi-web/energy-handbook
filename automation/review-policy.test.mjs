@@ -38,9 +38,44 @@ test("页面路由可靠映射到 Markdown", () => {
 
 test("验证批阅负载并构造受限提示", () => {
   const clean = validateReviewPayload(payload);
+  assert.equal(clean.items.length, 1);
   const prompt = buildCloudPrompt(clean);
   assert.match(prompt, /docs\/knowledge\/energy-basics\.md/);
   assert.match(prompt, /增加一个交互动画/);
   assert.match(prompt, /不得修改 \.github/);
   assert.match(prompt, /不要提交、推送或创建 PR/);
+});
+
+test("将多条批注合成一个受限 Cloud 任务", () => {
+  const clean = validateReviewPayload({
+    siteOrigin: payload.siteOrigin,
+    requestId: payload.requestId,
+    items: [
+      { ...payload, instruction: "补充通俗解释。" },
+      {
+        ...payload,
+        pagePath: "/energy-handbook/knowledge/fbd-sfc",
+        pageTitle: "FBD 与 SFC",
+        text: "功能块图",
+        instruction: "补充它与梯形图的区别。",
+      },
+    ],
+  });
+  const prompt = buildCloudPrompt(clean);
+  assert.equal(clean.items.length, 2);
+  assert.match(prompt, /共 2 条/);
+  assert.match(prompt, /批注 1/);
+  assert.match(prompt, /批注 2/);
+  assert.match(prompt, /docs\/knowledge\/fbd-sfc\.md/);
+});
+
+test("限制批阅清单条数和总内容", () => {
+  assert.throws(() => validateReviewPayload({
+    siteOrigin: payload.siteOrigin,
+    items: Array.from({ length: 21 }, () => payload),
+  }), /1–20/);
+  assert.throws(() => validateReviewPayload({
+    siteOrigin: payload.siteOrigin,
+    items: Array.from({ length: 13 }, () => ({ ...payload, text: "能".repeat(2_000) })),
+  }), /24000/);
 });

@@ -15,13 +15,21 @@ type ReviewSelection = {
   pageTitle: string;
 };
 
+type ReviewDraft = ReviewSelection & {
+  id: string;
+  instruction: string;
+};
+
 const apiBase = (import.meta.env.VITE_REVIEW_API_URL || "").replace(/\/$/, "");
 const sessionKey = "energy-handbook-review-session";
+const batchKey = "energy-handbook-review-batch";
 const reviewMode = ref(false);
 const session = ref<ReviewSession | null>(null);
 const selection = ref<ReviewSelection | null>(null);
+const drafts = ref<ReviewDraft[]>([]);
 const instruction = ref("");
 const drawerOpen = ref(false);
+const drawerMode = ref<"compose" | "batch">("compose");
 const submitting = ref(false);
 const message = ref("");
 const selectionButton = ref({ visible: false, left: 0, top: 0 });
@@ -29,12 +37,14 @@ let savedRange: Range | null = null;
 
 const configured = computed(() => Boolean(apiBase));
 const authenticated = computed(() => Boolean(session.value?.token));
-const canSubmit = computed(() => (
+const canAdd = computed(() => (
   authenticated.value
   && Boolean(selection.value)
   && instruction.value.trim().length >= 2
+  && drafts.value.length < 20
   && !submitting.value
 ));
+const canSubmitBatch = computed(() => authenticated.value && drafts.value.length > 0 && !submitting.value);
 
 function restoreSession() {
   const raw = sessionStorage.getItem(sessionKey);
@@ -46,6 +56,26 @@ function restoreSession() {
   } catch {
     sessionStorage.removeItem(sessionKey);
   }
+}
+
+function restoreBatch() {
+  const raw = sessionStorage.getItem(batchKey);
+  if (!raw) return;
+  try {
+    const parsed = JSON.parse(raw) as ReviewDraft[];
+    if (Array.isArray(parsed)) drafts.value = parsed.slice(0, 20).filter((item) => (
+      typeof item?.id === "string"
+      && typeof item?.text === "string"
+      && typeof item?.instruction === "string"
+    ));
+  } catch {
+    sessionStorage.removeItem(batchKey);
+  }
+}
+
+function saveBatch() {
+  if (drafts.value.length) sessionStorage.setItem(batchKey, JSON.stringify(drafts.value));
+  else sessionStorage.removeItem(batchKey);
 }
 
 async function exchangeLoginCode() {
@@ -159,9 +189,17 @@ function captureSelection() {
 async function openDrawer() {
   highlightSavedRange();
   selectionButton.value.visible = false;
+  drawerMode.value = "compose";
   drawerOpen.value = true;
   await nextTick();
   document.querySelector<HTMLTextAreaElement>("#review-instruction")?.focus();
+}
+
+function openBatchDrawer() {
+  clearSelection();
+  drawerMode.value = "batch";
+  drawerOpen.value = true;
+  message.value = "";
 }
 
 function closeDrawer() {
@@ -171,10 +209,29 @@ function closeDrawer() {
   clearSelection();
 }
 
-async function submitReview() {
-  if (!canSubmit.value || !session.value || !selection.value) return;
+function addToBatch() {
+  if (!canAdd.value || !selection.value) return;
+  drafts.value.push({
+    ...selection.value,
+    id: crypto.randomUUID(),
+    instruction: instruction.value.trim(),
+  });
+  saveBatch();
+  drawerOpen.value = false;
+  instruction.value = "";
+  message.value = `已加入批阅清单，共 ${drafts.value.length} 条。`;
+  clearSelection();
+}
+
+function removeDraft(id: string) {
+  drafts.value = drafts.value.filter((draft) => draft.id !== id);
+  saveBatch();
+}
+
+async function submitBatch() {
+  if (!canSubmitBatch.value || !session.value) return;
   submitting.value = true;
-  message.value = "正在提交云端 Codex 任务…";
+  message.value = `正在一次性提交 ${drafts.value.length} 条批注…`;
   try {
     const response = await fetch(`${apiBase}/reviews`, {
       method: "POST",
@@ -183,8 +240,7 @@ async function submitReview() {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        ...selection.value,
-        instruction: instruction.value.trim(),
+        items: drafts.value.map(({ id: _id, ...draft }) => draft),
         siteOrigin: window.location.origin,
       }),
     });
@@ -194,8 +250,10 @@ async function submitReview() {
       throw new Error("登录已过期，请重新登录");
     }
     if (!response.ok || !result.jobId) throw new Error(result.message || "提交失败");
-    message.value = `任务 ${result.jobId} 已提交，检查通过后将自动合并并发布。`;
-    instruction.value = "";
+    const submittedCount = drafts.value.length;
+    drafts.value = [];
+    saveBatch();
+    message.value = `${submittedCount} 条批注已合并为任务 ${result.jobId}，检查通过后将自动合并并发布。`;
   } catch (error) {
     message.value = error instanceof Error ? error.message : "提交失败";
   } finally {
@@ -205,6 +263,7 @@ async function submitReview() {
 
 onMounted(() => {
   restoreSession();
+  restoreBatch();
   void exchangeLoginCode();
   document.addEventListener("mouseup", captureSelection);
   document.addEventListener("keyup", captureSelection);
@@ -233,6 +292,9 @@ onBeforeUnmount(() => {
         >
           {{ reviewMode ? "批阅已开启" : "开启批阅" }}
         </button>
+        <button v-if="drafts.length" class="review-batch" type="button" @click="openBatchDrawer">
+          批阅清单 {{ drafts.length }}
+        </button>
         <button class="review-logout" type="button" @click="logout">退出</button>
       </template>
     </div>
@@ -253,28 +315,52 @@ onBeforeUnmount(() => {
         <div class="review-drawer-head">
           <div>
             <span class="review-eyebrow">在线批阅</span>
-            <h2 id="review-title">给云端 Codex 修改要求</h2>
+            <h2 id="review-title">{{ drawerMode === "compose" ? "添加修改要求" : "批阅清单" }}</h2>
           </div>
           <button class="review-close" type="button" aria-label="关闭批阅" @click="closeDrawer">×</button>
         </div>
 
-        <blockquote class="review-quote">{{ selection?.text }}</blockquote>
-        <label for="review-instruction">修改要求</label>
-        <textarea
-          id="review-instruction"
-          v-model="instruction"
-          maxlength="2000"
-          rows="6"
-          placeholder="例如：补充单位换算，并把这段改得更适合高中生理解。"
-        />
-        <p class="review-help">Codex 会结合上下文修改文章或相关动画；安全检查通过后自动合并。</p>
-        <p v-if="message" class="review-message" role="status">{{ message }}</p>
-        <div class="review-actions">
-          <button type="button" class="review-cancel" @click="closeDrawer">取消</button>
-          <button type="button" class="review-submit" :disabled="!canSubmit" @click="submitReview">
-            {{ submitting ? "提交中…" : "提交自动修改" }}
-          </button>
-        </div>
+        <template v-if="drawerMode === 'compose'">
+          <blockquote class="review-quote">{{ selection?.text }}</blockquote>
+          <label for="review-instruction">修改要求</label>
+          <textarea
+            id="review-instruction"
+            v-model="instruction"
+            maxlength="2000"
+            rows="6"
+            placeholder="例如：补充单位换算，并把这段改得更适合高中生理解。"
+          />
+          <p class="review-help">
+            先加入批阅清单，可以继续划选其他位置；最后只提交一个 Codex 任务。最多 20 条。
+          </p>
+          <div class="review-actions">
+            <button type="button" class="review-cancel" @click="closeDrawer">取消</button>
+            <button type="button" class="review-submit" :disabled="!canAdd" @click="addToBatch">
+              加入清单{{ drafts.length ? `（已有 ${drafts.length} 条）` : "" }}
+            </button>
+          </div>
+        </template>
+
+        <template v-else>
+          <p v-if="!drafts.length && !message" class="review-help">清单还是空的，请在文章中划选文字并添加修改要求。</p>
+          <ol v-else-if="drafts.length" class="review-batch-list">
+            <li v-for="(draft, index) in drafts" :key="draft.id">
+              <div class="review-batch-meta">
+                <strong>{{ index + 1 }}. {{ draft.pageTitle }}</strong>
+                <button type="button" @click="removeDraft(draft.id)">删除</button>
+              </div>
+              <blockquote>{{ draft.text }}</blockquote>
+              <p>{{ draft.instruction }}</p>
+            </li>
+          </ol>
+          <p v-if="message" class="review-message" role="status">{{ message }}</p>
+          <div class="review-actions">
+            <button type="button" class="review-cancel" @click="closeDrawer">继续批阅</button>
+            <button v-if="drafts.length" type="button" class="review-submit" :disabled="!canSubmitBatch" @click="submitBatch">
+              {{ submitting ? "提交中…" : `一次提交 ${drafts.length} 条` }}
+            </button>
+          </div>
+        </template>
       </aside>
     </div>
   </div>
