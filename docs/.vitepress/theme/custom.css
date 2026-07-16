@@ -36,6 +36,7 @@
 
 .review-account button,
 .review-selection-action,
+.review-batch-meta button,
 .review-actions button {
   border: 0;
   border-radius: 999px;
@@ -56,6 +57,13 @@
   color: var(--vp-c-text-1);
   background: var(--vp-c-bg-soft);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.review-batch {
+  padding: 10px 14px;
+  color: #2b2108;
+  background: #f4b942;
+  box-shadow: 0 7px 22px rgba(79, 54, 0, 0.2);
 }
 
 .review-logout {
@@ -164,6 +172,54 @@
 .review-help { color: var(--vp-c-text-2); }
 .review-message { color: var(--vp-c-brand-1); }
 
+.review-batch-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.review-batch-list li {
+  padding: 14px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  background: var(--vp-c-bg-soft);
+}
+
+.review-batch-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.review-batch-meta strong {
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.review-batch-meta button {
+  flex: none;
+  padding: 4px 8px;
+  color: var(--vp-c-danger-1);
+  background: transparent;
+}
+
+.review-batch-list blockquote {
+  margin: 10px 0 8px;
+  padding: 8px 10px;
+  border-left: 3px solid #d58a00;
+  color: var(--vp-c-text-2);
+  font-size: 0.82rem;
+}
+
+.review-batch-list p {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
 .review-actions {
   display: flex;
   justify-content: flex-end;
@@ -209,6 +265,9 @@
   .review-account {
     right: 12px;
     bottom: 12px;
+    max-width: calc(100vw - 24px);
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .review-drawer { padding: 22px; }

@@ -111,3 +111,9 @@
 - GitHub 仓库已开启 `allow_auto_merge` 和合并后删除分支。采用写 Deploy Key 可将 molt 的 GitHub 写权限严格限制在 `syrangg813s7vi-web/energy-handbook`，比复用个人 OAuth/PAT 权限更窄；PR 创建和合并继续由仓库内置 `GITHUB_TOKEN` 完成。
 - 真实任务已完成闭环：READY diff 经发布器推送为 `codex/review-6a579b97fe60`，GitHub Action 通过策略、测试与构建后创建并合并 PR #3。修复同一 job 内 `--auto` 自等待后，烟雾测试 PR #5 在 21 秒内自动创建、squash 合并并删除临时分支。
 - 发布器任务记录持久化在 `/var/lib/energy-review/jobs`，systemd 服务重启后会继续扫描；Cloud 失败和发布失败都有明确状态，发布最多自动尝试 3 次，避免无限失败循环。
+
+## 2026-07-16：批阅批量提交
+
+- 当前前端每次划线填写要求后立即 POST，因此每条批注都会产生独立 Cloud 任务、分支和 PR；用户要求改为先汇总、后一次提交。
+- n8n 当前仅透传请求体并覆盖服务端验证的 `actorEmail`，无需修改节点或连接；批量能力可以在前端与隔离执行器的负载协议中完成，现有 n8n 错误输出和凭据保持不变。
+- 批量清单以 `sessionStorage` 暂存，可跨站内页面保留但在浏览器会话结束后自然清除；上限 20 条，避免提示词和请求体无界增长。服务端继续接受旧单条格式，便于前后端滚动部署。

@@ -56,6 +56,13 @@
 - [x] 配置仅绑定 `energy-handbook` 的写入 Deploy Key，并完成真实任务端到端合并
 - [x] 完成端到端验证并发布
 
+### 阶段 2.2：批阅清单与批量提交 `in_progress`
+
+- [ ] 将单条批阅抽屉改为“加入清单”，支持查看、删除和跨页面暂存
+- [ ] 一次提交最多 20 条批注，只创建一个 Cloud Codex 任务和一个 PR
+- [ ] 服务端兼容旧单条负载，并对批量条数、单条长度和总请求大小执行校验
+- [ ] 更新测试、使用文档并完成浏览器与端到端部署验证
+
 ### 阶段 3：核心知识与数据可视化 `pending`
 
 - [ ] 编写能源基础、电力系统、化石能源、可再生能源、储能等核心内容
@@ -81,6 +88,7 @@
 | READY 差异发布 | 已更新 | Cloud Codex 当前只产出 READY diff；molt 使用仓库专属 Deploy Key 推送 `codex/review-*`，GitHub Action 建 PR、复检并自动合并 |
 | 默认修改边界 | 已确定 | Markdown、VitePress 动画组件及 `public/demos`；禁止工作流、依赖和站点配置 |
 | 登录会话网关 | 已部署 | `n8n.foxtiny.com/energy-review`；OAuth state + PKCE；实时校验 `energy-handbook` 的 `permissions.push`；一次性码 2 分钟，批阅令牌 15 分钟 |
+| 批阅提交粒度 | 已更新 | 每次划线先加入浏览器会话内的批阅清单；用户确认后整批生成一个 Cloud 任务、一个受限分支和一个 PR |
 
 ## 待用户确认（不阻塞底座建设）
 
@@ -108,3 +116,5 @@
 | 2026-07-15 | Cloud Codex 任务完成后没有创建分支或 PR | 1 | 实测原生集成只保留 READY diff；改由低权限执行器应用 diff，并用单仓库 Deploy Key 推送受限分支 |
 | 2026-07-15 | 发布器首次应用 READY diff 后误报没有修改 | 1 | `codex cloud apply` 默认将差异放入暂存区；文件检测改为 `git diff --name-only HEAD`，同时覆盖暂存与未暂存修改 |
 | 2026-07-15 | PR #3 最后一步启用 auto-merge 返回 `Pull request is in unstable status` | 1 | 同一 push job 在结束前等待自身检查会形成循环；门禁均已在前序步骤通过，改为最后一步直接 squash merge |
+| 2026-07-16 | Playwright `run-code` 用两个顶层语句注入本地测试会话时报语法错误 | 1 | 改为单个 async IIFE，保证 CLI 接收一个完整表达式 |
+| 2026-07-16 | 重启批阅执行器后立即探测健康端口返回连接失败 | 1 | systemd 已 active 但 Node 尚在绑定端口；等待启动日志后重试，健康接口返回 200 |

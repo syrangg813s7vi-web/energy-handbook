@@ -61,6 +61,22 @@ test("提交任务时只向外返回任务标识", async () => withServer(async 
   assert.equal(calls[0][0], "submit");
 }));
 
+test("整批批注只提交一个执行器任务", async () => withServer(async (origin, calls) => {
+  const response = await fetch(`${origin}/v1/reviews/submit`, {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-review-executor-token": "test-token" },
+    body: JSON.stringify({
+      siteOrigin: validPayload.siteOrigin,
+      actorEmail: validPayload.actorEmail,
+      items: [validPayload, { ...validPayload, text: "效率等于有用输出除以输入", instruction: "补充公式。" }],
+    }),
+  });
+  assert.equal(response.status, 202);
+  assert.equal(calls.length, 1);
+  const forwarded = JSON.parse(Buffer.from(calls[0][1], "base64url").toString("utf8"));
+  assert.equal(forwarded.items.length, 2);
+}));
+
 test("仅接受格式正确的任务标识查询状态", async () => withServer(async (origin) => {
   const headers = { "x-review-executor-token": "test-token" };
   const response = await fetch(`${origin}/v1/reviews/status/task_abcdefghijkl`, { headers });
