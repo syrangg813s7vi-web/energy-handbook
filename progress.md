@@ -30,6 +30,7 @@
 - 在 Cloudflare 为 `energybook.foxtiny.com` 添加指向 `syrangg813s7vi-web.github.io` 的 DNS-only CNAME，并等待 GitHub 签发 HTTPS 证书。
 - 已通过 Cloudflare API 创建 `energybook.foxtiny.com` 的 DNS-only CNAME，并将 Pages 构建从临时 `/energy-handbook/` 基路径切回自定义域名根路径 `/`。
 - GitHub Pages 已绑定 `energybook.foxtiny.com`、签发 TLS 证书并开启强制 HTTPS；绕过本机旧 DNS 缓存验证正式站点返回 HTTP 200，根路径资源和 canonical 均正确。
+- 已将本次 Cloudflare DNS 授权判断、API 操作顺序、GitHub Pages 验证标准和 Token 安全要求整理到 `findings.md`，供后续域名任务直接复用。
 
 ### 在线批阅决策
 

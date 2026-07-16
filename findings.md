@@ -72,6 +72,18 @@
 - 2026-07-16 从 2026-06-02 的本地历史会话中确认：用户曾为 `foxtiny.com` 创建最小权限的 DNS Edit API Token，并用它配置过 `mcp.foxtiny.com`。该 Token 仍有效，现已用于创建 DNS-only CNAME：`energybook.foxtiny.com` → `syrangg813s7vi-web.github.io`。
 - GitHub Pages 在 DNS 生效后立即接受自定义域名并可启用强制 HTTPS。正式地址 `https://energybook.foxtiny.com/` 已通过直连 GitHub Pages 节点验证返回 HTTP 200；本机解析器短暂保留了此前的 NXDOMAIN 缓存，不影响公共 DNS。
 
+### Cloudflare DNS 操作经验（后续任务复用）
+
+1. 先加载 Cloudflare skill，并以 Cloudflare 最新 API 文档为准。
+2. 先检查现有授权，不要看到 `wrangler whoami` 成功就假定可以改 DNS；Wrangler OAuth 的 `zone:read` 与 Cloudflare API 所需的 `DNS Write` 是两项不同权限。
+3. 本账号已有一个限定 `foxtiny.com`、权限为 `Zone / DNS / Edit` 的最小权限 API Token。需要修改该域 DNS 时，应优先查找安全凭据存储或既有授权记录，验证 Token 状态和资源范围后再操作，不要直接要求用户重复登录控制台。
+4. Token 只在进程内存或环境变量中短暂使用，禁止写入仓库、计划文件、日志或命令输出，也不得在回复中回显。
+5. GitHub Pages 子域名使用 DNS-only CNAME，目标必须是 `<owner>.github.io`，不能包含仓库名。
+6. 推荐执行顺序：创建 DNS → 用 `1.1.1.1` 和 `8.8.8.8` 验证 → 将 VitePress `base` 切到 `/` → 部署 → 在 GitHub Pages 登记 CNAME → 等待证书 → 开启强制 HTTPS。
+7. 完成条件不是“DNS 已创建”，而是同时满足：公共 DNS 正确、Pages 绑定正确、`https_enforced=true`、HTTPS 返回 200、静态资源为根路径、canonical 与 Sitemap 指向正式域名。
+8. 如果系统解析器仍报告 NXDOMAIN，先检查公共 DNS；这通常是本地负缓存。可用 `curl --resolve` 直连 GitHub Pages 节点验证证书和内容，不应误判为 Cloudflare 配置失败。
+9. 由于历史 Token 曾出现在对话记录中，应安排轮换，并将新 Token 转移到安全凭据存储；轮换后更新本条“已有授权”的状态，避免未来继续依赖旧 Token。
+
 ## 资料链接
 
 - GitHub Pages 发布源：<https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>
