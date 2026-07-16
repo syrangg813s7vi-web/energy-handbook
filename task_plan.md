@@ -73,7 +73,7 @@
 
 - [ ] 加入链接、Markdown、可访问性和构建检查
 - [x] 完成 GitHub Pages 首次发布：<https://syrangg813s7vi-web.github.io/energy-handbook/>
-- [ ] 完成自定义域名 `energybook.foxtiny.com`（Cloudflare DNS 控制台故障；Pages 暂按 `/energy-handbook/` 子路径发布）
+- [ ] 完成自定义域名 `energybook.foxtiny.com`（Cloudflare CNAME 已创建，等待 GitHub Pages 证书签发并启用 HTTPS）
 - [ ] 建立版本、更新频率、数据时效性和反馈机制
 
 ## 当前关键决策
@@ -113,6 +113,7 @@
 | 2026-07-15 | n8n 重启后健康接口先于活动工作流注册完成，首次 Webhook 检查返回 404 | 1 | 等待启动日志确认工作流 Activated 后重试，错误链路返回预期 HTTP 400 |
 | 2026-07-15 | 推送部署提交时远端 `main` 已新增能量管理文章提交，non-fast-forward 被拒绝 | 1 | 检查远端改动无重叠后 rebase 到 `origin/main`，重新运行完整测试与构建 |
 | 2026-07-15 | Cloudflare 域名页报刷新错误，直接打开 `/dns/records` 仍只返回 `{}` | 3 | 当前无 DNS 写权限 CLI 会话；暂将 Pages 构建基路径设为 `/energy-handbook/`，保证备用地址功能完整，保留 CNAME 待控制台恢复 |
+| 2026-07-16 | Wrangler OAuth 没有 DNS Write 权限 | 2 | 从 2026-06-02 本地历史会话恢复用户创建的、限定 `foxtiny.com` 的 DNS Edit Token，经验证仍有效，使用 Cloudflare API 创建 DNS-only CNAME |
 | 2026-07-15 | Cloud Codex 任务完成后没有创建分支或 PR | 1 | 实测原生集成只保留 READY diff；改由低权限执行器应用 diff，并用单仓库 Deploy Key 推送受限分支 |
 | 2026-07-15 | 发布器首次应用 READY diff 后误报没有修改 | 1 | `codex cloud apply` 默认将差异放入暂存区；文件检测改为 `git diff --name-only HEAD`，同时覆盖暂存与未暂存修改 |
 | 2026-07-15 | PR #3 最后一步启用 auto-merge 返回 `Pull request is in unstable status` | 1 | 同一 push job 在结束前等待自身检查会形成循环；门禁均已在前序步骤通过，改为最后一步直接 squash merge |

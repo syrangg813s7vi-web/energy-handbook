@@ -69,6 +69,7 @@
 - GitHub Pages 已通过 API 登记该域名；子域名 DNS 应使用 CNAME 指向 `syrangg813s7vi-web.github.io`，不要包含仓库路径。
 - `foxtiny.com` 使用 Cloudflare 权威 DNS。为便于 GitHub 完成域名校验和证书签发，初始记录采用 DNS only，证书就绪后再决定是否开启代理。
 - 当前 Wrangler OAuth 会话只有 Zone 读取权限，没有 DNS 写入权限；需要在 Cloudflare 控制台登录后创建记录。
+- 2026-07-16 从 2026-06-02 的本地历史会话中确认：用户曾为 `foxtiny.com` 创建最小权限的 DNS Edit API Token，并用它配置过 `mcp.foxtiny.com`。该 Token 仍有效，现已用于创建 DNS-only CNAME：`energybook.foxtiny.com` → `syrangg813s7vi-web.github.io`。
 
 ## 资料链接
 

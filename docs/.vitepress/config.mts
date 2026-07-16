@@ -1,7 +1,7 @@
 import { defineConfig } from "vitepress";
 
 const base = process.env.BASE_PATH ?? "/";
-const siteUrl = "https://syrangg813s7vi-web.github.io/energy-handbook";
+const siteUrl = "https://energybook.foxtiny.com";
 
 export default defineConfig({
   lang: "zh-CN",
