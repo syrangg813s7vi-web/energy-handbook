@@ -26,6 +26,10 @@ features:
     details: 为数据和关键结论记录发布机构、时间、口径、原始链接和访问日期。
     link: /roadmap
     linkText: 查看建设计划
+  - title: 理解设备接入
+    details: 以柴油发电机组为例，理解IEC 61850如何把私有点表转化为统一模型和工程配置。
+    link: /knowledge/iec61850-device-integration
+    linkText: 阅读IEC 61850设备接入
 ---
 
 ## 一个最小可交互示例
