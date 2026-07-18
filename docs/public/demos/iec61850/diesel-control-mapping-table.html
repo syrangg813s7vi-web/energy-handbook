@@ -1,0 +1,1525 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Diesel Start Command Mapping</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;max-width:736px;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="Diesel Start Command Mapping" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Diesel Start Command Mapping&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(--background) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: light-dark(rgb(255 255 255), rgb(24 24 24));
+  --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
+  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --card-foreground: var(--foreground);
+  --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
+  --popover-foreground: var(--foreground);
+  --primary: light-dark(rgb(51 156 255), rgb(131 195 255));
+  --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
+  --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: light-dark(
+    rgb(26 28 31 / 49.4%),
+    rgb(255 255 255 / 49.8%)
+  );
+  --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
+  --accent-foreground: var(--primary);
+  --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
+  --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
+  --input: light-dark(
+    rgb(26 28 31 / 11.8%),
+    color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+  );
+  --ring: light-dark(rgb(51 156 255), rgb(131 195 255 / 76%));
+  --font-size-base: 14px;
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: 12.5px;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+  --color-background-primary: var(--background);
+  --color-text-primary: var(--foreground);
+  --color-border-secondary: var(--border);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--viz-font-weight-medium);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed=&quot;true&quot;],
+    [aria-selected=&quot;true&quot;],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;diesel-start-command-v1&quot;&gt;
+  &lt;div class=&quot;viz-controls&quot; aria-label=&quot;动画控制&quot;&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-start-action=&quot;play&quot;&gt;
+      &lt;i data-lucide=&quot;play&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+      &lt;span data-start-play&gt;开始演示&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-start-action=&quot;prev&quot;&gt;
+      &lt;i data-lucide=&quot;chevron-left&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+      上一步
+    &lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-start-action=&quot;next&quot;&gt;
+      下一步
+      &lt;i data-lucide=&quot;chevron-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+    &lt;/button&gt;
+    &lt;span class=&quot;viz-badge&quot; data-start-counter&gt;1 / 6&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;start-current&quot; aria-live=&quot;polite&quot;&gt;
+    &lt;span class=&quot;viz-badge&quot; data-start-phase&gt;业务命令&lt;/span&gt;
+    &lt;strong data-start-summary&gt;操作员点击“启动柴发”。&lt;/strong&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;start-chain&quot; role=&quot;img&quot; aria-label=&quot;启动柴发命令从业务操作转换为IEC 61850标准对象，再映射为Modbus命令，最后将运行状态反馈给EMS&quot;&gt;
+    &lt;section class=&quot;start-lane&quot;&gt;
+      &lt;div class=&quot;start-node&quot; data-start-node=&quot;ems&quot;&gt;
+        &lt;span class=&quot;start-icon&quot;&gt;&lt;i data-lucide=&quot;monitor-cog&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+        &lt;strong&gt;EMS&lt;/strong&gt;
+        &lt;code data-start-state=&quot;ems&quot;&gt;启动柴发&lt;/code&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;start-arrow&quot;&gt;
+        &lt;span data-start-link=&quot;left&quot;&gt;表达为标准对象&lt;/span&gt;
+        &lt;i data-lucide=&quot;arrow-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;start-node&quot; data-start-node=&quot;gateway&quot;&gt;
+        &lt;span class=&quot;start-icon&quot;&gt;&lt;i data-lucide=&quot;shuffle&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+        &lt;strong&gt;61850接入网关&lt;/strong&gt;
+        &lt;code data-start-state=&quot;gateway&quot;&gt;等待命令&lt;/code&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;start-arrow&quot;&gt;
+        &lt;span data-start-link=&quot;right&quot;&gt;翻译为厂家命令&lt;/span&gt;
+        &lt;i data-lucide=&quot;arrow-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;start-node&quot; data-start-node=&quot;controller&quot;&gt;
+        &lt;span class=&quot;start-icon&quot;&gt;&lt;i data-lucide=&quot;fuel&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+        &lt;strong&gt;柴发控制器&lt;/strong&gt;
+        &lt;code data-start-state=&quot;controller&quot;&gt;等待启动&lt;/code&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section class=&quot;start-model&quot; aria-label=&quot;命令在标准设备模型中的表达&quot;&gt;
+      &lt;div class=&quot;start-model-head&quot;&gt;
+        &lt;span class=&quot;viz-badge&quot; data-start-detail-label&gt;人的语言&lt;/span&gt;
+        &lt;strong data-start-detail-title&gt;启动柴发&lt;/strong&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;start-model-path&quot;&gt;
+        &lt;div class=&quot;start-segment&quot; data-start-segment=&quot;ld&quot;&gt;
+          &lt;span&gt;逻辑设备&lt;/span&gt;
+          &lt;code&gt;LD_DG&lt;/code&gt;
+        &lt;/div&gt;
+        &lt;i data-lucide=&quot;chevron-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+        &lt;div class=&quot;start-segment&quot; data-start-segment=&quot;ln&quot;&gt;
+          &lt;span&gt;逻辑节点&lt;/span&gt;
+          &lt;code&gt;DCIP1&lt;/code&gt;
+        &lt;/div&gt;
+        &lt;i data-lucide=&quot;chevron-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+        &lt;div class=&quot;start-segment&quot; data-start-segment=&quot;do&quot;&gt;
+          &lt;span&gt;数据对象&lt;/span&gt;
+          &lt;code&gt;EngCtl&lt;/code&gt;
+        &lt;/div&gt;
+        &lt;i data-lucide=&quot;chevron-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+        &lt;div class=&quot;start-segment&quot; data-start-segment=&quot;service&quot;&gt;
+          &lt;span&gt;控制服务&lt;/span&gt;
+          &lt;code&gt;Operate&lt;/code&gt;
+        &lt;/div&gt;
+        &lt;i data-lucide=&quot;chevron-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+        &lt;div class=&quot;start-segment&quot; data-start-segment=&quot;value&quot;&gt;
+          &lt;span&gt;控制值&lt;/span&gt;
+          &lt;code&gt;ctlVal=on&lt;/code&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;pre aria-label=&quot;当前命令或映射内容&quot;&gt;&lt;code data-start-code&gt;操作员命令：启动柴发&lt;/code&gt;&lt;/pre&gt;
+    &lt;/section&gt;
+
+    &lt;section class=&quot;start-translation&quot;&gt;
+      &lt;div class=&quot;start-translation-item&quot; data-start-map=&quot;source&quot;&gt;
+        &lt;span&gt;标准侧匹配条件&lt;/span&gt;
+        &lt;code&gt;LD_DG/DCIP1.EngCtl + on&lt;/code&gt;
+      &lt;/div&gt;
+      &lt;i data-lucide=&quot;arrow-right-left&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+      &lt;div class=&quot;start-translation-item&quot; data-start-map=&quot;target&quot;&gt;
+        &lt;span&gt;柴发侧输出&lt;/span&gt;
+        &lt;code&gt;Unit 3 · FC06 · 41001 = 1&lt;/code&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section class=&quot;start-feedback&quot; data-start-feedback&gt;
+      &lt;i data-lucide=&quot;rotate-ccw&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+      &lt;code&gt;31001=2&lt;/code&gt;
+      &lt;span&gt;映射为&lt;/span&gt;
+      &lt;code&gt;LD_DG/DCIP1.EngOnOff.stVal=true&lt;/code&gt;
+      &lt;span&gt;EMS显示：运行&lt;/span&gt;
+    &lt;/section&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;start-progress&quot; role=&quot;progressbar&quot; aria-label=&quot;演示进度&quot; aria-valuemin=&quot;1&quot; aria-valuemax=&quot;6&quot; aria-valuenow=&quot;1&quot;&gt;
+    &lt;span data-start-progress=&quot;0&quot;&gt;&lt;/span&gt;
+    &lt;span data-start-progress=&quot;1&quot;&gt;&lt;/span&gt;
+    &lt;span data-start-progress=&quot;2&quot;&gt;&lt;/span&gt;
+    &lt;span data-start-progress=&quot;3&quot;&gt;&lt;/span&gt;
+    &lt;span data-start-progress=&quot;4&quot;&gt;&lt;/span&gt;
+    &lt;span data-start-progress=&quot;5&quot;&gt;&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+  #diesel-start-command-v1 {
+    color: var(--foreground);
+  }
+
+  #diesel-start-command-v1 .start-current {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+
+  #diesel-start-command-v1 .start-chain {
+    display: grid;
+    gap: 18px;
+    margin-top: 18px;
+  }
+
+  #diesel-start-command-v1 .start-lane {
+    display: grid;
+    grid-template-columns: minmax(120px, 1fr) minmax(90px, .7fr) minmax(150px, 1fr) minmax(90px, .7fr) minmax(130px, 1fr);
+    align-items: center;
+    gap: 10px;
+  }
+
+  #diesel-start-command-v1 .start-node {
+    display: grid;
+    justify-items: center;
+    gap: 7px;
+    text-align: center;
+    opacity: .45;
+    transition: opacity 240ms ease, transform 240ms ease;
+  }
+
+  #diesel-start-command-v1 .start-node.is-active {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+
+  #diesel-start-command-v1 .start-node code {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  #diesel-start-command-v1 .start-icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--viz-series-1) 14%, var(--background));
+  }
+
+  #diesel-start-command-v1 .start-arrow {
+    display: grid;
+    justify-items: center;
+    gap: 6px;
+    color: var(--muted-foreground);
+    text-align: center;
+    opacity: .4;
+    transition: opacity 220ms ease;
+  }
+
+  #diesel-start-command-v1 .start-arrow.is-active {
+    opacity: 1;
+  }
+
+  #diesel-start-command-v1 .start-model {
+    display: grid;
+    gap: 12px;
+  }
+
+  #diesel-start-command-v1 .start-model-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  #diesel-start-command-v1 .start-model-path {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(18px, auto) minmax(96px, 1fr)) minmax(96px, 1fr);
+    align-items: center;
+    gap: 6px;
+  }
+
+  #diesel-start-command-v1 .start-segment {
+    display: grid;
+    gap: 5px;
+    min-width: 0;
+    padding: 10px 8px;
+    background: var(--background);
+    border-bottom: 2px solid var(--border);
+    opacity: .42;
+    transition: opacity 220ms ease, background 220ms ease, border-color 220ms ease;
+  }
+
+  #diesel-start-command-v1 .start-segment span {
+    color: var(--muted-foreground);
+  }
+
+  #diesel-start-command-v1 .start-segment code {
+    overflow-wrap: anywhere;
+  }
+
+  #diesel-start-command-v1 .start-segment.is-active {
+    opacity: 1;
+    background: color-mix(in srgb, var(--viz-series-1) 14%, var(--background));
+    border-color: var(--viz-series-1);
+  }
+
+  #diesel-start-command-v1 pre {
+    margin: 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  #diesel-start-command-v1 .start-translation {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    opacity: .38;
+    transition: opacity 220ms ease;
+  }
+
+  #diesel-start-command-v1 .start-translation.is-active {
+    opacity: 1;
+  }
+
+  #diesel-start-command-v1 .start-translation-item {
+    display: grid;
+    gap: 5px;
+    padding: 10px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  #diesel-start-command-v1 .start-translation-item.is-active {
+    background: color-mix(in srgb, var(--viz-series-1) 14%, var(--background));
+    border-color: var(--viz-series-1);
+  }
+
+  #diesel-start-command-v1 .start-translation-item span {
+    color: var(--muted-foreground);
+  }
+
+  #diesel-start-command-v1 .start-translation-item code {
+    overflow-wrap: anywhere;
+  }
+
+  #diesel-start-command-v1 .start-feedback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    flex-wrap: wrap;
+    color: var(--muted-foreground);
+    opacity: .35;
+    transition: opacity 220ms ease;
+  }
+
+  #diesel-start-command-v1 .start-feedback.is-active {
+    opacity: 1;
+  }
+
+  #diesel-start-command-v1 .start-progress {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 4px;
+    margin-top: 14px;
+  }
+
+  #diesel-start-command-v1 .start-progress span {
+    height: 3px;
+    background: var(--border);
+  }
+
+  #diesel-start-command-v1 .start-progress span.is-current,
+  #diesel-start-command-v1 .start-progress span.is-complete {
+    background: var(--viz-series-1);
+  }
+
+  @media (max-width: 620px) {
+    #diesel-start-command-v1 .start-lane {
+      grid-template-columns: 1fr;
+    }
+
+    #diesel-start-command-v1 .start-arrow {
+      min-height: 38px;
+    }
+
+    #diesel-start-command-v1 .start-arrow svg {
+      transform: rotate(90deg);
+    }
+
+    #diesel-start-command-v1 .start-model-path {
+      grid-template-columns: 1fr;
+    }
+
+    #diesel-start-command-v1 .start-model-path &gt; svg {
+      justify-self: center;
+      transform: rotate(90deg);
+    }
+  }
+
+  @media (max-width: 420px) {
+    #diesel-start-command-v1 .start-translation {
+      grid-template-columns: 1fr;
+    }
+
+    #diesel-start-command-v1 .start-translation &gt; svg {
+      justify-self: center;
+      transform: rotate(90deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #diesel-start-command-v1 .start-node,
+    #diesel-start-command-v1 .start-segment,
+    #diesel-start-command-v1 .start-translation,
+    #diesel-start-command-v1 .start-feedback {
+      transition: none;
+    }
+  }
+&lt;/style&gt;
+
+&lt;script&gt;
+  (() =&gt; {
+    const root = document.getElementById(&quot;diesel-start-command-v1&quot;);
+    if (!root) return;
+
+    const steps = [
+      {
+        phase: &quot;业务命令&quot;,
+        summary: &quot;操作员点击“启动柴发”。&quot;,
+        label: &quot;人的语言&quot;,
+        title: &quot;启动柴发&quot;,
+        code: &quot;操作员命令：启动柴发&quot;,
+        segments: [],
+        nodes: [&quot;ems&quot;],
+        arrows: [],
+        maps: [],
+        translation: false,
+        feedback: false,
+        states: { ems: &quot;启动柴发&quot;, gateway: &quot;等待命令&quot;, controller: &quot;等待启动&quot; }
+      },
+      {
+        phase: &quot;标准设备模型&quot;,
+        summary: &quot;命令先定位到柴发发动机的标准控制对象。&quot;,
+        label: &quot;对象定位&quot;,
+        title: &quot;LD_DG / DCIP1 / EngCtl&quot;,
+        code: &quot;对象引用：LD_DG/DCIP1.EngCtl&quot;,
+        segments: [&quot;ld&quot;, &quot;ln&quot;, &quot;do&quot;],
+        nodes: [&quot;ems&quot;, &quot;gateway&quot;],
+        arrows: [0],
+        maps: [&quot;source&quot;],
+        translation: false,
+        feedback: false,
+        states: { ems: &quot;选择EngCtl&quot;, gateway: &quot;找到标准对象&quot;, controller: &quot;等待启动&quot; }
+      },
+      {
+        phase: &quot;标准控制服务&quot;,
+        summary: &quot;启动被表达成对EngCtl执行Operate，控制值为on。&quot;,
+        label: &quot;完整标准命令&quot;,
+        title: &quot;Operate + ctlVal=on&quot;,
+        code: &quot;Operate { object=LD_DG/DCIP1.EngCtl, ctlVal=on, origin=EMS, ctlNum=27, test=false }&quot;,
+        segments: [&quot;ld&quot;, &quot;ln&quot;, &quot;do&quot;, &quot;service&quot;, &quot;value&quot;],
+        nodes: [&quot;ems&quot;, &quot;gateway&quot;],
+        arrows: [0],
+        maps: [&quot;source&quot;],
+        translation: false,
+        feedback: false,
+        states: { ems: &quot;发送Operate&quot;, gateway: &quot;收到ctlVal=on&quot;, controller: &quot;等待启动&quot; }
+      },
+      {
+        phase: &quot;网关映射&quot;,
+        summary: &quot;网关用对象引用和控制值匹配映射规则。&quot;,
+        label: &quot;映射条件&quot;,
+        title: &quot;EngCtl + on → 41001写1&quot;,
+        code: &quot;match: LD_DG/DCIP1.EngCtl + on  ⇒  modbus-tcp, unit=3, fc=06, register=41001, value=1&quot;,
+        segments: [&quot;do&quot;, &quot;value&quot;],
+        nodes: [&quot;gateway&quot;],
+        arrows: [],
+        maps: [&quot;source&quot;, &quot;target&quot;],
+        translation: true,
+        feedback: false,
+        states: { ems: &quot;等待执行&quot;, gateway: &quot;命中启动规则&quot;, controller: &quot;等待启动&quot; }
+      },
+      {
+        phase: &quot;柴发操控命令&quot;,
+        summary: &quot;标准命令被翻译成柴发控制器真正能执行的Modbus写寄存器命令。&quot;,
+        label: &quot;厂家协议输出&quot;,
+        title: &quot;Unit 3 · FC06 · 41001 = 1&quot;,
+        code: &quot;Modbus TCP：设备3，功能码06，保持寄存器41001，写入值1（启动）&quot;,
+        segments: [],
+        nodes: [&quot;gateway&quot;, &quot;controller&quot;],
+        arrows: [1],
+        maps: [&quot;target&quot;],
+        translation: true,
+        feedback: false,
+        states: { ems: &quot;等待执行&quot;, gateway: &quot;发送FC06&quot;, controller: &quot;41001=1，开始启动&quot; }
+      },
+      {
+        phase: &quot;状态反馈&quot;,
+        summary: &quot;运行状态再从厂家协议映射回标准模型，EMS确认启动成功。&quot;,
+        label: &quot;闭环结果&quot;,
+        title: &quot;31001=2 → EngOnOff=true&quot;,
+        code: &quot;反馈：31001=2  ⇒  LD_DG/DCIP1.EngOnOff.stVal=true，q=good，t=设备时间&quot;,
+        segments: [&quot;ld&quot;, &quot;ln&quot;],
+        nodes: [&quot;ems&quot;, &quot;gateway&quot;, &quot;controller&quot;],
+        arrows: [],
+        maps: [&quot;source&quot;, &quot;target&quot;],
+        translation: true,
+        feedback: true,
+        states: { ems: &quot;柴发状态=运行&quot;, gateway: &quot;反馈标准状态&quot;, controller: &quot;31001=2，运行&quot; }
+      }
+    ];
+
+    let index = 0;
+    let timer = null;
+    const counter = root.querySelector(&quot;[data-start-counter]&quot;);
+    const phase = root.querySelector(&quot;[data-start-phase]&quot;);
+    const summary = root.querySelector(&quot;[data-start-summary]&quot;);
+    const detailLabel = root.querySelector(&quot;[data-start-detail-label]&quot;);
+    const detailTitle = root.querySelector(&quot;[data-start-detail-title]&quot;);
+    const code = root.querySelector(&quot;[data-start-code]&quot;);
+    const translation = root.querySelector(&quot;.start-translation&quot;);
+    const feedback = root.querySelector(&quot;[data-start-feedback]&quot;);
+    const progressbar = root.querySelector(&quot;.start-progress&quot;);
+    const playButton = root.querySelector(&quot;[data-start-action=&#x27;play&#x27;]&quot;);
+    const playLabel = root.querySelector(&quot;[data-start-play]&quot;);
+    const arrows = root.querySelectorAll(&quot;.start-arrow&quot;);
+
+    function render() {
+      const current = steps[index];
+      counter.textContent = `${index + 1} / ${steps.length}`;
+      phase.textContent = current.phase;
+      summary.textContent = current.summary;
+      detailLabel.textContent = current.label;
+      detailTitle.textContent = current.title;
+      code.textContent = current.code;
+      translation.classList.toggle(&quot;is-active&quot;, current.translation);
+      feedback.classList.toggle(&quot;is-active&quot;, current.feedback);
+      progressbar.setAttribute(&quot;aria-valuenow&quot;, String(index + 1));
+
+      root.querySelectorAll(&quot;[data-start-segment]&quot;).forEach((segment) =&gt; {
+        segment.classList.toggle(&quot;is-active&quot;, current.segments.includes(segment.dataset.startSegment));
+      });
+
+      root.querySelectorAll(&quot;[data-start-node]&quot;).forEach((node) =&gt; {
+        node.classList.toggle(&quot;is-active&quot;, current.nodes.includes(node.dataset.startNode));
+      });
+
+      arrows.forEach((arrow, arrowIndex) =&gt; {
+        arrow.classList.toggle(&quot;is-active&quot;, current.arrows.includes(arrowIndex));
+      });
+
+      root.querySelectorAll(&quot;[data-start-map]&quot;).forEach((item) =&gt; {
+        item.classList.toggle(&quot;is-active&quot;, current.maps.includes(item.dataset.startMap));
+      });
+
+      Object.entries(current.states).forEach(([name, value]) =&gt; {
+        const target = root.querySelector(`[data-start-state=&quot;${name}&quot;]`);
+        if (target) target.textContent = value;
+      });
+
+      root.querySelectorAll(&quot;[data-start-progress]&quot;).forEach((item, progressIndex) =&gt; {
+        item.classList.toggle(&quot;is-current&quot;, progressIndex === index);
+        item.classList.toggle(&quot;is-complete&quot;, progressIndex &lt; index);
+      });
+
+      playLabel.textContent = timer ? &quot;暂停&quot; : (index === steps.length - 1 ? &quot;重新演示&quot; : &quot;开始演示&quot;);
+      playButton.classList.toggle(&quot;btn-primary&quot;, !timer);
+    }
+
+    function stop() {
+      if (timer) window.clearInterval(timer);
+      timer = null;
+      render();
+    }
+
+    function play() {
+      if (timer) {
+        stop();
+        return;
+      }
+      if (index === steps.length - 1) index = 0;
+      timer = window.setInterval(() =&gt; {
+        if (index &gt;= steps.length - 1) {
+          stop();
+          return;
+        }
+        index += 1;
+        render();
+      }, 3200);
+      render();
+    }
+
+    playButton.addEventListener(&quot;click&quot;, play);
+    root.querySelector(&quot;[data-start-action=&#x27;prev&#x27;]&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+      stop();
+      index = Math.max(0, index - 1);
+      render();
+    });
+    root.querySelector(&quot;[data-start-action=&#x27;next&#x27;]&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+      stop();
+      index = Math.min(steps.length - 1, index + 1);
+      render();
+    });
+
+    render();
+  })();
+&lt;/script&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>
