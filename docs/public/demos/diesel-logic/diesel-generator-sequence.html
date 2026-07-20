@@ -1,0 +1,1683 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>柴发自动启停顺控</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;max-width:736px;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="柴发自动启停顺控" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;柴发自动启停顺控&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(--background) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: light-dark(rgb(255 255 255), rgb(24 24 24));
+  --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
+  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --card-foreground: var(--foreground);
+  --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
+  --popover-foreground: var(--foreground);
+  --primary: light-dark(rgb(51 156 255), rgb(131 195 255));
+  --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
+  --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: light-dark(
+    rgb(26 28 31 / 49.4%),
+    rgb(255 255 255 / 49.8%)
+  );
+  --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
+  --accent-foreground: var(--primary);
+  --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
+  --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
+  --input: light-dark(
+    rgb(26 28 31 / 11.8%),
+    color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+  );
+  --ring: light-dark(rgb(51 156 255), rgb(131 195 255 / 76%));
+  --font-size-base: 14px;
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: 12.5px;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+  --color-background-primary: var(--background);
+  --color-text-primary: var(--foreground);
+  --color-border-secondary: var(--border);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--viz-font-weight-medium);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed=&quot;true&quot;],
+    [aria-selected=&quot;true&quot;],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;dg-sequence-vis&quot;&gt;
+  &lt;div class=&quot;viz-controls&quot; aria-label=&quot;动画控制&quot;&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;dg-play&quot;&gt;
+      &lt;i data-lucide=&quot;play&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+      &lt;span&gt;播放&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;dg-prev&quot;&gt;
+      &lt;i data-lucide=&quot;step-back&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+      &lt;span&gt;上一步&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;dg-next&quot;&gt;
+      &lt;i data-lucide=&quot;step-forward&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+      &lt;span&gt;下一步&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; id=&quot;dg-reset&quot;&gt;
+      &lt;i data-lucide=&quot;rotate-ccw&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+      &lt;span&gt;复位&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;span class=&quot;viz-badge&quot; id=&quot;dg-step-badge&quot;&gt;步骤 1 / 9&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;dg-stage&quot;&gt;
+    &lt;svg class=&quot;dg-diagram&quot; viewBox=&quot;0 0 920 440&quot; role=&quot;img&quot; aria-labelledby=&quot;dg-svg-title dg-svg-desc&quot;&gt;
+      &lt;title id=&quot;dg-svg-title&quot;&gt;单台柴油发电机自动启停逻辑动画&lt;/title&gt;
+      &lt;desc id=&quot;dg-svg-desc&quot;&gt;动画依次展示母线失电、启动请求、启动许可、启动命令、发动机启动、建压、断路器合闸、带载运行和正常停机。&lt;/desc&gt;
+
+      &lt;defs&gt;
+        &lt;marker id=&quot;dg-arrow&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;9&quot; refY=&quot;5&quot; markerWidth=&quot;7&quot; markerHeight=&quot;7&quot; orient=&quot;auto-start-reverse&quot;&gt;
+          &lt;path d=&quot;M 0 0 L 10 5 L 0 10 z&quot; fill=&quot;currentColor&quot;&gt;&lt;/path&gt;
+        &lt;/marker&gt;
+        &lt;filter id=&quot;dg-glow&quot; x=&quot;-50%&quot; y=&quot;-50%&quot; width=&quot;200%&quot; height=&quot;200%&quot;&gt;
+          &lt;feGaussianBlur stdDeviation=&quot;5&quot; result=&quot;blur&quot;&gt;&lt;/feGaussianBlur&gt;
+          &lt;feMerge&gt;
+            &lt;feMergeNode in=&quot;blur&quot;&gt;&lt;/feMergeNode&gt;
+            &lt;feMergeNode in=&quot;SourceGraphic&quot;&gt;&lt;/feMergeNode&gt;
+          &lt;/feMerge&gt;
+        &lt;/filter&gt;
+      &lt;/defs&gt;
+
+      &lt;g class=&quot;logic-lane&quot;&gt;
+        &lt;text x=&quot;24&quot; y=&quot;32&quot; class=&quot;lane-label&quot;&gt;控制逻辑&lt;/text&gt;
+
+        &lt;g class=&quot;logic-node&quot; id=&quot;node-request&quot; transform=&quot;translate(24 54)&quot;&gt;
+          &lt;rect width=&quot;184&quot; height=&quot;74&quot; rx=&quot;10&quot;&gt;&lt;/rect&gt;
+          &lt;text x=&quot;92&quot; y=&quot;29&quot; text-anchor=&quot;middle&quot; class=&quot;node-title&quot;&gt;启动请求&lt;/text&gt;
+          &lt;text x=&quot;92&quot; y=&quot;53&quot; text-anchor=&quot;middle&quot; class=&quot;node-sub&quot;&gt;母线失电持续 5 秒&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;path class=&quot;logic-link&quot; id=&quot;link-request-permit&quot; d=&quot;M218 91 H274&quot;&gt;&lt;/path&gt;
+
+        &lt;g class=&quot;logic-node&quot; id=&quot;node-permit&quot; transform=&quot;translate(284 54)&quot;&gt;
+          &lt;rect width=&quot;246&quot; height=&quot;74&quot; rx=&quot;10&quot;&gt;&lt;/rect&gt;
+          &lt;text x=&quot;123&quot; y=&quot;25&quot; text-anchor=&quot;middle&quot; class=&quot;node-title&quot;&gt;启动许可&lt;/text&gt;
+          &lt;text x=&quot;123&quot; y=&quot;48&quot; text-anchor=&quot;middle&quot; class=&quot;node-sub&quot;&gt;自动模式 · 无故障 · 急停复位&lt;/text&gt;
+          &lt;text x=&quot;123&quot; y=&quot;65&quot; text-anchor=&quot;middle&quot; class=&quot;node-sub&quot;&gt;QF1 分位&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;path class=&quot;logic-link&quot; id=&quot;link-permit-command&quot; d=&quot;M540 91 H596&quot;&gt;&lt;/path&gt;
+
+        &lt;g class=&quot;logic-node&quot; id=&quot;node-command&quot; transform=&quot;translate(606 54)&quot;&gt;
+          &lt;rect width=&quot;184&quot; height=&quot;74&quot; rx=&quot;10&quot;&gt;&lt;/rect&gt;
+          &lt;text x=&quot;92&quot; y=&quot;29&quot; text-anchor=&quot;middle&quot; class=&quot;node-title&quot;&gt;启动命令&lt;/text&gt;
+          &lt;text x=&quot;92&quot; y=&quot;53&quot; text-anchor=&quot;middle&quot; class=&quot;node-sub&quot;&gt;请求 AND 许可&lt;/text&gt;
+        &lt;/g&gt;
+
+        &lt;path class=&quot;logic-link&quot; id=&quot;link-command-engine&quot; d=&quot;M800 91 H878 V188&quot;&gt;&lt;/path&gt;
+      &lt;/g&gt;
+
+      &lt;line x1=&quot;24&quot; y1=&quot;155&quot; x2=&quot;896&quot; y2=&quot;155&quot; class=&quot;lane-divider&quot;&gt;&lt;/line&gt;
+      &lt;text x=&quot;24&quot; y=&quot;186&quot; class=&quot;lane-label&quot;&gt;一次设备&lt;/text&gt;
+
+      &lt;g class=&quot;equipment&quot; id=&quot;equipment-engine&quot;&gt;
+        &lt;circle cx=&quot;166&quot; cy=&quot;270&quot; r=&quot;62&quot;&gt;&lt;/circle&gt;
+        &lt;text x=&quot;166&quot; y=&quot;260&quot; text-anchor=&quot;middle&quot; class=&quot;equipment-title&quot;&gt;柴油机&lt;/text&gt;
+        &lt;text x=&quot;166&quot; y=&quot;286&quot; text-anchor=&quot;middle&quot; class=&quot;equipment-value&quot; id=&quot;engine-status&quot;&gt;停止&lt;/text&gt;
+        &lt;path id=&quot;engine-motion&quot; d=&quot;M132 304 Q166 326 200 304&quot;&gt;&lt;/path&gt;
+      &lt;/g&gt;
+
+      &lt;path class=&quot;power-link&quot; id=&quot;shaft-link&quot; d=&quot;M228 270 H304&quot;&gt;&lt;/path&gt;
+
+      &lt;g class=&quot;equipment&quot; id=&quot;equipment-generator&quot;&gt;
+        &lt;circle cx=&quot;374&quot; cy=&quot;270&quot; r=&quot;62&quot;&gt;&lt;/circle&gt;
+        &lt;text x=&quot;374&quot; y=&quot;258&quot; text-anchor=&quot;middle&quot; class=&quot;equipment-title&quot;&gt;发电机 G1&lt;/text&gt;
+        &lt;text x=&quot;374&quot; y=&quot;284&quot; text-anchor=&quot;middle&quot; class=&quot;equipment-value&quot; id=&quot;generator-status&quot;&gt;0 V / 0 Hz&lt;/text&gt;
+        &lt;text x=&quot;374&quot; y=&quot;307&quot; text-anchor=&quot;middle&quot; class=&quot;wave-mark&quot;&gt;∿&lt;/text&gt;
+      &lt;/g&gt;
+
+      &lt;path class=&quot;power-link&quot; id=&quot;generator-link&quot; d=&quot;M436 270 H530&quot;&gt;&lt;/path&gt;
+
+      &lt;g id=&quot;equipment-breaker&quot;&gt;
+        &lt;circle cx=&quot;582&quot; cy=&quot;270&quot; r=&quot;43&quot; class=&quot;breaker-ring&quot;&gt;&lt;/circle&gt;
+        &lt;path d=&quot;M552 270 H568&quot; class=&quot;breaker-terminal&quot;&gt;&lt;/path&gt;
+        &lt;path d=&quot;M596 270 H612&quot; class=&quot;breaker-terminal&quot;&gt;&lt;/path&gt;
+        &lt;path id=&quot;breaker-blade&quot; d=&quot;M568 270 L595 246&quot;&gt;&lt;/path&gt;
+        &lt;text x=&quot;582&quot; y=&quot;335&quot; text-anchor=&quot;middle&quot; class=&quot;equipment-title&quot;&gt;QF1&lt;/text&gt;
+        &lt;text x=&quot;582&quot; y=&quot;358&quot; text-anchor=&quot;middle&quot; class=&quot;equipment-value&quot; id=&quot;breaker-status&quot;&gt;分闸&lt;/text&gt;
+      &lt;/g&gt;
+
+      &lt;path class=&quot;power-link&quot; id=&quot;bus-link&quot; d=&quot;M625 270 H718&quot;&gt;&lt;/path&gt;
+
+      &lt;g id=&quot;equipment-bus&quot;&gt;
+        &lt;path d=&quot;M718 218 V322&quot; class=&quot;busbar&quot;&gt;&lt;/path&gt;
+        &lt;path d=&quot;M718 270 H792&quot; class=&quot;power-link&quot;&gt;&lt;/path&gt;
+        &lt;rect x=&quot;792&quot; y=&quot;230&quot; width=&quot;104&quot; height=&quot;80&quot; rx=&quot;10&quot; class=&quot;load-box&quot;&gt;&lt;/rect&gt;
+        &lt;text x=&quot;844&quot; y=&quot;260&quot; text-anchor=&quot;middle&quot; class=&quot;equipment-title&quot;&gt;负载母线&lt;/text&gt;
+        &lt;text x=&quot;844&quot; y=&quot;286&quot; text-anchor=&quot;middle&quot; class=&quot;equipment-value&quot; id=&quot;bus-status&quot;&gt;失电&lt;/text&gt;
+      &lt;/g&gt;
+
+      &lt;g id=&quot;energy-pulse&quot; aria-hidden=&quot;true&quot;&gt;
+        &lt;circle r=&quot;7&quot;&gt;&lt;/circle&gt;
+      &lt;/g&gt;
+
+      &lt;g class=&quot;timeline&quot; aria-label=&quot;顺控状态&quot;&gt;
+        &lt;path d=&quot;M52 405 H868&quot; class=&quot;timeline-line&quot;&gt;&lt;/path&gt;
+        &lt;g id=&quot;timeline-steps&quot;&gt;&lt;/g&gt;
+      &lt;/g&gt;
+    &lt;/svg&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;viz-grid dg-readouts&quot;&gt;
+    &lt;div class=&quot;card viz-stat&quot;&gt;
+      &lt;span class=&quot;text-muted&quot;&gt;启动请求&lt;/span&gt;
+      &lt;span class=&quot;viz-stat-value&quot; id=&quot;request-value&quot;&gt;0&lt;/span&gt;
+      &lt;span class=&quot;text-small&quot; id=&quot;request-note&quot;&gt;等待母线失电判据&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;card viz-stat&quot;&gt;
+      &lt;span class=&quot;text-muted&quot;&gt;启动许可&lt;/span&gt;
+      &lt;span class=&quot;viz-stat-value&quot; id=&quot;permit-value&quot;&gt;0&lt;/span&gt;
+      &lt;span class=&quot;text-small&quot; id=&quot;permit-note&quot;&gt;尚未检查许可条件&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;card viz-stat&quot;&gt;
+      &lt;span class=&quot;text-muted&quot;&gt;当前状态&lt;/span&gt;
+      &lt;span class=&quot;viz-stat-value&quot; id=&quot;state-value&quot;&gt;待机&lt;/span&gt;
+      &lt;span class=&quot;text-small&quot; id=&quot;state-note&quot;&gt;母线正常，柴发停止&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+  #dg-sequence-vis {
+    color: var(--foreground);
+    width: 100%;
+  }
+
+  #dg-sequence-vis .viz-controls {
+    margin-bottom: 12px;
+  }
+
+  #dg-sequence-vis .dg-stage {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  #dg-sequence-vis .dg-diagram {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 330px;
+    color: var(--muted-foreground);
+  }
+
+  #dg-sequence-vis .lane-label,
+  #dg-sequence-vis .node-title,
+  #dg-sequence-vis .equipment-title,
+  #dg-sequence-vis .equipment-value,
+  #dg-sequence-vis .node-sub,
+  #dg-sequence-vis .timeline text {
+    fill: var(--foreground);
+  }
+
+  #dg-sequence-vis .lane-label,
+  #dg-sequence-vis .node-title,
+  #dg-sequence-vis .equipment-title {
+    font-weight: 500;
+  }
+
+  #dg-sequence-vis .node-sub,
+  #dg-sequence-vis .equipment-value,
+  #dg-sequence-vis .timeline text {
+    fill: var(--muted-foreground);
+  }
+
+  #dg-sequence-vis .logic-node rect,
+  #dg-sequence-vis .equipment circle,
+  #dg-sequence-vis .breaker-ring,
+  #dg-sequence-vis .load-box {
+    fill: color-mix(in srgb, var(--muted) 34%, transparent);
+    stroke: var(--border);
+    stroke-width: 2;
+    transition: fill 300ms ease, stroke 300ms ease, filter 300ms ease;
+  }
+
+  #dg-sequence-vis .logic-link {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 2;
+    marker-end: url(#dg-arrow);
+    transition: stroke 300ms ease;
+  }
+
+  #dg-sequence-vis .lane-divider,
+  #dg-sequence-vis .timeline-line {
+    stroke: var(--border);
+    stroke-width: 1.5;
+  }
+
+  #dg-sequence-vis .power-link,
+  #dg-sequence-vis .busbar,
+  #dg-sequence-vis .breaker-terminal,
+  #dg-sequence-vis #breaker-blade {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 5;
+    stroke-linecap: round;
+    transition: stroke 350ms ease, d 350ms ease;
+  }
+
+  #dg-sequence-vis #engine-motion {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+
+  #dg-sequence-vis .wave-mark {
+    fill: var(--muted-foreground);
+  }
+
+  #dg-sequence-vis .logic-node.active rect,
+  #dg-sequence-vis .equipment.active circle,
+  #dg-sequence-vis #equipment-breaker.active .breaker-ring,
+  #dg-sequence-vis #equipment-bus.active .load-box {
+    fill: color-mix(in srgb, var(--viz-series-1) 18%, transparent);
+    stroke: var(--viz-series-1);
+    filter: url(#dg-glow);
+  }
+
+  #dg-sequence-vis .logic-link.active,
+  #dg-sequence-vis .power-link.energized,
+  #dg-sequence-vis .busbar.energized,
+  #dg-sequence-vis #equipment-breaker.energized .breaker-terminal,
+  #dg-sequence-vis #equipment-breaker.energized #breaker-blade {
+    stroke: var(--viz-series-1);
+  }
+
+  #dg-sequence-vis #energy-pulse {
+    opacity: 0;
+  }
+
+  #dg-sequence-vis #energy-pulse.visible {
+    opacity: 1;
+  }
+
+  #dg-sequence-vis #energy-pulse circle {
+    fill: var(--viz-series-1);
+  }
+
+  #dg-sequence-vis .timeline circle {
+    fill: var(--background);
+    stroke: var(--border);
+    stroke-width: 2;
+    transition: fill 250ms ease, stroke 250ms ease;
+  }
+
+  #dg-sequence-vis .timeline .done circle {
+    fill: var(--viz-series-1);
+    stroke: var(--viz-series-1);
+  }
+
+  #dg-sequence-vis .timeline .current circle {
+    fill: var(--primary);
+    stroke: var(--primary);
+    filter: url(#dg-glow);
+  }
+
+  #dg-sequence-vis .timeline .current text {
+    fill: var(--foreground);
+    font-weight: 500;
+  }
+
+  #dg-sequence-vis .dg-readouts {
+    margin-top: 12px;
+  }
+
+  #dg-sequence-vis .viz-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  @media (max-width: 520px) {
+    #dg-sequence-vis .dg-diagram {
+      min-height: 250px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #dg-sequence-vis * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+&lt;/style&gt;
+
+&lt;script&gt;
+  (() =&gt; {
+    const root = document.getElementById(&#x27;dg-sequence-vis&#x27;);
+    if (!root) return;
+
+    const steps = [
+      {
+        name: &#x27;待机&#x27;,
+        short: &#x27;待机&#x27;,
+        note: &#x27;母线正常，柴发停止&#x27;,
+        request: 0,
+        permit: 0,
+        requestNote: &#x27;等待母线失电判据&#x27;,
+        permitNote: &#x27;尚未检查许可条件&#x27;,
+        engine: &#x27;停止&#x27;,
+        generator: &#x27;0 V / 0 Hz&#x27;,
+        breaker: &#x27;分闸&#x27;,
+        bus: &#x27;正常&#x27;
+      },
+      {
+        name: &#x27;母线失电&#x27;,
+        short: &#x27;失电&#x27;,
+        note: &#x27;母线电压低于定值，5 秒延时开始&#x27;,
+        request: 0,
+        permit: 0,
+        requestNote: &#x27;失电延时计时中&#x27;,
+        permitNote: &#x27;等待启动请求&#x27;,
+        engine: &#x27;停止&#x27;,
+        generator: &#x27;0 V / 0 Hz&#x27;,
+        breaker: &#x27;分闸&#x27;,
+        bus: &#x27;失电&#x27;
+      },
+      {
+        name: &#x27;启动请求&#x27;,
+        short: &#x27;请求&#x27;,
+        note: &#x27;母线失电持续 5 秒，启动请求成立&#x27;,
+        request: 1,
+        permit: 0,
+        requestNote: &#x27;母线失电判据成立&#x27;,
+        permitNote: &#x27;开始检查许可条件&#x27;,
+        engine: &#x27;停止&#x27;,
+        generator: &#x27;0 V / 0 Hz&#x27;,
+        breaker: &#x27;分闸&#x27;,
+        bus: &#x27;失电&#x27;,
+        requestActive: true
+      },
+      {
+        name: &#x27;许可检查&#x27;,
+        short: &#x27;许可&#x27;,
+        note: &#x27;自动模式、无故障、急停复位且 QF1 分位&#x27;,
+        request: 1,
+        permit: 1,
+        requestNote: &#x27;启动请求保持&#x27;,
+        permitNote: &#x27;全部许可条件满足&#x27;,
+        engine: &#x27;停止&#x27;,
+        generator: &#x27;0 V / 0 Hz&#x27;,
+        breaker: &#x27;分闸&#x27;,
+        bus: &#x27;失电&#x27;,
+        requestActive: true,
+        permitActive: true,
+        link1: true
+      },
+      {
+        name: &#x27;启动发动机&#x27;,
+        short: &#x27;启动&#x27;,
+        note: &#x27;请求 AND 许可，输出启动马达命令&#x27;,
+        request: 1,
+        permit: 1,
+        requestNote: &#x27;启动请求保持&#x27;,
+        permitNote: &#x27;启动许可保持&#x27;,
+        engine: &#x27;启动中&#x27;,
+        generator: &#x27;升速中&#x27;,
+        breaker: &#x27;分闸&#x27;,
+        bus: &#x27;失电&#x27;,
+        requestActive: true,
+        permitActive: true,
+        commandActive: true,
+        engineActive: true,
+        link1: true,
+        link2: true,
+        link3: true
+      },
+      {
+        name: &#x27;暖机建压&#x27;,
+        short: &#x27;建压&#x27;,
+        note: &#x27;运行反馈成立，启动马达退出；等待电压频率稳定&#x27;,
+        request: 1,
+        permit: 1,
+        requestNote: &#x27;运行需求仍存在&#x27;,
+        permitNote: &#x27;运行条件正常&#x27;,
+        engine: &#x27;运行 / 暖机&#x27;,
+        generator: &#x27;400 V / 50 Hz&#x27;,
+        breaker: &#x27;分闸&#x27;,
+        bus: &#x27;失电&#x27;,
+        engineActive: true,
+        generatorActive: true,
+        shaft: true,
+        generatorLink: true
+      },
+      {
+        name: &#x27;无压合闸&#x27;,
+        short: &#x27;合闸&#x27;,
+        note: &#x27;发电机就绪且母线无压，QF1 执行合闸&#x27;,
+        request: 1,
+        permit: 1,
+        requestNote: &#x27;运行需求仍存在&#x27;,
+        permitNote: &#x27;合闸许可成立&#x27;,
+        engine: &#x27;运行&#x27;,
+        generator: &#x27;400 V / 50 Hz&#x27;,
+        breaker: &#x27;合闸&#x27;,
+        bus: &#x27;送电中&#x27;,
+        engineActive: true,
+        generatorActive: true,
+        breakerActive: true,
+        shaft: true,
+        generatorLink: true,
+        breakerClosed: true
+      },
+      {
+        name: &#x27;带载运行&#x27;,
+        short: &#x27;运行&#x27;,
+        note: &#x27;QF1 合位反馈成立，柴发向负载母线供电&#x27;,
+        request: 1,
+        permit: 1,
+        requestNote: &#x27;运行需求保持&#x27;,
+        permitNote: &#x27;无故障，持续运行&#x27;,
+        engine: &#x27;带载运行&#x27;,
+        generator: &#x27;400 V / 50 Hz&#x27;,
+        breaker: &#x27;合闸&#x27;,
+        bus: &#x27;柴发供电&#x27;,
+        engineActive: true,
+        generatorActive: true,
+        breakerActive: true,
+        busActive: true,
+        shaft: true,
+        generatorLink: true,
+        busLink: true,
+        breakerClosed: true,
+        pulse: true
+      },
+      {
+        name: &#x27;正常停机&#x27;,
+        short: &#x27;停机&#x27;,
+        note: &#x27;先卸载分闸，再冷却运行，最后停止发动机&#x27;,
+        request: 0,
+        permit: 1,
+        requestNote: &#x27;停机请求使运行需求撤销&#x27;,
+        permitNote: &#x27;允许执行正常停机顺序&#x27;,
+        engine: &#x27;冷却后停止&#x27;,
+        generator: &#x27;降至 0 V&#x27;,
+        breaker: &#x27;已分闸&#x27;,
+        bus: &#x27;失电&#x27;,
+        engineActive: true
+      }
+    ];
+
+    let index = 0;
+    let timer = null;
+    let playing = false;
+
+    const ids = {
+      play: root.querySelector(&#x27;#dg-play&#x27;),
+      prev: root.querySelector(&#x27;#dg-prev&#x27;),
+      next: root.querySelector(&#x27;#dg-next&#x27;),
+      reset: root.querySelector(&#x27;#dg-reset&#x27;),
+      badge: root.querySelector(&#x27;#dg-step-badge&#x27;),
+      requestValue: root.querySelector(&#x27;#request-value&#x27;),
+      permitValue: root.querySelector(&#x27;#permit-value&#x27;),
+      stateValue: root.querySelector(&#x27;#state-value&#x27;),
+      requestNote: root.querySelector(&#x27;#request-note&#x27;),
+      permitNote: root.querySelector(&#x27;#permit-note&#x27;),
+      stateNote: root.querySelector(&#x27;#state-note&#x27;),
+      engineStatus: root.querySelector(&#x27;#engine-status&#x27;),
+      generatorStatus: root.querySelector(&#x27;#generator-status&#x27;),
+      breakerStatus: root.querySelector(&#x27;#breaker-status&#x27;),
+      busStatus: root.querySelector(&#x27;#bus-status&#x27;),
+      requestNode: root.querySelector(&#x27;#node-request&#x27;),
+      permitNode: root.querySelector(&#x27;#node-permit&#x27;),
+      commandNode: root.querySelector(&#x27;#node-command&#x27;),
+      engine: root.querySelector(&#x27;#equipment-engine&#x27;),
+      generator: root.querySelector(&#x27;#equipment-generator&#x27;),
+      breaker: root.querySelector(&#x27;#equipment-breaker&#x27;),
+      bus: root.querySelector(&#x27;#equipment-bus&#x27;),
+      link1: root.querySelector(&#x27;#link-request-permit&#x27;),
+      link2: root.querySelector(&#x27;#link-permit-command&#x27;),
+      link3: root.querySelector(&#x27;#link-command-engine&#x27;),
+      shaft: root.querySelector(&#x27;#shaft-link&#x27;),
+      generatorLink: root.querySelector(&#x27;#generator-link&#x27;),
+      busLink: root.querySelector(&#x27;#bus-link&#x27;),
+      busbar: root.querySelector(&#x27;.busbar&#x27;),
+      blade: root.querySelector(&#x27;#breaker-blade&#x27;),
+      pulse: root.querySelector(&#x27;#energy-pulse&#x27;),
+      timeline: root.querySelector(&#x27;#timeline-steps&#x27;)
+    };
+
+    const xPositions = [52, 154, 256, 358, 460, 562, 664, 766, 868];
+    steps.forEach((step, i) =&gt; {
+      const group = document.createElementNS(&#x27;http://www.w3.org/2000/svg&#x27;, &#x27;g&#x27;);
+      group.setAttribute(&#x27;data-index&#x27;, String(i));
+      const circle = document.createElementNS(&#x27;http://www.w3.org/2000/svg&#x27;, &#x27;circle&#x27;);
+      circle.setAttribute(&#x27;cx&#x27;, String(xPositions[i]));
+      circle.setAttribute(&#x27;cy&#x27;, &#x27;405&#x27;);
+      circle.setAttribute(&#x27;r&#x27;, &#x27;8&#x27;);
+      const label = document.createElementNS(&#x27;http://www.w3.org/2000/svg&#x27;, &#x27;text&#x27;);
+      label.setAttribute(&#x27;x&#x27;, String(xPositions[i]));
+      label.setAttribute(&#x27;y&#x27;, &#x27;430&#x27;);
+      label.setAttribute(&#x27;text-anchor&#x27;, &#x27;middle&#x27;);
+      label.textContent = step.short;
+      group.append(circle, label);
+      ids.timeline.appendChild(group);
+    });
+
+    function toggle(element, className, enabled) {
+      element.classList.toggle(className, Boolean(enabled));
+    }
+
+    function setPlaying(nextPlaying) {
+      playing = nextPlaying;
+      const iconName = playing ? &#x27;pause&#x27; : &#x27;play&#x27;;
+      ids.play.innerHTML = &#x27;&lt;i data-lucide=&quot;&#x27; + iconName + &#x27;&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span&gt;&#x27; + (playing ? &#x27;暂停&#x27; : &#x27;播放&#x27;) + &#x27;&lt;/span&gt;&#x27;;
+      if (window.lucide) {
+        lucide.createIcons({ attrs: { width: 16, height: 16 } });
+      }
+      if (timer) window.clearInterval(timer);
+      timer = playing ? window.setInterval(() =&gt; {
+        if (index &gt;= steps.length - 1) {
+          setPlaying(false);
+          return;
+        }
+        index += 1;
+        render();
+      }, 1900) : null;
+    }
+
+    function animatePulse(enabled) {
+      toggle(ids.pulse, &#x27;visible&#x27;, enabled);
+      if (!enabled) return;
+      const start = performance.now();
+      const duration = 1200;
+      function frame(now) {
+        if (!steps[index].pulse) return;
+        const t = ((now - start) % duration) / duration;
+        const x = 438 + t * 350;
+        ids.pulse.setAttribute(&#x27;transform&#x27;, &#x27;translate(&#x27; + x.toFixed(1) + &#x27; 270)&#x27;);
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function render() {
+      const step = steps[index];
+      ids.badge.textContent = &#x27;步骤 &#x27; + (index + 1) + &#x27; / &#x27; + steps.length;
+      ids.requestValue.textContent = String(step.request);
+      ids.permitValue.textContent = String(step.permit);
+      ids.stateValue.textContent = step.name;
+      ids.requestNote.textContent = step.requestNote;
+      ids.permitNote.textContent = step.permitNote;
+      ids.stateNote.textContent = step.note;
+      ids.engineStatus.textContent = step.engine;
+      ids.generatorStatus.textContent = step.generator;
+      ids.breakerStatus.textContent = step.breaker;
+      ids.busStatus.textContent = step.bus;
+
+      toggle(ids.requestNode, &#x27;active&#x27;, step.requestActive);
+      toggle(ids.permitNode, &#x27;active&#x27;, step.permitActive);
+      toggle(ids.commandNode, &#x27;active&#x27;, step.commandActive);
+      toggle(ids.engine, &#x27;active&#x27;, step.engineActive);
+      toggle(ids.generator, &#x27;active&#x27;, step.generatorActive);
+      toggle(ids.breaker, &#x27;active&#x27;, step.breakerActive);
+      toggle(ids.bus, &#x27;active&#x27;, step.busActive);
+      toggle(ids.link1, &#x27;active&#x27;, step.link1);
+      toggle(ids.link2, &#x27;active&#x27;, step.link2);
+      toggle(ids.link3, &#x27;active&#x27;, step.link3);
+      toggle(ids.shaft, &#x27;energized&#x27;, step.shaft);
+      toggle(ids.generatorLink, &#x27;energized&#x27;, step.generatorLink);
+      toggle(ids.busLink, &#x27;energized&#x27;, step.busLink);
+      toggle(ids.busbar, &#x27;energized&#x27;, step.busActive);
+      toggle(ids.breaker, &#x27;energized&#x27;, step.breakerClosed);
+      ids.blade.setAttribute(&#x27;d&#x27;, step.breakerClosed ? &#x27;M568 270 L596 270&#x27; : &#x27;M568 270 L595 246&#x27;);
+
+      Array.from(ids.timeline.children).forEach((group, i) =&gt; {
+        group.classList.toggle(&#x27;done&#x27;, i &lt; index);
+        group.classList.toggle(&#x27;current&#x27;, i === index);
+      });
+
+      ids.prev.disabled = index === 0;
+      ids.next.disabled = index === steps.length - 1;
+      animatePulse(Boolean(step.pulse));
+    }
+
+    ids.play.addEventListener(&#x27;click&#x27;, () =&gt; {
+      if (!playing &amp;&amp; index === steps.length - 1) {
+        index = 0;
+        render();
+      }
+      setPlaying(!playing);
+    });
+
+    ids.prev.addEventListener(&#x27;click&#x27;, () =&gt; {
+      setPlaying(false);
+      index = Math.max(0, index - 1);
+      render();
+    });
+
+    ids.next.addEventListener(&#x27;click&#x27;, () =&gt; {
+      setPlaying(false);
+      index = Math.min(steps.length - 1, index + 1);
+      render();
+    });
+
+    ids.reset.addEventListener(&#x27;click&#x27;, () =&gt; {
+      setPlaying(false);
+      index = 0;
+      render();
+    });
+
+    render();
+  })();
+&lt;/script&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>

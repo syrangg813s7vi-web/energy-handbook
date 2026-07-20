@@ -56,6 +56,7 @@ export default defineConfig({
       {
         text: "工业控制",
         items: [
+          { text: "柴发的逻辑组态", link: "/knowledge/diesel-generator-logic-configuration" },
           { text: "FBD与SFC", link: "/knowledge/fbd-sfc" },
           { text: "IEC 61850设备接入", link: "/knowledge/iec61850-device-integration" },
         ],
@@ -65,6 +66,7 @@ export default defineConfig({
         items: [
           { text: "内容与动画", link: "/guides/content-and-animation" },
           { text: "在线批阅", link: "/guides/online-review" },
+          { text: "灾难恢复", link: "/guides/disaster-recovery" },
           { text: "路线图", link: "/roadmap" },
         ],
       },
