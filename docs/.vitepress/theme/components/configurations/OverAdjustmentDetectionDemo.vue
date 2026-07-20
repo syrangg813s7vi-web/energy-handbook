@@ -143,7 +143,7 @@ const isOver = computed(() => state.value.detector === "candidate" || state.valu
     <div class="timer-lane">
       <span>超限持续计时</span>
       <div class="timer-track" aria-hidden="true">
-        <span :style="{ width: `${state.timer}%` }"></span>
+        <span :style="{ transform: `scaleX(${state.timer / 100})` }"></span>
       </div>
       <strong>{{ state.timerText }}</strong>
     </div>
@@ -164,7 +164,7 @@ const isOver = computed(() => state.value.detector === "candidate" || state.valu
 }
 
 .over .detector-status {
-  color: var(--vp-c-danger-1);
+  color: var(--config-danger);
 }
 
 .response-plot {
@@ -184,48 +184,48 @@ const isOver = computed(() => state.value.detector === "candidate" || state.valu
 }
 
 .deadband {
-  fill: rgba(213, 138, 0, 0.2);
+  fill: var(--config-capacity-soft);
 }
 
 .target-line {
   fill: none;
-  stroke: #d58a00;
+  stroke: var(--config-capacity);
   stroke-width: 2;
   stroke-dasharray: 7 5;
 }
 
 .measured-line {
   fill: none;
-  stroke: var(--vp-c-brand-1);
+  stroke: var(--config-accent);
   stroke-width: 4;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 clipPath rect {
-  transition: width 600ms ease;
+  transition: width 700ms var(--config-ease);
 }
 
 .cursor {
   stroke: var(--vp-c-divider);
   stroke-width: 1;
-  transition: x1 600ms ease, x2 600ms ease;
+  transition: x1 700ms var(--config-ease), x2 700ms var(--config-ease);
 }
 
 .point {
-  fill: var(--vp-c-brand-1);
+  fill: var(--config-accent);
   stroke: var(--vp-c-bg);
   stroke-width: 3;
-  transition: cx 600ms ease, cy 600ms ease, fill 300ms ease;
+  transition: cx 700ms var(--config-ease), cy 700ms var(--config-ease), fill 300ms ease;
 }
 
 .over .point {
-  fill: var(--vp-c-danger-1);
+  fill: var(--config-danger);
 }
 
 .point-label {
   fill: var(--vp-c-text-1);
-  transition: x 600ms ease, y 600ms ease;
+  transition: x 700ms var(--config-ease), y 700ms var(--config-ease);
 }
 
 .timer-lane {
@@ -235,7 +235,7 @@ clipPath rect {
   align-items: center;
   min-height: 42px;
   padding: 8px 0;
-  border-top: 1px solid var(--vp-c-divider);
+  border-top: 1px solid var(--config-line);
 }
 
 .timer-lane > span {
@@ -250,14 +250,18 @@ clipPath rect {
   height: 12px;
   overflow: hidden;
   border-radius: 999px;
-  background: var(--vp-c-divider);
+  background: var(--config-track);
 }
 
 .timer-track span {
   display: block;
+  width: 100%;
   height: 100%;
-  background: var(--vp-c-danger-1);
-  transition: width 500ms ease;
+  background: var(--config-danger);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 650ms var(--config-ease);
+  will-change: transform;
 }
 
 @media (max-width: 560px) {

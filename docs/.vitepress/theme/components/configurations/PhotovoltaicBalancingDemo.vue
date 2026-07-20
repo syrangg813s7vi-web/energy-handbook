@@ -72,21 +72,24 @@ const residual = computed(() => Math.max(0, 60 - total.value));
       @reset="reset"
     />
 
-    <div class="config-stat-row" aria-live="polite">
-      <div class="config-stat"><span>场站目标</span><strong>60.0 MW</strong></div>
-      <div class="config-stat"><span>合计出力</span><strong>{{ total.toFixed(1) }} MW</strong></div>
-      <div class="config-stat"><span>待分配</span><strong>{{ residual.toFixed(1) }} MW</strong></div>
+    <div class="balance-header" aria-live="polite">
+      <div><span>场站目标</span><strong>60.0 MW</strong></div>
+      <div><span>合计出力</span><strong>{{ total.toFixed(1) }} MW</strong></div>
+      <div><span>待分配</span><strong>{{ residual.toFixed(1) }} MW</strong></div>
     </div>
 
-    <div class="dispatch-flow" aria-label="场站目标进入光伏均衡分配器">
-      <div><span>场站目标</span><strong>60 MW</strong></div>
-      <b aria-hidden="true">→</b>
-      <div><span>均衡分配器</span><strong>{{ state.strategy }}</strong></div>
-      <b aria-hidden="true">→</b>
-      <span>各光伏单元</span>
+    <div class="balance-flow" role="img" aria-labelledby="pvb-title pvb-desc">
+      <span id="pvb-title" class="config-sr-only">光伏场站功率均衡分配动画</span>
+      <span id="pvb-desc" class="config-sr-only">场站目标功率按各光伏单元的可发能力进行分配；单元达到上限后，剩余功率转移给仍有调节裕度的单元。</span>
+      <div class="target-node"><span>场站目标</span><strong>60 MW</strong></div>
+      <div class="flow-line" aria-hidden="true"><span class="flow-packet"></span></div>
+      <div class="dispatch-node"><span>均衡分配器</span><strong>{{ state.strategy }}</strong></div>
     </div>
 
     <div class="unit-chart" aria-label="各光伏单元可发上限、请求位置和实际分配">
+      <div class="scale-row" aria-hidden="true">
+        <span>0</span><span>10</span><span>20</span><span>30</span><span>40 MW</span>
+      </div>
       <div
         v-for="(name, index) in names"
         :key="name"
@@ -100,11 +103,11 @@ const residual = computed(() => Math.max(0, 60 - total.value));
         <div class="bar-track">
           <span
             class="available"
-            :style="{ width: `${(state.available[index] / 40) * 100}%` }"
+            :style="{ transform: `scaleX(${state.available[index] / 40})` }"
           ></span>
           <span
             class="output"
-            :style="{ width: `${(state.output[index] / 40) * 100}%` }"
+            :style="{ transform: `scaleX(${state.output[index] / 40})` }"
           ></span>
           <i
             class="request"
@@ -135,40 +138,118 @@ const residual = computed(() => Math.max(0, 60 - total.value));
 </template>
 
 <style scoped>
-.dispatch-flow {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: center;
-  min-height: 88px;
+.balance-header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 10px 0 14px;
+  border-bottom: 1px solid var(--config-line);
 }
 
-.dispatch-flow div {
+.balance-header > div {
   display: flex;
-  flex-direction: column;
-  min-width: 128px;
-  padding: 9px 12px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 9px;
-  background: var(--vp-c-bg);
+  gap: 8px;
+  align-items: baseline;
+  justify-content: space-between;
 }
 
-.dispatch-flow span {
+.balance-header span {
   color: var(--vp-c-text-2);
 }
 
-.dispatch-flow b {
-  color: var(--vp-c-brand-1);
-  font-size: 1.45rem;
+.balance-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90px;
+  padding: 14px 0 8px;
 }
 
+.target-node,
+.dispatch-node {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 128px;
+  min-height: 62px;
+  padding: 8px 12px;
+  border: 1px solid var(--config-line);
+  border-radius: 10px;
+  background: var(--config-node);
+}
+
+.target-node span,
+.dispatch-node span {
+  color: var(--vp-c-text-2);
+}
+
+.flow-line {
+  position: relative;
+  width: 120px;
+  height: 2px;
+  margin: 0 14px;
+  background: var(--config-accent);
+}
+
+.flow-line::after {
+  position: absolute;
+  top: -4px;
+  right: -1px;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid var(--config-accent);
+  content: "";
+}
+
+.flow-packet {
+  position: absolute;
+  top: -5px;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--config-accent);
+  animation: pv-balance-flow 1.8s linear infinite;
+  will-change: transform;
+}
+
+@keyframes pv-balance-flow {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(108px, 0, 0); }
+}
+
+.unit-chart {
+  padding: 4px 0;
+}
+
+.scale-row,
 .unit-row {
   display: grid;
-  grid-template-columns: 112px minmax(180px, 1fr) 105px;
+  grid-template-columns: 112px minmax(220px, 1fr) 116px;
   gap: 14px;
   align-items: center;
-  min-height: 70px;
-  border-top: 1px solid var(--vp-c-divider);
+}
+
+.scale-row {
+  position: relative;
+  min-height: 22px;
+  color: var(--vp-c-text-2);
+}
+
+.scale-row > span {
+  position: absolute;
+  top: 0;
+}
+
+.scale-row > span:nth-child(1) { left: 126px; }
+.scale-row > span:nth-child(2) { left: calc(126px + (100% - 256px) * 0.25); }
+.scale-row > span:nth-child(3) { left: calc(126px + (100% - 256px) * 0.5); }
+.scale-row > span:nth-child(4) { left: calc(126px + (100% - 256px) * 0.75); }
+.scale-row > span:nth-child(5) { right: 130px; }
+
+.unit-row {
+  min-height: 72px;
+  border-top: 1px solid var(--config-line);
 }
 
 .unit-name,
@@ -190,28 +271,32 @@ const residual = computed(() => Math.max(0, 60 - total.value));
 .bar-track {
   position: relative;
   height: 28px;
+  overflow: visible;
   border-radius: 6px;
   background:
-    linear-gradient(to right, transparent calc(25% - 1px), var(--vp-c-divider) 25%, transparent calc(25% + 1px)),
-    linear-gradient(to right, transparent calc(50% - 1px), var(--vp-c-divider) 50%, transparent calc(50% + 1px)),
-    linear-gradient(to right, transparent calc(75% - 1px), var(--vp-c-divider) 75%, transparent calc(75% + 1px)),
-    var(--vp-c-bg);
+    linear-gradient(to right, transparent calc(25% - 1px), var(--config-line) 25%, transparent calc(25% + 1px)),
+    linear-gradient(to right, transparent calc(50% - 1px), var(--config-line) 50%, transparent calc(50% + 1px)),
+    linear-gradient(to right, transparent calc(75% - 1px), var(--config-line) 75%, transparent calc(75% + 1px)),
+    var(--config-track);
 }
 
 .bar-track .available,
 .bar-track .output {
   position: absolute;
-  inset: 0 auto 0 0;
+  inset: 0;
   border-radius: 6px;
-  transition: width 500ms ease;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 650ms var(--config-ease);
+  will-change: transform;
 }
 
 .bar-track .available {
-  background: rgba(213, 138, 0, 0.24);
+  background: var(--config-capacity-soft);
 }
 
 .bar-track .output {
-  background: color-mix(in srgb, var(--vp-c-brand-1) 72%, transparent);
+  background: var(--config-accent-fill);
 }
 
 .bar-track .request {
@@ -220,7 +305,8 @@ const residual = computed(() => Math.max(0, 60 - total.value));
   width: 2px;
   height: 38px;
   background: var(--vp-c-text-1);
-  transition: left 500ms ease, background 300ms ease;
+  transition: left 650ms var(--config-ease), background 300ms ease;
+  will-change: left;
 }
 
 .bar-track .request::before {
@@ -235,7 +321,7 @@ const residual = computed(() => Math.max(0, 60 - total.value));
 }
 
 .unit-row.limited .request {
-  background: var(--vp-c-danger-1);
+  background: var(--config-danger);
 }
 
 .balance-legend {
@@ -260,11 +346,11 @@ const residual = computed(() => Math.max(0, 60 - total.value));
 }
 
 .available-key {
-  background: rgba(213, 138, 0, 0.24);
+  background: var(--config-capacity-soft);
 }
 
 .output-key {
-  background: color-mix(in srgb, var(--vp-c-brand-1) 72%, transparent);
+  background: var(--config-accent-fill);
 }
 
 .request-key {
@@ -274,18 +360,32 @@ const residual = computed(() => Math.max(0, 60 - total.value));
 }
 
 @media (max-width: 600px) {
-  .dispatch-flow {
-    flex-wrap: wrap;
+  .balance-header {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .balance-flow {
     justify-content: flex-start;
   }
 
-  .dispatch-flow div {
+  .flow-line {
+    width: 52px;
+    margin: 0 8px;
+  }
+
+  .flow-packet {
+    display: none;
+  }
+
+  .target-node,
+  .dispatch-node {
+    min-width: 0;
     flex: 1;
   }
 
-  .dispatch-flow > span {
-    width: 100%;
-    text-align: center;
+  .scale-row {
+    display: none;
   }
 
   .unit-row {

@@ -115,7 +115,7 @@ const state = computed(() => states[step.value]);
         <div class="pu-track">
           <span
             class="pu-fill"
-            :style="{ width: `${(state.pu[index] ?? 0) * 100}%` }"
+            :style="{ transform: `scaleX(${state.pu[index] ?? 0})` }"
           ></span>
           <i v-if="state.mode === 'control' || state.mode === 'denormalize'" class="target"></i>
         </div>
@@ -141,8 +141,8 @@ const state = computed(() => states[step.value]);
   align-items: center;
   min-height: 54px;
   padding: 10px 0;
-  border-top: 1px solid var(--vp-c-divider);
-  border-bottom: 1px solid var(--vp-c-divider);
+  border-top: 1px solid var(--config-line);
+  border-bottom: 1px solid var(--config-line);
 }
 
 .controller-lane span {
@@ -168,7 +168,7 @@ const state = computed(() => states[step.value]);
 
 .conversion-row {
   min-height: 78px;
-  border-top: 1px solid var(--vp-c-divider);
+  border-top: 1px solid var(--config-line);
 }
 
 .device-name,
@@ -184,8 +184,8 @@ const state = computed(() => states[step.value]);
 
 .physical {
   padding: 8px 10px;
-  border-left: 3px solid #d58a00;
-  background: rgba(213, 138, 0, 0.1);
+  border-left: 3px solid var(--config-capacity);
+  background: var(--config-capacity-soft);
 }
 
 .operation {
@@ -195,7 +195,7 @@ const state = computed(() => states[step.value]);
 }
 
 .operation span {
-  color: var(--vp-c-brand-1);
+  color: var(--config-accent);
   font-size: 1.3rem;
 }
 
@@ -213,15 +213,19 @@ const state = computed(() => states[step.value]);
   border-radius: 6px;
   background:
     linear-gradient(to right, transparent calc(50% - 1px), var(--vp-c-divider) 50%, transparent calc(50% + 1px)),
-    var(--vp-c-bg);
+    var(--config-track);
 }
 
 .pu-fill {
   display: block;
+  width: 100%;
   height: 100%;
   border-radius: 6px;
-  background: color-mix(in srgb, var(--vp-c-brand-1) 72%, transparent);
-  transition: width 500ms ease;
+  background: var(--config-accent-fill);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 650ms var(--config-ease);
+  will-change: transform;
 }
 
 .target {

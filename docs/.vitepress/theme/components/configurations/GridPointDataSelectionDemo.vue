@@ -65,7 +65,11 @@ const state = computed(() => states[step.value]);
 </script>
 
 <template>
-  <div class="config-demo grid-selector-demo">
+  <div
+    class="config-demo grid-selector-demo"
+    :data-selected="state.selected"
+    :data-hold="state.selected === 'hold'"
+  >
     <ConfigurationDemoControls
       :current="step"
       :total="states.length"
@@ -75,42 +79,55 @@ const state = computed(() => states[step.value]);
       @reset="reset"
     />
 
-    <div class="selector-flow" aria-label="并网点主备数据选择过程">
-      <div
-        class="source main-source"
-        :class="{ selected: state.selected === 'main', invalid: state.main[1].includes('无效') }"
+    <div class="selector-stage">
+      <svg class="selector-wires" viewBox="0 0 736 300" role="img" aria-labelledby="gps-title gps-desc">
+        <title id="gps-title">并网点主备测量数据选择动画</title>
+        <desc id="gps-desc">主测量和备用测量进入数据选择器；选择器根据品质、更新时间和回切延时，为场站控制器提供一个可信的并网点功率值。</desc>
+        <path class="wire main-wire" d="M 186 78 C 280 78, 260 128, 350 128"></path>
+        <path class="wire backup-wire" d="M 186 222 C 280 222, 260 172, 350 172"></path>
+        <path class="wire output-wire" d="M 486 150 L 604 150"></path>
+        <circle class="packet main-packet" r="6">
+          <animateMotion dur="1.6s" repeatCount="indefinite" path="M 186 78 C 280 78, 260 128, 350 128"></animateMotion>
+        </circle>
+        <circle class="packet backup-packet" r="6">
+          <animateMotion dur="1.6s" repeatCount="indefinite" path="M 186 222 C 280 222, 260 172, 350 172"></animateMotion>
+        </circle>
+        <circle class="packet output-packet" r="6">
+          <animateMotion dur="1.2s" repeatCount="indefinite" path="M 486 150 L 604 150"></animateMotion>
+        </circle>
+      </svg>
+
+      <section
+        class="source source-main"
+        :class="{ 'is-selected': state.selected === 'main', 'is-invalid': state.main[1].includes('无效') }"
+        aria-label="主测量"
       >
         <span>主测量 A</span>
         <strong>{{ state.main[0] }}</strong>
         <small>{{ state.main[1] }}</small>
-      </div>
+      </section>
 
-      <div class="flow-arrow main-arrow" :class="{ active: state.selected === 'main' }">→</div>
-
-      <div class="selector" :class="{ holding: state.selected === 'hold' }">
+      <section class="selector-node" :class="{ holding: state.selected === 'hold' }" aria-label="数据选择器">
         <span>数据选择器</span>
         <strong>{{ state.selector[0] }}</strong>
         <small>{{ state.selector[1] }}</small>
-      </div>
+      </section>
 
-      <div class="flow-arrow output-arrow" :class="{ paused: state.selected === 'hold' }">→</div>
-
-      <div class="controller">
+      <section class="controller-node" aria-label="场站控制器">
         <span>送往控制器</span>
         <strong>{{ state.output }}</strong>
         <small>唯一可信输入</small>
-      </div>
+      </section>
 
-      <div
-        class="source backup-source"
-        :class="{ selected: state.selected === 'backup' }"
+      <section
+        class="source source-backup"
+        :class="{ 'is-selected': state.selected === 'backup' }"
+        aria-label="备用测量"
       >
         <span>备用测量 B</span>
         <strong>{{ state.backup[0] }}</strong>
         <small>{{ state.backup[1] }}</small>
-      </div>
-
-      <div class="flow-arrow backup-arrow" :class="{ active: state.selected === 'backup' }">→</div>
+      </section>
     </div>
 
     <div class="config-detail" role="status" aria-live="polite">
@@ -124,118 +141,160 @@ const state = computed(() => states[step.value]);
 </template>
 
 <style scoped>
-.selector-flow {
-  display: grid;
-  grid-template-columns: minmax(150px, 1fr) 42px minmax(145px, 0.9fr) 42px minmax(140px, 0.9fr);
-  grid-template-rows: repeat(2, minmax(96px, auto));
-  gap: 12px 4px;
-  align-items: center;
-  padding: 14px 0 4px;
+.selector-stage {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  aspect-ratio: 736 / 300;
+}
+
+.selector-wires {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.wire {
+  fill: none;
+  stroke: var(--config-line);
+  stroke-width: 2;
+  transition: stroke 400ms var(--config-ease), opacity 400ms var(--config-ease);
+}
+
+.packet {
+  fill: var(--config-accent);
+  opacity: 0;
+  transition: opacity 300ms ease;
 }
 
 .source,
-.selector,
-.controller {
+.selector-node,
+.controller-node {
+  box-sizing: border-box;
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  min-height: 88px;
+  min-height: 82px;
   padding: 12px;
-  border: 1px solid var(--vp-c-divider);
+  border: 1px solid var(--config-line);
   border-radius: 10px;
-  background: var(--vp-c-bg);
-  transition: border-color 300ms ease, background 300ms ease, transform 300ms ease;
+  background: var(--config-node);
+  color: var(--vp-c-text-1);
+  transition:
+    border-color 400ms var(--config-ease),
+    background 400ms var(--config-ease),
+    opacity 400ms var(--config-ease),
+    transform 400ms var(--config-ease);
 }
 
 .source span,
-.selector span,
-.controller span,
+.selector-node span,
+.controller-node span,
 .source small,
-.selector small,
-.controller small {
+.selector-node small,
+.controller-node small {
   color: var(--vp-c-text-2);
 }
 
-.source.selected {
-  border-color: var(--vp-c-brand-1);
-  background: var(--vp-c-brand-soft);
+.source {
+  left: 0;
+  width: 25.27%;
+}
+
+.source-main {
+  top: 36px;
+}
+
+.source-backup {
+  top: 180px;
+}
+
+.selector-node {
+  top: 105px;
+  left: 47.55%;
+  width: 18.48%;
+  text-align: center;
+}
+
+.controller-node {
+  top: 105px;
+  left: 82.06%;
+  width: 17.94%;
+}
+
+.source.is-selected {
+  border-color: var(--config-accent);
+  background: var(--config-accent-soft);
   transform: translateY(-2px);
 }
 
-.source.invalid {
-  border-color: var(--vp-c-danger-1);
+.source.is-invalid {
+  border-color: var(--config-danger);
+  background: var(--config-danger-soft);
 }
 
-.main-source {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-.backup-source {
-  grid-column: 1;
-  grid-row: 2;
-}
-
-.selector {
-  grid-column: 3;
-  grid-row: 1 / 3;
-}
-
-.selector.holding {
+.selector-node.holding {
   border-style: dashed;
 }
 
-.controller {
-  grid-column: 5;
-  grid-row: 1 / 3;
+.grid-selector-demo[data-selected="main"] .main-wire,
+.grid-selector-demo[data-selected="backup"] .backup-wire,
+.grid-selector-demo .output-wire {
+  stroke: var(--config-accent);
 }
 
-.flow-arrow {
-  color: var(--vp-c-divider);
-  text-align: center;
-  font-size: 1.6rem;
-  transition: color 300ms ease, opacity 300ms ease;
+.grid-selector-demo[data-selected="main"] .main-packet,
+.grid-selector-demo[data-selected="backup"] .backup-packet,
+.grid-selector-demo .output-packet {
+  opacity: 1;
 }
 
-.flow-arrow.active,
-.output-arrow {
-  color: var(--vp-c-brand-1);
+.grid-selector-demo[data-hold="true"] .output-packet {
+  opacity: 0;
 }
 
-.main-arrow {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-.backup-arrow {
-  grid-column: 2;
-  grid-row: 2;
-}
-
-.output-arrow {
-  grid-column: 4;
-  grid-row: 1 / 3;
-}
-
-.output-arrow.paused {
-  opacity: 0.35;
+.grid-selector-demo[data-hold="true"] .output-wire {
+  stroke-dasharray: 5 5;
 }
 
 @media (max-width: 620px) {
-  .selector-flow {
-    display: flex;
-    flex-direction: column;
+  .selector-stage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    min-height: 0;
+    aspect-ratio: auto;
   }
 
-  .main-source { order: 1; }
-  .backup-source { order: 2; }
-  .selector { order: 3; }
-  .controller { order: 4; }
+  .selector-wires {
+    display: none;
+  }
 
-  .main-arrow,
-  .backup-arrow,
-  .output-arrow {
+  .source,
+  .selector-node,
+  .controller-node {
+    position: static;
+    width: auto;
+    min-height: 96px;
+  }
+
+  .selector-node,
+  .controller-node {
+    text-align: left;
+  }
+
+  .source-main { order: 1; }
+  .source-backup { order: 2; }
+  .selector-node { order: 3; }
+  .controller-node { order: 4; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .packet {
     display: none;
   }
 }
