@@ -56,6 +56,7 @@ export default defineConfig({
       {
         text: "工业控制",
         items: [
+          { text: "常见组态", link: "/knowledge/common-configurations" },
           { text: "柴发的逻辑组态", link: "/knowledge/diesel-generator-logic-configuration" },
           { text: "FBD与SFC", link: "/knowledge/fbd-sfc" },
           { text: "IEC 61850设备接入", link: "/knowledge/iec61850-device-integration" },
