@@ -9,6 +9,7 @@ import GridPointDataSelectionDemo from "./components/configurations/GridPointDat
 import OverAdjustmentDetectionDemo from "./components/configurations/OverAdjustmentDetectionDemo.vue";
 import PerUnitValueDemo from "./components/configurations/PerUnitValueDemo.vue";
 import PhotovoltaicBalancingDemo from "./components/configurations/PhotovoltaicBalancingDemo.vue";
+import PvStorageVariableAllocationDemo from "./components/configurations/PvStorageVariableAllocationDemo.vue";
 import ReviewLayer from "./components/ReviewLayer.vue";
 import "./components/configurations/configuration-demo.css";
 import "./custom.css";
@@ -29,5 +30,6 @@ export default {
     app.component("PhotovoltaicBalancingDemo", PhotovoltaicBalancingDemo);
     app.component("PerUnitValueDemo", PerUnitValueDemo);
     app.component("OverAdjustmentDetectionDemo", OverAdjustmentDetectionDemo);
+    app.component("PvStorageVariableAllocationDemo", PvStorageVariableAllocationDemo);
   },
 } satisfies Theme;
