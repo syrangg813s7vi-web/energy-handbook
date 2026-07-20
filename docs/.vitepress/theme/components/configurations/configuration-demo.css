@@ -1,0 +1,141 @@
+.config-demo {
+  margin: 1.25rem 0 1.5rem;
+  padding: 18px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 14px;
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg-soft);
+}
+
+.config-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.config-button {
+  padding: 7px 12px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.config-button:hover {
+  border-color: var(--vp-c-brand-1);
+}
+
+.config-button:focus-visible {
+  outline: 3px solid var(--vp-c-brand-soft);
+  outline-offset: 2px;
+}
+
+.config-button.primary {
+  border-color: var(--vp-c-brand-1);
+  color: var(--vp-c-white);
+  background: var(--vp-c-brand-1);
+}
+
+.config-button.quiet {
+  color: var(--vp-c-text-2);
+  background: transparent;
+}
+
+.config-step {
+  margin-left: auto;
+  padding: 4px 9px;
+  border-radius: 999px;
+  color: var(--vp-c-text-2);
+  background: var(--vp-c-bg);
+  font-size: 0.86rem;
+}
+
+.config-stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding: 10px 0 12px;
+  border-top: 1px solid var(--vp-c-divider);
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.config-stat {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.config-stat span {
+  color: var(--vp-c-text-2);
+}
+
+.config-detail {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  min-height: 48px;
+  margin-top: 10px;
+  padding: 12px 0 8px;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+.config-detail strong {
+  flex: none;
+}
+
+.config-detail span {
+  color: var(--vp-c-text-2);
+}
+
+.config-progress {
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--vp-c-divider);
+}
+
+.config-progress span {
+  display: block;
+  height: 100%;
+  background: var(--vp-c-brand-1);
+  transition: width 350ms ease;
+}
+
+@media (max-width: 600px) {
+  .config-demo {
+    padding: 14px;
+  }
+
+  .config-step {
+    width: 100%;
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .config-stat-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .config-detail {
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .config-demo *,
+  .config-demo *::before,
+  .config-demo *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
