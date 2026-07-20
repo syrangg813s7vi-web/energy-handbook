@@ -257,6 +257,79 @@
   background: var(--vp-c-bg-soft);
 }
 
+.focus-reading-toggle {
+  position: fixed;
+  top: calc(var(--vp-nav-height) + 14px);
+  right: 18px;
+  z-index: 40;
+  display: none;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 999px;
+  color: var(--vp-c-text-2);
+  background: var(--vp-c-bg);
+  background: color-mix(in srgb, var(--vp-c-bg) 90%, transparent);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.focus-reading-toggle:hover,
+.focus-reading-toggle:focus-visible,
+.focus-reading-toggle.active {
+  border-color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1);
+}
+
+.focus-reading-toggle:focus-visible {
+  outline: 3px solid var(--vp-c-brand-soft);
+  outline-offset: 2px;
+}
+
+.focus-reading-toggle svg {
+  width: 17px;
+  height: 17px;
+  fill: currentcolor;
+}
+
+@media (min-width: 960px) {
+  .focus-reading-toggle {
+    display: inline-flex;
+  }
+
+  .focus-reading .VPSidebar,
+  .focus-reading .VPDoc .aside {
+    display: none;
+  }
+
+  .focus-reading .VPContent.has-sidebar {
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .focus-reading .VPDoc .container {
+    display: flex;
+    justify-content: center;
+    max-width: 1120px;
+  }
+
+  .focus-reading .VPDoc .content {
+    width: 100%;
+    max-width: 1024px;
+  }
+
+  .focus-reading .VPDoc.has-aside .content-container {
+    max-width: 960px;
+  }
+}
+
 @media (max-width: 640px) {
   .VPHome .vp-doc {
     padding-inline: 24px;
