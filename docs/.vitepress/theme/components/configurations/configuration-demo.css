@@ -1,10 +1,22 @@
 .config-demo {
+  --config-accent: var(--vp-c-brand-1);
+  --config-accent-soft: var(--vp-c-brand-soft);
+  --config-accent-fill: color-mix(in srgb, var(--config-accent) 72%, transparent);
+  --config-capacity: #d58a00;
+  --config-capacity-soft: color-mix(in srgb, var(--config-capacity) 24%, transparent);
+  --config-danger: var(--vp-c-danger-1);
+  --config-danger-soft: color-mix(in srgb, var(--config-danger) 10%, var(--vp-c-bg));
+  --config-line: var(--vp-c-divider);
+  --config-node: var(--vp-c-bg);
+  --config-track: var(--vp-c-bg-soft);
+  --config-ease: cubic-bezier(0.4, 0, 0.2, 1);
   margin: 1.25rem 0 1.5rem;
   padding: 18px;
   border: 1px solid var(--vp-c-divider);
   border-radius: 14px;
   color: var(--vp-c-text-1);
   background: var(--vp-c-bg-soft);
+  isolation: isolate;
 }
 
 .config-controls {
@@ -60,8 +72,8 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
   padding: 10px 0 12px;
-  border-top: 1px solid var(--vp-c-divider);
-  border-bottom: 1px solid var(--vp-c-divider);
+  border-top: 1px solid var(--config-line);
+  border-bottom: 1px solid var(--config-line);
 }
 
 .config-stat {
@@ -82,7 +94,7 @@
   min-height: 48px;
   margin-top: 10px;
   padding: 12px 0 8px;
-  border-top: 1px solid var(--vp-c-divider);
+  border-top: 1px solid var(--config-line);
 }
 
 .config-detail strong {
@@ -97,14 +109,27 @@
   height: 4px;
   overflow: hidden;
   border-radius: 999px;
-  background: var(--vp-c-divider);
+  background: var(--config-track);
 }
 
 .config-progress span {
   display: block;
   height: 100%;
-  background: var(--vp-c-brand-1);
-  transition: width 350ms ease;
+  background: var(--config-accent);
+  transition: width 500ms var(--config-ease);
+  will-change: width;
+}
+
+.config-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
 }
 
 @media (max-width: 600px) {
