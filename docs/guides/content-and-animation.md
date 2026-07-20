@@ -34,9 +34,6 @@ description: 在 Markdown 中编写可维护、可访问的交互演示。
   title="FBD完整网络扫描演示"
   class="demo-frame"
 ></iframe>
-
-如果当前阅读器没有显示动画，请
-[单独打开演示](/demos/plc/fbd-scan.html)。
 ```
 
 适合：FBD/SFC 扫描演示、完整工艺模拟、独立教学工具和需要强 CSS/JavaScript 隔离的页面。
@@ -58,7 +55,7 @@ description: 在 Markdown 中编写可维护、可访问的交互演示。
 - 所有控件可用键盘操作，输出变化可被辅助技术读取。
 - 遵守用户的 `prefers-reduced-motion` 设置。
 - 首屏有 SSR 输出，JavaScript 不可用时仍有基本信息。
-- iframe 后提供可单独打开的链接，核心结论同时写入 Markdown 正文。
+- 核心结论同时写入 Markdown 正文；只有确实需要独立入口时才另给链接。
 - 数据型演示标注来源、口径、日期和许可条款。
 - 移动端不溢出，深色/浅色主题均可读。
 
@@ -68,3 +65,7 @@ description: 在 Markdown 中编写可维护、可访问的交互演示。
 - 用无文本替代的视频、Canvas 或 iframe 传达核心知识。
 - 把未标注来源的外部数据直接固化在 JavaScript 中。
 - 为了“更炫”而加入与学习目标无关的持续动画。
+
+## 写作案例
+
+怎样以动画为主线组织整篇文章，参见[动画驱动型技术文章写作案例](./animation-led-writing-case.md)。案例总结“先看全貌、再逐层拆解、最后形成完整认识”的通用行文方法。

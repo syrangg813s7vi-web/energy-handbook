@@ -65,6 +65,7 @@ export default defineConfig({
         text: "建设指南",
         items: [
           { text: "内容与动画", link: "/guides/content-and-animation" },
+          { text: "动画驱动写作案例", link: "/guides/animation-led-writing-case" },
           { text: "在线批阅", link: "/guides/online-review" },
           { text: "灾难恢复", link: "/guides/disaster-recovery" },
           { text: "路线图", link: "/roadmap" },
