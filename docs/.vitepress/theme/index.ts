@@ -4,13 +4,17 @@ import { h } from "vue";
 import EnergyFlowDemo from "./components/EnergyFlowDemo.vue";
 import EnergyManagementDemo from "./components/EnergyManagementDemo.vue";
 import EnergySystemRoles from "./components/EnergySystemRoles.vue";
+import FocusReadingToggle from "./components/FocusReadingToggle.vue";
 import ReviewLayer from "./components/ReviewLayer.vue";
 import "./custom.css";
 
 export default {
   extends: DefaultTheme,
   Layout: () => h(DefaultTheme.Layout, null, {
-    "layout-bottom": () => h(ReviewLayer),
+    "layout-bottom": () => [
+      h(FocusReadingToggle),
+      h(ReviewLayer),
+    ],
   }),
   enhanceApp({ app }) {
     app.component("EnergyFlowDemo", EnergyFlowDemo);
