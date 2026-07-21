@@ -26,7 +26,7 @@ const s = computed(() => states[step.value]);
       <div class="config-stat"><span>V/f 参考</span><strong>{{ s[4] }}</strong></div>
     </div>
     <div class="island-stage">
-      <svg viewBox="0 0 736 420" role="img" aria-labelledby="off-grid-title">
+      <svg viewBox="0 0 736 420" preserveAspectRatio="none" role="img" aria-labelledby="off-grid-title">
         <title id="off-grid-title">微电网由并网切换到离网运行</title>
         <path class="wire" :class="{ inactive: s[10] }" d="M120 195 L160 195 M260 195 L325 195" />
         <path class="wire active" d="M435 195 L616 195 M380 318 L380 250" />
@@ -50,7 +50,7 @@ const s = computed(() => states[step.value]);
 
 <style scoped>
 .island-stage{position:relative;min-height:390px;aspect-ratio:736/390}.island-stage svg{position:absolute;inset:0;width:100%;height:100%}.wire{fill:none;stroke:var(--config-line);stroke-width:2;transition:stroke .4s,opacity .4s}.wire.active{stroke:var(--config-accent)}.wire.inactive{stroke:var(--config-danger);stroke-dasharray:6 5;opacity:.55}.packet{fill:var(--config-accent)}.node{position:absolute;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:4px;min-height:80px;padding:11px;border:1px solid var(--config-line);border-radius:10px;background:var(--config-node);transition:.4s var(--config-ease)}.node span,.node small{color:var(--vp-c-text-2)}.node.leader{border-color:var(--config-accent);background:var(--config-accent-soft)}.node.open{border-color:var(--config-danger);opacity:.72}.node.danger{border-color:var(--config-danger);color:var(--config-danger)}.grid{top:150px;left:0;width:16.3%}.breaker{top:150px;left:21.74%;width:13.59%}.bus{top:150px;left:44.16%;width:14.95%}.storage{top:8px;left:43.48%;width:16.3%}.pv{top:292px;left:43.48%;width:16.3%}.load{top:150px;left:83.7%;width:16.3%}
-.island-stage{min-height:420px;aspect-ratio:736/420}.pv{top:318px}
-@media(max-width:680px){.island-stage{display:grid;grid-template-columns:1fr 1fr;gap:10px;min-height:0;aspect-ratio:auto}.island-stage svg{display:none}.node{position:static;width:auto;min-height:92px}.grid{order:1}.breaker{order:2}.storage{order:3}.pv{order:4}.bus{order:5}.load{order:6}}
+.island-stage{min-height:420px;aspect-ratio:736/420}.node{transform:translateY(-50%)}.grid,.breaker,.bus,.load{top:46.43%}.storage{top:10%}.pv{top:86.9%}
+@media(max-width:680px){.island-stage{display:grid;grid-template-columns:1fr 1fr;gap:10px;min-height:0;aspect-ratio:auto}.island-stage svg{display:none}.node{position:static;width:auto;min-height:92px;transform:none}.grid{order:1}.breaker{order:2}.storage{order:3}.pv{order:4}.bus{order:5}.load{order:6}}
 @media(prefers-reduced-motion:reduce){.packet{display:none}}
 </style>
