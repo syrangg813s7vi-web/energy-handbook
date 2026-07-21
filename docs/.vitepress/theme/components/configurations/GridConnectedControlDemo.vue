@@ -24,7 +24,7 @@ const s = computed(() => states[step.value]);
       <div class="config-stat"><span>闭环状态</span><strong>{{ s[6] }}</strong></div>
     </div>
     <div class="gc-stage">
-      <svg viewBox="0 0 736 330" role="img" aria-labelledby="gc-title">
+      <svg viewBox="0 0 736 330" preserveAspectRatio="none" role="img" aria-labelledby="gc-title">
         <title id="gc-title">场站并网点有功闭环控制</title>
         <path class="wire command" d="M110 70 C210 70 205 145 300 145" />
         <path class="wire" :class="{ active:s[7] }" d="M410 130 C485 100 500 65 610 65 M410 160 C485 190 500 230 610 230" />
@@ -46,7 +46,7 @@ const s = computed(() => states[step.value]);
 </template>
 
 <style scoped>
-.gc-stage{position:relative;min-height:330px;aspect-ratio:736/330}.gc-stage svg{position:absolute;inset:0;width:100%;height:100%}.wire{fill:none;stroke:var(--config-line);stroke-width:2;transition:.4s}.wire.active,.wire.command{stroke:var(--config-accent)}.packet{r:5;fill:var(--config-accent)}.node{position:absolute;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:4px;min-height:82px;padding:11px;border:1px solid var(--config-line);border-radius:10px;background:var(--config-node);transition:.4s var(--config-ease)}.node span,.node small{color:var(--vp-c-text-2)}.controller,.reached{border-color:var(--config-accent);background:var(--config-accent-soft)}.dispatch{top:28px;left:0;width:20%}.controller{top:110px;left:40.7%;width:18%}.pv{top:24px;right:0;width:18%}.bess{top:190px;right:0;width:18%}.poi{top:240px;left:22%;width:18%}
-@media(max-width:680px){.gc-stage{display:grid;grid-template-columns:1fr 1fr;gap:10px;min-height:0;aspect-ratio:auto}.gc-stage svg{display:none}.node{position:static;width:auto;min-height:92px}.dispatch{order:1}.controller{order:2}.pv{order:3}.bess{order:4}.poi{order:5;grid-column:1/-1}}
+.gc-stage{position:relative;min-height:330px;aspect-ratio:736/330}.gc-stage svg{position:absolute;inset:0;width:100%;height:100%}.wire{fill:none;stroke:var(--config-line);stroke-width:2;transition:.4s}.wire.active,.wire.command{stroke:var(--config-accent)}.packet{r:5;fill:var(--config-accent)}.node{position:absolute;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:4px;min-height:82px;padding:11px;border:1px solid var(--config-line);border-radius:10px;background:var(--config-node);transform:translateY(-50%);transition:.4s var(--config-ease)}.node span,.node small{color:var(--vp-c-text-2)}.controller,.reached{border-color:var(--config-accent);background:var(--config-accent-soft)}.dispatch{top:21.21%;left:0;width:20%}.controller{top:45.76%;left:40.7%;width:18%}.pv{top:19.7%;right:0;width:18%}.bess{top:69.7%;right:0;width:18%}.poi{top:85.15%;left:22%;width:18%}
+@media(max-width:680px){.gc-stage{display:grid;grid-template-columns:1fr 1fr;gap:10px;min-height:0;aspect-ratio:auto}.gc-stage svg{display:none}.node{position:static;width:auto;min-height:92px;transform:none}.dispatch{order:1}.controller{order:2}.pv{order:3}.bess{order:4}.poi{order:5;grid-column:1/-1}}
 @media(prefers-reduced-motion:reduce){.packet{display:none}}
 </style>
