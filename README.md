@@ -30,6 +30,7 @@ npm run docs:preview
 - VitePress 配置位于 `docs/.vitepress/config.mts`。
 - 页内交互组件位于 `docs/.vitepress/theme/components/`，通过 Vue + TypeScript 实现。
 - 强隔离的自包含 HTML 动画位于 `docs/public/demos/`，通过 iframe 嵌入 Markdown。
+- 文章图形统一使用 Codex 直接生成并经本地确认的原版文件；站点只做嵌入与适配，不进行二次近似重绘。
 - 动画选型和验收规范见站内《内容与动画》。
 
 ## GitHub Pages
