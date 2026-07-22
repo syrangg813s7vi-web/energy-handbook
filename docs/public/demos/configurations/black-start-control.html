@@ -1,0 +1,505 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./visualize.css">
+<div id="black-start-control-demo">
+  <div class="viz-controls" aria-label="动画控制">
+    <button type="button" class="btn btn-primary" data-action="play">自动演示</button>
+    <button type="button" class="btn" data-action="next">下一步</button>
+    <button type="button" class="btn btn-ghost" data-action="reset">复位</button>
+    <span class="viz-badge" data-role="step-label">步骤 1 / 7</span>
+  </div>
+
+  <div class="viz-grid black-start-metrics" aria-live="polite">
+    <section class="card viz-stat">
+      <span class="text-muted">母线电压</span>
+      <strong class="viz-stat-value" data-role="voltage">0.00 pu</strong>
+    </section>
+    <section class="card viz-stat">
+      <span class="text-muted">母线频率</span>
+      <strong class="viz-stat-value" data-role="frequency">—</strong>
+    </section>
+    <section class="card viz-stat">
+      <span class="text-muted">已恢复负荷</span>
+      <strong class="viz-stat-value" data-role="restored-load">0 MW</strong>
+    </section>
+  </div>
+
+  <div class="black-start-stage">
+    <svg class="black-start-wires" viewBox="0 0 736 380" role="img" aria-labelledby="bsc-title bsc-desc">
+      <title id="bsc-title">微电网黑启动恢复顺序</title>
+      <desc id="bsc-desc">停电后先隔离故障，再由具备自主启动能力的构网型储能建立母线电压和频率，依次投入变压器、关键负荷、光伏和普通负荷。</desc>
+
+      <path class="wire command-wire" data-role="command-wire" d="M 162 65 C 166 119 111 142 72 170"></path>
+      <path class="wire source-wire" data-role="source-wire" d="M 147 215 L 177 215"></path>
+      <path class="wire bus-wire" data-role="bus-wire" d="M 310 215 L 368 215"></path>
+      <path class="wire pv-wire" data-role="pv-wire" d="M 353 110 C 375 132 405 150 430 170"></path>
+      <path class="wire critical-wire" data-role="critical-wire" d="M 515 215 C 558 185 575 140 589 125"></path>
+      <path class="wire normal-wire" data-role="normal-wire" d="M 515 215 C 558 248 575 286 589 305"></path>
+
+      <circle class="packet command-packet" data-role="command-packet" r="5">
+        <animateMotion dur="1.35s" repeatCount="indefinite" path="M 162 65 C 166 119 111 142 72 170"></animateMotion>
+      </circle>
+      <circle class="packet source-packet" data-role="source-packet" r="5">
+        <animateMotion dur="1s" repeatCount="indefinite" path="M 147 215 L 177 215"></animateMotion>
+      </circle>
+      <circle class="packet bus-packet" data-role="bus-packet" r="5">
+        <animateMotion dur="1.1s" repeatCount="indefinite" path="M 310 215 L 368 215"></animateMotion>
+      </circle>
+      <circle class="packet pv-packet" data-role="pv-packet" r="5">
+        <animateMotion dur="1.25s" repeatCount="indefinite" path="M 353 110 C 375 132 405 150 430 170"></animateMotion>
+      </circle>
+      <circle class="packet critical-packet" data-role="critical-packet" r="5">
+        <animateMotion dur="1.35s" repeatCount="indefinite" path="M 515 215 C 558 185 575 140 589 125"></animateMotion>
+      </circle>
+      <circle class="packet normal-packet" data-role="normal-packet" r="5">
+        <animateMotion dur="1.45s" repeatCount="indefinite" path="M 515 215 C 558 248 575 286 589 305"></animateMotion>
+      </circle>
+    </svg>
+
+    <section class="card bs-node control-node" data-role="control-node">
+      <span class="text-muted">恢复控制器</span>
+      <strong data-role="control-status">确认全停电</strong>
+      <small class="text-muted" data-role="control-note">等待状态核对</small>
+    </section>
+
+    <section class="card bs-node pv-node" data-role="pv-node">
+      <span class="text-muted">光伏 / 跟网源</span>
+      <strong data-role="pv-power">0 MW</strong>
+      <small class="text-muted" data-role="pv-note">无母线参考，保持停机</small>
+    </section>
+
+    <section class="card bs-node bess-node" data-role="bess-node">
+      <span class="text-muted">黑启动源 / GFM 储能</span>
+      <strong data-role="bess-power">停机</strong>
+      <small class="text-muted" data-role="bess-note">DC 控制电源可用</small>
+    </section>
+
+    <section class="card bs-node energize-node" data-role="energize-node">
+      <span class="text-muted">启动路径</span>
+      <strong data-role="energize-status">全部断开</strong>
+      <small class="text-muted" data-role="energize-note">变压器与馈线隔离</small>
+    </section>
+
+    <section class="card bs-node bus-node" data-role="bus-node">
+      <span class="text-muted">本地交流母线</span>
+      <strong data-role="bus-status">无压</strong>
+      <small class="text-muted" data-role="bus-note">0.00 pu · 无频率</small>
+    </section>
+
+    <section class="card bs-node critical-node" data-role="critical-node">
+      <span class="text-muted">关键负荷</span>
+      <strong data-role="critical-load">0 MW</strong>
+      <small class="text-muted" data-role="critical-note">等待优先恢复</small>
+    </section>
+
+    <section class="card bs-node normal-node" data-role="normal-node">
+      <span class="text-muted">普通负荷</span>
+      <strong data-role="normal-load">0 MW</strong>
+      <small class="text-muted" data-role="normal-note">保持切除</small>
+    </section>
+  </div>
+
+  <div class="current-detail" role="status" aria-live="polite">
+    <strong data-role="phase">系统完全失电</strong>
+    <span data-role="detail">交流母线没有电压和频率，普通光伏逆变器无法自行启动；只有控制电源和黑启动源仍可用。</span>
+  </div>
+
+  <div class="progress-track" aria-hidden="true">
+    <span data-role="progress"></span>
+  </div>
+</div>
+
+<style>
+  #black-start-control-demo {
+    color: var(--foreground);
+  }
+
+  #black-start-control-demo .viz-controls {
+    margin-bottom: 14px;
+  }
+
+  #black-start-control-demo .black-start-metrics {
+    margin-bottom: 12px;
+  }
+
+  #black-start-control-demo .black-start-stage {
+    position: relative;
+    width: 100%;
+    min-height: 380px;
+    aspect-ratio: 736 / 380;
+  }
+
+  #black-start-control-demo .black-start-wires {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  #black-start-control-demo .wire {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 2;
+    transition: stroke 400ms ease, opacity 400ms ease;
+  }
+
+  #black-start-control-demo .wire.active {
+    stroke: var(--viz-series-1);
+  }
+
+  #black-start-control-demo .wire.blocked {
+    stroke: var(--destructive);
+    stroke-dasharray: 6 5;
+  }
+
+  #black-start-control-demo .command-wire {
+    stroke-dasharray: 5 5;
+  }
+
+  #black-start-control-demo .packet {
+    fill: var(--viz-series-1);
+    opacity: 0;
+    transition: opacity 300ms ease;
+  }
+
+  #black-start-control-demo .packet.visible {
+    opacity: 1;
+  }
+
+  #black-start-control-demo .bs-node {
+    position: absolute;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    min-height: 90px;
+  }
+
+  #black-start-control-demo .bs-node strong {
+    font-variant-numeric: tabular-nums;
+  }
+
+  #black-start-control-demo .control-node {
+    top: 20px;
+    left: 0;
+    width: 22%;
+  }
+
+  #black-start-control-demo .pv-node {
+    top: 20px;
+    left: 38%;
+    width: 20%;
+  }
+
+  #black-start-control-demo .bess-node {
+    top: 170px;
+    left: 0;
+    width: 20%;
+  }
+
+  #black-start-control-demo .energize-node {
+    top: 170px;
+    left: 24%;
+    width: 18%;
+  }
+
+  #black-start-control-demo .bus-node {
+    top: 170px;
+    left: 50%;
+    width: 20%;
+  }
+
+  #black-start-control-demo .critical-node {
+    top: 80px;
+    left: 80%;
+    width: 20%;
+  }
+
+  #black-start-control-demo .normal-node {
+    top: 260px;
+    left: 80%;
+    width: 20%;
+  }
+
+  #black-start-control-demo .bs-node.active {
+    color: var(--foreground);
+  }
+
+  #black-start-control-demo .bs-node.blocked {
+    color: var(--destructive);
+  }
+
+  #black-start-control-demo .current-detail {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    min-height: 48px;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  #black-start-control-demo .current-detail strong {
+    flex: 0 0 auto;
+  }
+
+  #black-start-control-demo .current-detail span {
+    color: var(--muted-foreground);
+  }
+
+  #black-start-control-demo .progress-track {
+    height: 4px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--muted);
+  }
+
+  #black-start-control-demo .progress-track span {
+    display: block;
+    width: 14.286%;
+    height: 100%;
+    background: var(--viz-series-1);
+    transition: width 450ms ease;
+  }
+
+  @media (max-width: 680px) {
+    #black-start-control-demo .black-start-stage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      min-height: 0;
+      aspect-ratio: auto;
+    }
+
+    #black-start-control-demo .black-start-wires {
+      display: none;
+    }
+
+    #black-start-control-demo .bs-node {
+      position: static;
+      width: auto;
+      min-height: 94px;
+    }
+
+    #black-start-control-demo .control-node { order: 1; }
+    #black-start-control-demo .bess-node { order: 2; }
+    #black-start-control-demo .energize-node { order: 3; }
+    #black-start-control-demo .bus-node { order: 4; }
+    #black-start-control-demo .critical-node { order: 5; }
+    #black-start-control-demo .pv-node { order: 6; }
+    #black-start-control-demo .normal-node { order: 7; }
+
+    #black-start-control-demo .current-detail {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 4px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #black-start-control-demo .packet {
+      display: none;
+    }
+
+    #black-start-control-demo *,
+    #black-start-control-demo *::before,
+    #black-start-control-demo *::after {
+      transition-duration: 0.001ms !important;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.getElementById("black-start-control-demo");
+    if (!root) return;
+
+    const states = [
+      {
+        phase: "系统完全失电",
+        detail: "交流母线没有电压和频率，普通光伏逆变器无法自行启动；只有控制电源和黑启动源仍可用。",
+        voltage: 0, frequency: null, critical: 0, normal: 0, pv: 0, bess: "停机",
+        control: "确认全停电", controlNote: "等待状态核对", energize: "全部断开", energizeNote: "变压器与馈线隔离",
+        bus: "无压", busNote: "0.00 pu · 无频率", pvNote: "无母线参考，保持停机", bessNote: "DC 控制电源可用",
+        command: false, source: false, busLive: false, pvLive: false, criticalLive: false, normalLive: false,
+      },
+      {
+        phase: "先隔离故障并建立启动路径",
+        detail: "控制器核对停电范围、开关位置和线路健康状态，只保留计划中的启动路径，避免向未知故障点送电。",
+        voltage: 0, frequency: null, critical: 0, normal: 0, pv: 0, bess: "待启动",
+        control: "启动条件通过", controlNote: "故障段已隔离", energize: "启动路径就绪", energizeNote: "仅保留必要开关",
+        bus: "仍然无压", busNote: "等待构网源", pvNote: "保持停机", bessNote: "SOC 与直流侧正常",
+        command: true, source: false, busLive: false, pvLive: false, criticalLive: false, normalLive: false,
+      },
+      {
+        phase: "黑启动源自主启动",
+        detail: "构网型储能不依赖外部交流参考，先启动自身控制、冷却和辅助系统，再缓慢建立输出电压。",
+        voltage: .35, frequency: 50, critical: 0, normal: 0, pv: 0, bess: "软升压",
+        control: "启动 GFM 储能", controlNote: "限制励磁涌流", energize: "源侧开关闭合", energizeNote: "母线侧暂不带载",
+        bus: "升压中", busNote: "0.35 pu · 50.0 Hz", pvNote: "等待稳定母线", bessNote: "形成电压与频率",
+        command: true, source: true, busLive: true, pvLive: false, criticalLive: false, normalLive: false,
+      },
+      {
+        phase: "母线建压并空载稳定",
+        detail: "启动源依次励磁变压器和母线，电压采用软启动方式升到额定值，并确认无异常电流和保护动作。",
+        voltage: 1, frequency: 50, critical: 0, normal: 0, pv: 0, bess: "2 MW",
+        control: "母线建压完成", controlNote: "空载稳定检查", energize: "变压器已励磁", energizeNote: "涌流已衰减",
+        bus: "额定电压建立", busNote: "1.00 pu · 50.0 Hz", pvNote: "母线已存在，等待许可", bessNote: "承担辅助损耗",
+        command: true, source: true, busLive: true, pvLive: false, criticalLive: false, normalLive: false,
+      },
+      {
+        phase: "优先投入关键负荷",
+        detail: "关键负荷分批投入，每次都观察电压、频率和电流恢复；一次投入过多可能触发限流或导致母线崩溃。",
+        voltage: .98, frequency: 49.8, critical: 10, normal: 0, pv: 0, bess: "10 MW",
+        control: "恢复关键负荷", controlNote: "分段投入并等待稳定", energize: "关键馈线闭合", energizeNote: "普通馈线保持断开",
+        bus: "负荷冲击恢复中", busNote: "0.98 pu · 49.8 Hz", pvNote: "等待并入", bessNote: "暂态支撑 10 MW",
+        command: true, source: true, busLive: true, pvLive: false, criticalLive: true, normalLive: false,
+      },
+      {
+        phase: "母线稳定后投入其他电源",
+        detail: "光伏等跟网型电源必须看到稳定的电压和频率参考后才能并入；它们接管部分持续功率，释放储能余量。",
+        voltage: 1, frequency: 50, critical: 15, normal: 5, pv: 15, bess: "5 MW",
+        control: "允许光伏并入", controlNote: "功率缓慢爬升", energize: "电源与关键馈线闭合", energizeNote: "继续保留备用容量",
+        bus: "离网稳定运行", busNote: "1.00 pu · 50.0 Hz", pvNote: "跟随母线输出 15 MW", bessNote: "维持 V/f 并平衡波动",
+        command: true, source: true, busLive: true, pvLive: true, criticalLive: true, normalLive: true,
+      },
+      {
+        phase: "逐级扩大恢复范围",
+        detail: "普通负荷按优先级逐段恢复，始终保留调频、调压和下一次负荷冲击所需的备用能力；最后才准备与大电网同期。",
+        voltage: 1, frequency: 50, critical: 15, normal: 20, pv: 25, bess: "10 MW",
+        control: "恢复计划完成", controlNote: "下一步等待同期并网", energize: "主要馈线已恢复", energizeNote: "故障段继续隔离",
+        bus: "稳定带载", busNote: "1.00 pu · 50.0 Hz", pvNote: "输出 25 MW", bessNote: "保持 10 MW 与备用余量",
+        command: true, source: true, busLive: true, pvLive: true, criticalLive: true, normalLive: true,
+      },
+    ];
+
+    const el = {
+      play: root.querySelector('[data-action="play"]'),
+      voltage: root.querySelector('[data-role="voltage"]'),
+      frequency: root.querySelector('[data-role="frequency"]'),
+      restoredLoad: root.querySelector('[data-role="restored-load"]'),
+      controlNode: root.querySelector('[data-role="control-node"]'),
+      controlStatus: root.querySelector('[data-role="control-status"]'),
+      controlNote: root.querySelector('[data-role="control-note"]'),
+      pvNode: root.querySelector('[data-role="pv-node"]'),
+      pvPower: root.querySelector('[data-role="pv-power"]'),
+      pvNote: root.querySelector('[data-role="pv-note"]'),
+      bessNode: root.querySelector('[data-role="bess-node"]'),
+      bessPower: root.querySelector('[data-role="bess-power"]'),
+      bessNote: root.querySelector('[data-role="bess-note"]'),
+      energizeNode: root.querySelector('[data-role="energize-node"]'),
+      energizeStatus: root.querySelector('[data-role="energize-status"]'),
+      energizeNote: root.querySelector('[data-role="energize-note"]'),
+      busNode: root.querySelector('[data-role="bus-node"]'),
+      busStatus: root.querySelector('[data-role="bus-status"]'),
+      busNote: root.querySelector('[data-role="bus-note"]'),
+      criticalNode: root.querySelector('[data-role="critical-node"]'),
+      criticalLoad: root.querySelector('[data-role="critical-load"]'),
+      criticalNote: root.querySelector('[data-role="critical-note"]'),
+      normalNode: root.querySelector('[data-role="normal-node"]'),
+      normalLoad: root.querySelector('[data-role="normal-load"]'),
+      normalNote: root.querySelector('[data-role="normal-note"]'),
+      commandWire: root.querySelector('[data-role="command-wire"]'),
+      sourceWire: root.querySelector('[data-role="source-wire"]'),
+      busWire: root.querySelector('[data-role="bus-wire"]'),
+      pvWire: root.querySelector('[data-role="pv-wire"]'),
+      criticalWire: root.querySelector('[data-role="critical-wire"]'),
+      normalWire: root.querySelector('[data-role="normal-wire"]'),
+      commandPacket: root.querySelector('[data-role="command-packet"]'),
+      sourcePacket: root.querySelector('[data-role="source-packet"]'),
+      busPacket: root.querySelector('[data-role="bus-packet"]'),
+      pvPacket: root.querySelector('[data-role="pv-packet"]'),
+      criticalPacket: root.querySelector('[data-role="critical-packet"]'),
+      normalPacket: root.querySelector('[data-role="normal-packet"]'),
+      phase: root.querySelector('[data-role="phase"]'),
+      detail: root.querySelector('[data-role="detail"]'),
+      stepLabel: root.querySelector('[data-role="step-label"]'),
+      progress: root.querySelector('[data-role="progress"]'),
+    };
+
+    let index = 0;
+    let timer = 0;
+
+    function setFlow(wire, packet, active) {
+      wire.className.baseVal = `wire ${wire.getAttribute("data-role").replace("-wire", "-wire")} ${active ? "active" : ""}`.trim();
+      packet.className.baseVal = `packet ${active ? "visible" : ""}`.trim();
+    }
+
+    function render() {
+      const state = states[index];
+      el.voltage.textContent = `${state.voltage.toFixed(2)} pu`;
+      el.frequency.textContent = state.frequency === null ? "—" : `${state.frequency.toFixed(1)} Hz`;
+      el.restoredLoad.textContent = `${state.critical + state.normal} MW`;
+      el.controlStatus.textContent = state.control;
+      el.controlNote.textContent = state.controlNote;
+      el.pvPower.textContent = `${state.pv} MW`;
+      el.pvNote.textContent = state.pvNote;
+      el.bessPower.textContent = state.bess;
+      el.bessNote.textContent = state.bessNote;
+      el.energizeStatus.textContent = state.energize;
+      el.energizeNote.textContent = state.energizeNote;
+      el.busStatus.textContent = state.bus;
+      el.busNote.textContent = state.busNote;
+      el.criticalLoad.textContent = `${state.critical} MW`;
+      el.criticalNote.textContent = state.criticalLive ? "关键负荷已供电" : "等待优先恢复";
+      el.normalLoad.textContent = `${state.normal} MW`;
+      el.normalNote.textContent = state.normalLive ? "按计划逐段恢复" : "保持切除";
+      el.phase.textContent = state.phase;
+      el.detail.textContent = state.detail;
+      el.stepLabel.textContent = `步骤 ${index + 1} / ${states.length}`;
+      el.progress.style.width = `${((index + 1) / states.length) * 100}%`;
+
+      setFlow(el.commandWire, el.commandPacket, state.command);
+      setFlow(el.sourceWire, el.sourcePacket, state.source);
+      setFlow(el.busWire, el.busPacket, state.busLive);
+      setFlow(el.pvWire, el.pvPacket, state.pvLive);
+      setFlow(el.criticalWire, el.criticalPacket, state.criticalLive);
+      setFlow(el.normalWire, el.normalPacket, state.normalLive);
+
+      el.controlNode.className = `card bs-node control-node ${state.command ? "active" : ""}`.trim();
+      el.pvNode.className = `card bs-node pv-node ${state.pvLive ? "active" : ""}`.trim();
+      el.bessNode.className = `card bs-node bess-node ${state.source ? "active" : ""}`.trim();
+      el.energizeNode.className = `card bs-node energize-node ${state.busLive ? "active" : ""}`.trim();
+      el.busNode.className = `card bs-node bus-node ${state.busLive ? "active" : ""}`.trim();
+      el.criticalNode.className = `card bs-node critical-node ${state.criticalLive ? "active" : ""}`.trim();
+      el.normalNode.className = `card bs-node normal-node ${state.normalLive ? "active" : ""}`.trim();
+    }
+
+    function stop() {
+      window.clearInterval(timer);
+      timer = 0;
+      el.play.textContent = "自动演示";
+    }
+
+    function advance() {
+      index = (index + 1) % states.length;
+      render();
+      if (index === states.length - 1) stop();
+    }
+
+    root.querySelector('[data-action="next"]').addEventListener("click", () => {
+      stop();
+      advance();
+    });
+
+    root.querySelector('[data-action="reset"]').addEventListener("click", () => {
+      stop();
+      index = 0;
+      render();
+    });
+
+    el.play.addEventListener("click", () => {
+      if (timer) {
+        stop();
+        return;
+      }
+      if (index === states.length - 1) index = 0;
+      render();
+      el.play.textContent = "暂停";
+      timer = window.setInterval(advance, 2900);
+    });
+
+    render();
+  })();
+</script>

@@ -17,7 +17,6 @@ import PhotovoltaicBalancingDemo from "./components/configurations/PhotovoltaicB
 import PvStorageVariableAllocationDemo from "./components/configurations/PvStorageVariableAllocationDemo.vue";
 import SampleDataManagerDemo from "./components/configurations/SampleDataManagerDemo.vue";
 import ReviewLayer from "./components/ReviewLayer.vue";
-import "./components/configurations/configuration-demo.css";
 import "./custom.css";
 
 export default {

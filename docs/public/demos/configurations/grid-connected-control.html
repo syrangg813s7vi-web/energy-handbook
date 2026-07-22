@@ -1,0 +1,466 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./visualize.css">
+<div id="grid-connected-control-demo">
+  <div class="viz-controls" aria-label="动画控制">
+    <button type="button" class="btn btn-primary" data-action="play">自动演示</button>
+    <button type="button" class="btn" data-action="next">下一步</button>
+    <button type="button" class="btn btn-ghost" data-action="reset">复位</button>
+    <span class="viz-badge" data-role="step-label">步骤 1 / 6</span>
+  </div>
+
+  <div class="viz-grid grid-metrics" aria-live="polite">
+    <section class="card viz-stat">
+      <span class="text-muted">并网点有功指令</span>
+      <strong class="viz-stat-value" data-role="p-set">50 MW</strong>
+    </section>
+    <section class="card viz-stat">
+      <span class="text-muted">并网点实际有功</span>
+      <strong class="viz-stat-value" data-role="p-poi">50 MW</strong>
+    </section>
+    <section class="card viz-stat">
+      <span class="text-muted">闭环偏差</span>
+      <strong class="viz-stat-value" data-role="p-error">0 MW</strong>
+    </section>
+  </div>
+
+  <div class="gc-stage">
+    <svg class="gc-wires" viewBox="0 0 736 350" role="img" aria-labelledby="gcc-title gcc-desc">
+      <title id="gcc-title">场站并网控制闭环</title>
+      <desc id="gcc-desc">调度指令进入场站控制器，控制器读取并网点反馈，把有功和无功指令分配给光伏与储能，设备出力汇集后送入公共电网。</desc>
+
+      <path class="wire command-wire" data-role="dispatch-wire" d="M 120 65 C 168 65 216 65 265 65"></path>
+      <path class="wire command-wire" data-role="pv-command-wire" d="M 305 108 C 262 148 194 184 99 235"></path>
+      <path class="wire command-wire" data-role="bess-command-wire" d="M 350 108 C 350 148 350 190 350 235"></path>
+      <path class="wire power-wire active" d="M 170 278 C 272 278 332 216 420 175"></path>
+      <path class="wire power-wire active" d="M 350 235 C 378 211 394 190 420 175"></path>
+      <path class="wire power-wire active" d="M 565 175 L 589 175"></path>
+      <path class="wire feedback-wire" data-role="feedback-wire" d="M 485 130 C 470 82 430 66 442 66"></path>
+
+      <circle class="packet command-packet" data-role="dispatch-packet" r="5">
+        <animateMotion dur="1.25s" repeatCount="indefinite" path="M 120 65 C 168 65 216 65 265 65"></animateMotion>
+      </circle>
+      <circle class="packet command-packet" data-role="pv-command-packet" r="5">
+        <animateMotion dur="1.45s" repeatCount="indefinite" path="M 305 108 C 262 148 194 184 99 235"></animateMotion>
+      </circle>
+      <circle class="packet command-packet" data-role="bess-command-packet" r="5">
+        <animateMotion dur="1.2s" repeatCount="indefinite" path="M 350 108 C 350 148 350 190 350 235"></animateMotion>
+      </circle>
+      <circle class="packet power-packet visible" r="5">
+        <animateMotion dur="1.5s" repeatCount="indefinite" path="M 170 278 C 272 278 332 216 420 175"></animateMotion>
+      </circle>
+      <circle class="packet power-packet visible" r="5">
+        <animateMotion dur="1.25s" repeatCount="indefinite" path="M 350 235 C 378 211 394 190 420 175"></animateMotion>
+      </circle>
+      <circle class="packet power-packet visible" r="5">
+        <animateMotion dur="1.1s" repeatCount="indefinite" path="M 565 175 L 589 175"></animateMotion>
+      </circle>
+      <circle class="packet feedback-packet visible" r="4">
+        <animateMotion dur="1.55s" repeatCount="indefinite" path="M 485 130 C 470 82 430 66 442 66"></animateMotion>
+      </circle>
+    </svg>
+
+    <section class="card gc-node dispatch-node">
+      <span class="text-muted">电网调度</span>
+      <strong data-role="dispatch-value">P* 50 MW</strong>
+      <small class="text-muted" data-role="dispatch-note">下发场站目标</small>
+    </section>
+
+    <section class="card gc-node controller-node" data-role="controller-node">
+      <span class="text-muted">场站控制器 PPC</span>
+      <strong data-role="controller-status">稳态跟踪</strong>
+      <small class="text-muted" data-role="allocation">PV 45 + 储能 5</small>
+    </section>
+
+    <section class="card gc-node pv-node" data-role="pv-node">
+      <span class="text-muted">光伏</span>
+      <strong data-role="pv-power">45 MW</strong>
+      <small class="text-muted" data-role="pv-note">可用 55 MW</small>
+    </section>
+
+    <section class="card gc-node bess-node" data-role="bess-node">
+      <span class="text-muted">储能</span>
+      <strong data-role="bess-power">5 MW</strong>
+      <small class="text-muted" data-role="bess-note">补充调节</small>
+    </section>
+
+    <section class="card gc-node poi-node" data-role="poi-node">
+      <span class="text-muted">并网点反馈</span>
+      <strong data-role="poi-power">P 50 MW</strong>
+      <small class="text-muted" data-role="poi-electric">1.00 pu · Q 0 Mvar</small>
+    </section>
+
+    <section class="card gc-node grid-node">
+      <span class="text-muted">公共电网</span>
+      <strong>50.0 Hz</strong>
+      <small class="text-muted">提供电压与频率参考</small>
+    </section>
+  </div>
+
+  <div class="current-detail" role="status" aria-live="polite">
+    <strong data-role="phase">稳定并网</strong>
+    <span data-role="detail">外部电网确定频率和相位；场站控制器只需让并网点的 P、Q 或电压跟随目标。</span>
+  </div>
+
+  <div class="progress-track" aria-hidden="true">
+    <span data-role="progress"></span>
+  </div>
+</div>
+
+<style>
+  #grid-connected-control-demo {
+    color: var(--foreground);
+  }
+
+  #grid-connected-control-demo .viz-controls {
+    margin-bottom: 14px;
+  }
+
+  #grid-connected-control-demo .grid-metrics {
+    margin-bottom: 12px;
+  }
+
+  #grid-connected-control-demo .gc-stage {
+    position: relative;
+    width: 100%;
+    min-height: 350px;
+    aspect-ratio: 736 / 350;
+  }
+
+  #grid-connected-control-demo .gc-wires {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  #grid-connected-control-demo .wire {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 2;
+    transition: stroke 400ms ease, opacity 400ms ease;
+  }
+
+  #grid-connected-control-demo .wire.active {
+    stroke: var(--viz-series-1);
+  }
+
+  #grid-connected-control-demo .command-wire.active,
+  #grid-connected-control-demo .feedback-wire.active {
+    stroke: var(--viz-series-2);
+  }
+
+  #grid-connected-control-demo .feedback-wire {
+    stroke-dasharray: 5 5;
+  }
+
+  #grid-connected-control-demo .packet {
+    fill: var(--viz-series-1);
+    opacity: 0;
+    transition: opacity 300ms ease;
+  }
+
+  #grid-connected-control-demo .command-packet,
+  #grid-connected-control-demo .feedback-packet {
+    fill: var(--viz-series-2);
+  }
+
+  #grid-connected-control-demo .packet.visible {
+    opacity: 1;
+  }
+
+  #grid-connected-control-demo .gc-node {
+    position: absolute;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    min-height: 90px;
+  }
+
+  #grid-connected-control-demo .gc-node strong {
+    font-variant-numeric: tabular-nums;
+  }
+
+  #grid-connected-control-demo .dispatch-node {
+    top: 20px;
+    left: 0;
+    width: 16.3%;
+  }
+
+  #grid-connected-control-demo .controller-node {
+    top: 20px;
+    left: 36%;
+    width: 24%;
+  }
+
+  #grid-connected-control-demo .pv-node {
+    top: 235px;
+    left: 3%;
+    width: 20%;
+  }
+
+  #grid-connected-control-demo .bess-node {
+    top: 235px;
+    left: 37.5%;
+    width: 20%;
+  }
+
+  #grid-connected-control-demo .poi-node {
+    top: 130px;
+    left: 57%;
+    width: 20%;
+  }
+
+  #grid-connected-control-demo .grid-node {
+    top: 130px;
+    left: 80%;
+    width: 20%;
+  }
+
+  #grid-connected-control-demo .controller-node.active,
+  #grid-connected-control-demo .poi-node.active {
+    color: var(--foreground);
+  }
+
+  #grid-connected-control-demo .pv-node.limited {
+    color: var(--destructive);
+  }
+
+  #grid-connected-control-demo .current-detail {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    min-height: 48px;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  #grid-connected-control-demo .current-detail strong {
+    flex: 0 0 auto;
+  }
+
+  #grid-connected-control-demo .current-detail span {
+    color: var(--muted-foreground);
+  }
+
+  #grid-connected-control-demo .progress-track {
+    height: 4px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--muted);
+  }
+
+  #grid-connected-control-demo .progress-track span {
+    display: block;
+    width: 16.667%;
+    height: 100%;
+    background: var(--viz-series-1);
+    transition: width 450ms ease;
+  }
+
+  @media (max-width: 680px) {
+    #grid-connected-control-demo .gc-stage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      min-height: 0;
+      aspect-ratio: auto;
+    }
+
+    #grid-connected-control-demo .gc-wires {
+      display: none;
+    }
+
+    #grid-connected-control-demo .gc-node {
+      position: static;
+      width: auto;
+      min-height: 94px;
+    }
+
+    #grid-connected-control-demo .dispatch-node { order: 1; }
+    #grid-connected-control-demo .controller-node { order: 2; }
+    #grid-connected-control-demo .pv-node { order: 3; }
+    #grid-connected-control-demo .bess-node { order: 4; }
+    #grid-connected-control-demo .poi-node { order: 5; }
+    #grid-connected-control-demo .grid-node { order: 6; }
+
+    #grid-connected-control-demo .current-detail {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 4px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #grid-connected-control-demo .packet {
+      display: none;
+    }
+
+    #grid-connected-control-demo *,
+    #grid-connected-control-demo *::before,
+    #grid-connected-control-demo *::after {
+      transition-duration: 0.001ms !important;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.getElementById("grid-connected-control-demo");
+    if (!root) return;
+
+    const states = [
+      {
+        phase: "稳定并网",
+        detail: "外部电网确定频率和相位；场站控制器只需让并网点的 P、Q 或电压跟随目标。",
+        pSet: 50, pPoi: 50, voltage: 1, q: 0, pv: 45, pvAvail: 55, bess: 5,
+        controller: "稳态跟踪", note: "下发场站目标", allocation: "PV 45 + 储能 5",
+        commands: false, pvLimited: false,
+      },
+      {
+        phase: "调度提高有功目标",
+        detail: "并网点目标从 50 MW 提高到 65 MW；控制器读到实际仍为 50 MW，得到 +15 MW 闭环偏差。",
+        pSet: 65, pPoi: 50, voltage: 1, q: 0, pv: 45, pvAvail: 55, bess: 5,
+        controller: "计算偏差 +15", note: "新指令 P* 65 MW", allocation: "等待分配增量",
+        commands: true, pvLimited: false,
+      },
+      {
+        phase: "把增量分配给设备",
+        detail: "控制器按照光伏可用能力、储能调节余量和爬坡约束，把增量分别下发给光伏和储能。",
+        pSet: 65, pPoi: 58, voltage: 1, q: 0, pv: 53, pvAvail: 55, bess: 5,
+        controller: "分配并限速", note: "保持 P* 65 MW", allocation: "PV → 55，储能 → 10",
+        commands: true, pvLimited: false,
+      },
+      {
+        phase: "并网点闭环收敛",
+        detail: "设备出力汇集到并网点；反馈值达到 65 MW 后，偏差归零，而不是要求每台设备输出相同比例。",
+        pSet: 65, pPoi: 65, voltage: 1, q: 0, pv: 55, pvAvail: 55, bess: 10,
+        controller: "偏差归零", note: "保持 P* 65 MW", allocation: "PV 55 + 储能 10",
+        commands: true, pvLimited: false,
+      },
+      {
+        phase: "无功回路调节电压",
+        detail: "并网点电压偏高时，控制器可命令设备吸收无功；有功目标保持不变，电压逐步回到目标附近。",
+        pSet: 65, pPoi: 65, voltage: 1.01, q: -8, pv: 55, pvAvail: 55, bess: 10,
+        controller: "吸收无功", note: "P* 65 · V* 1.00 pu", allocation: "Q：PV -5 + 储能 -3",
+        commands: true, pvLimited: false,
+      },
+      {
+        phase: "波动由储能补偿",
+        detail: "云层使光伏可用功率降到 35 MW，储能迅速提高到 30 MW，使并网点仍保持 65 MW；前提是储能还有能力。",
+        pSet: 65, pPoi: 65, voltage: 1, q: 0, pv: 35, pvAvail: 35, bess: 30,
+        controller: "补偿光伏波动", note: "保持 P* 65 MW", allocation: "PV 35 + 储能 30",
+        commands: true, pvLimited: true,
+      },
+    ];
+
+    const el = {
+      play: root.querySelector('[data-action="play"]'),
+      pSet: root.querySelector('[data-role="p-set"]'),
+      pPoi: root.querySelector('[data-role="p-poi"]'),
+      pError: root.querySelector('[data-role="p-error"]'),
+      dispatchValue: root.querySelector('[data-role="dispatch-value"]'),
+      dispatchNote: root.querySelector('[data-role="dispatch-note"]'),
+      controllerNode: root.querySelector('[data-role="controller-node"]'),
+      controllerStatus: root.querySelector('[data-role="controller-status"]'),
+      allocation: root.querySelector('[data-role="allocation"]'),
+      pvNode: root.querySelector('[data-role="pv-node"]'),
+      pvPower: root.querySelector('[data-role="pv-power"]'),
+      pvNote: root.querySelector('[data-role="pv-note"]'),
+      bessPower: root.querySelector('[data-role="bess-power"]'),
+      poiNode: root.querySelector('[data-role="poi-node"]'),
+      poiPower: root.querySelector('[data-role="poi-power"]'),
+      poiElectric: root.querySelector('[data-role="poi-electric"]'),
+      dispatchWire: root.querySelector('[data-role="dispatch-wire"]'),
+      pvCommandWire: root.querySelector('[data-role="pv-command-wire"]'),
+      bessCommandWire: root.querySelector('[data-role="bess-command-wire"]'),
+      feedbackWire: root.querySelector('[data-role="feedback-wire"]'),
+      dispatchPacket: root.querySelector('[data-role="dispatch-packet"]'),
+      pvCommandPacket: root.querySelector('[data-role="pv-command-packet"]'),
+      bessCommandPacket: root.querySelector('[data-role="bess-command-packet"]'),
+      phase: root.querySelector('[data-role="phase"]'),
+      detail: root.querySelector('[data-role="detail"]'),
+      stepLabel: root.querySelector('[data-role="step-label"]'),
+      progress: root.querySelector('[data-role="progress"]'),
+    };
+
+    let index = 0;
+    let timer = 0;
+
+    function signed(value) {
+      return value > 0 ? `+${value}` : `${value}`;
+    }
+
+    function render() {
+      const state = states[index];
+      const error = state.pSet - state.pPoi;
+      el.pSet.textContent = `${state.pSet} MW`;
+      el.pPoi.textContent = `${state.pPoi} MW`;
+      el.pError.textContent = `${signed(error)} MW`;
+      el.dispatchValue.textContent = `P* ${state.pSet} MW`;
+      el.dispatchNote.textContent = state.note;
+      el.controllerStatus.textContent = state.controller;
+      el.allocation.textContent = state.allocation;
+      el.pvPower.textContent = `${state.pv} MW`;
+      el.pvNote.textContent = `可用 ${state.pvAvail} MW`;
+      el.bessPower.textContent = `${state.bess} MW`;
+      el.poiPower.textContent = `P ${state.pPoi} MW`;
+      el.poiElectric.textContent = `${state.voltage.toFixed(2)} pu · Q ${signed(state.q)} Mvar`;
+      el.phase.textContent = state.phase;
+      el.detail.textContent = state.detail;
+      el.stepLabel.textContent = `步骤 ${index + 1} / ${states.length}`;
+      el.progress.style.width = `${((index + 1) / states.length) * 100}%`;
+
+      const wireClass = state.commands ? "wire command-wire active" : "wire command-wire";
+      el.dispatchWire.className.baseVal = wireClass;
+      el.pvCommandWire.className.baseVal = wireClass;
+      el.bessCommandWire.className.baseVal = wireClass;
+      el.feedbackWire.className.baseVal = state.commands ? "wire feedback-wire active" : "wire feedback-wire";
+      el.dispatchPacket.className.baseVal = `packet command-packet ${state.commands ? "visible" : ""}`;
+      el.pvCommandPacket.className.baseVal = `packet command-packet ${state.commands ? "visible" : ""}`;
+      el.bessCommandPacket.className.baseVal = `packet command-packet ${state.commands ? "visible" : ""}`;
+      el.controllerNode.className = `card gc-node controller-node ${state.commands ? "active" : ""}`.trim();
+      el.poiNode.className = `card gc-node poi-node ${state.commands ? "active" : ""}`.trim();
+      el.pvNode.className = `card gc-node pv-node ${state.pvLimited ? "limited" : ""}`.trim();
+    }
+
+    function stop() {
+      window.clearInterval(timer);
+      timer = 0;
+      el.play.textContent = "自动演示";
+    }
+
+    function advance() {
+      index = (index + 1) % states.length;
+      render();
+      if (index === states.length - 1) stop();
+    }
+
+    root.querySelector('[data-action="next"]').addEventListener("click", () => {
+      stop();
+      advance();
+    });
+
+    root.querySelector('[data-action="reset"]').addEventListener("click", () => {
+      stop();
+      index = 0;
+      render();
+    });
+
+    el.play.addEventListener("click", () => {
+      if (timer) {
+        stop();
+        return;
+      }
+      if (index === states.length - 1) index = 0;
+      render();
+      el.play.textContent = "暂停";
+      timer = window.setInterval(advance, 2800);
+    });
+
+    render();
+  })();
+</script>

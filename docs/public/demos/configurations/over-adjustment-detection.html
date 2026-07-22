@@ -1,0 +1,442 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./visualize.css">
+<div id="over-adjustment-detection-demo">
+  <div class="viz-controls" aria-label="动画控制">
+    <button type="button" class="btn btn-primary" data-action="play">自动演示</button>
+    <button type="button" class="btn" data-action="next">下一步</button>
+    <button type="button" class="btn btn-ghost" data-action="reset">复位</button>
+    <span class="viz-badge" data-role="step-label">步骤 1 / 6</span>
+  </div>
+
+  <div class="detector-header" aria-live="polite">
+    <div>
+      <span>目标</span>
+      <strong>80.0 MW</strong>
+    </div>
+    <div>
+      <span>并网点实测</span>
+      <strong data-role="measured">60.0 MW</strong>
+    </div>
+    <div>
+      <span>检测状态</span>
+      <strong data-role="status">指令变化闭锁</strong>
+    </div>
+  </div>
+
+  <div class="response-plot">
+    <svg viewBox="0 0 736 330" role="img" aria-labelledby="oad-title oad-desc">
+      <title id="oad-title">升功率过程的过调检测动画</title>
+      <desc id="oad-desc">目标功率从六十兆瓦升到八十兆瓦，并网点实测逐步上升、越过目标、超过允许带并持续一段时间后确认过调，随后回到复归区间。</desc>
+
+      <defs>
+        <clipPath id="oad-reveal-clip">
+          <rect data-role="clip" x="60" y="20" width="70" height="260"></rect>
+        </clipPath>
+      </defs>
+
+      <g class="grid">
+        <line x1="60" y1="30" x2="680" y2="30"></line>
+        <line x1="60" y1="99" x2="680" y2="99"></line>
+        <line x1="60" y1="167" x2="680" y2="167"></line>
+        <line x1="60" y1="236" x2="680" y2="236"></line>
+        <line x1="60" y1="270" x2="680" y2="270"></line>
+      </g>
+
+      <g class="axis-labels">
+        <text x="48" y="34" text-anchor="end">90</text>
+        <text x="48" y="103" text-anchor="end">80</text>
+        <text x="48" y="171" text-anchor="end">70</text>
+        <text x="48" y="240" text-anchor="end">60</text>
+        <text x="60" y="302">0 s</text>
+        <text x="680" y="302" text-anchor="end">时间</text>
+        <text x="16" y="20">MW</text>
+      </g>
+
+      <rect class="deadband" x="130" y="92" width="550" height="14"></rect>
+      <text class="band-label" x="672" y="88" text-anchor="end">允许带 ±1 MW</text>
+
+      <path class="target-line" d="M 60 236 L 130 236 L 130 99 L 680 99"></path>
+      <text class="target-label" x="672" y="120" text-anchor="end">目标 80 MW</text>
+
+      <g clip-path="url(#oad-reveal-clip)">
+        <path class="measured-line" d="M 60 236 L 130 236 L 220 154 L 310 113 L 400 95 L 490 85 L 580 83 L 670 96"></path>
+      </g>
+
+      <line class="cursor-line" data-role="cursor" x1="130" y1="30" x2="130" y2="270"></line>
+      <circle class="current-point" data-role="point" cx="130" cy="236" r="7"></circle>
+      <text class="point-label" data-role="point-label" x="142" y="226">60.0 MW</text>
+    </svg>
+  </div>
+
+  <div class="timer-lane">
+    <span>超限持续计时</span>
+    <div class="timer-track" aria-hidden="true">
+      <span data-role="timer-fill"></span>
+    </div>
+    <strong data-role="timer-value">未启动</strong>
+  </div>
+
+  <div class="current-detail" role="status" aria-live="polite">
+    <strong data-role="phase">目标刚改变</strong>
+    <span data-role="detail">控制器先短暂闭锁检测，避免把正常的指令阶跃过程误判为过调。</span>
+  </div>
+
+  <div class="progress-track" aria-hidden="true">
+    <span data-role="progress"></span>
+  </div>
+</div>
+
+<style>
+  #over-adjustment-detection-demo {
+    color: var(--foreground);
+  }
+
+  #over-adjustment-detection-demo .viz-controls {
+    margin-bottom: 14px;
+  }
+
+  #over-adjustment-detection-demo .detector-header {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    padding: 10px 0 12px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  #over-adjustment-detection-demo .detector-header > div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  #over-adjustment-detection-demo .detector-header span {
+    color: var(--muted-foreground);
+  }
+
+  #over-adjustment-detection-demo[data-state="candidate"] [data-role="status"],
+  #over-adjustment-detection-demo[data-state="alarm"] [data-role="status"] {
+    color: var(--destructive);
+  }
+
+  #over-adjustment-detection-demo .response-plot {
+    width: 100%;
+  }
+
+  #over-adjustment-detection-demo .response-plot svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  #over-adjustment-detection-demo .grid line {
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  #over-adjustment-detection-demo .axis-labels,
+  #over-adjustment-detection-demo .band-label,
+  #over-adjustment-detection-demo .target-label {
+    fill: var(--muted-foreground);
+  }
+
+  #over-adjustment-detection-demo .deadband {
+    fill: color-mix(in srgb, var(--viz-series-2) 22%, transparent);
+  }
+
+  #over-adjustment-detection-demo .target-line {
+    fill: none;
+    stroke: var(--viz-series-2);
+    stroke-width: 2;
+    stroke-dasharray: 7 5;
+  }
+
+  #over-adjustment-detection-demo .measured-line {
+    fill: none;
+    stroke: var(--viz-series-1);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #over-adjustment-detection-demo [data-role="clip"] {
+    transition: width 600ms ease;
+  }
+
+  #over-adjustment-detection-demo .cursor-line {
+    stroke: var(--border);
+    stroke-width: 1;
+    transition: x1 600ms ease, x2 600ms ease;
+  }
+
+  #over-adjustment-detection-demo .current-point {
+    fill: var(--viz-series-1);
+    stroke: var(--background);
+    stroke-width: 3;
+    transition: cx 600ms ease, cy 600ms ease, fill 300ms ease;
+  }
+
+  #over-adjustment-detection-demo[data-state="candidate"] .current-point,
+  #over-adjustment-detection-demo[data-state="alarm"] .current-point {
+    fill: var(--destructive);
+  }
+
+  #over-adjustment-detection-demo .point-label {
+    fill: var(--foreground);
+    transition: x 600ms ease, y 600ms ease;
+  }
+
+  #over-adjustment-detection-demo .timer-lane {
+    display: grid;
+    grid-template-columns: 124px minmax(160px, 1fr) 88px;
+    gap: 12px;
+    align-items: center;
+    min-height: 42px;
+    padding: 8px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  #over-adjustment-detection-demo .timer-lane > span {
+    color: var(--muted-foreground);
+  }
+
+  #over-adjustment-detection-demo .timer-lane > strong {
+    text-align: right;
+  }
+
+  #over-adjustment-detection-demo .timer-track {
+    height: 12px;
+    overflow: hidden;
+    background: var(--muted);
+    border-radius: 999px;
+  }
+
+  #over-adjustment-detection-demo .timer-track span {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: var(--destructive);
+    transition: width 500ms ease;
+  }
+
+  #over-adjustment-detection-demo .current-detail {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    min-height: 48px;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  #over-adjustment-detection-demo .current-detail strong {
+    flex: 0 0 auto;
+  }
+
+  #over-adjustment-detection-demo .current-detail span {
+    color: var(--muted-foreground);
+  }
+
+  #over-adjustment-detection-demo .progress-track {
+    height: 4px;
+    overflow: hidden;
+    background: var(--muted);
+    border-radius: 999px;
+  }
+
+  #over-adjustment-detection-demo .progress-track span {
+    display: block;
+    width: 16.666%;
+    height: 100%;
+    background: var(--viz-series-1);
+    transition: width 350ms ease;
+  }
+
+  @media (max-width: 560px) {
+    #over-adjustment-detection-demo .detector-header {
+      grid-template-columns: 1fr;
+      gap: 5px;
+    }
+
+    #over-adjustment-detection-demo .timer-lane {
+      grid-template-columns: 1fr 72px;
+    }
+
+    #over-adjustment-detection-demo .timer-track {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+
+    #over-adjustment-detection-demo .timer-lane > strong {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    #over-adjustment-detection-demo .current-detail {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 4px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #over-adjustment-detection-demo *,
+    #over-adjustment-detection-demo *::before,
+    #over-adjustment-detection-demo *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.getElementById("over-adjustment-detection-demo");
+    if (!root) return;
+
+    const states = [
+      {
+        phase: "目标刚改变",
+        detail: "控制器先短暂闭锁检测，避免把正常的指令阶跃过程误判为过调。",
+        measured: 60,
+        status: "指令变化闭锁",
+        detectorState: "blocked",
+        x: 130,
+        y: 236,
+        timer: 0,
+        timerText: "未启动"
+      },
+      {
+        phase: "正常跟踪目标",
+        detail: "实测功率仍在目标下方，控制器继续升功率；此时不存在过调。",
+        measured: 78,
+        status: "正常跟踪",
+        detectorState: "normal",
+        x: 310,
+        y: 113,
+        timer: 0,
+        timerText: "未启动"
+      },
+      {
+        phase: "越过目标但仍在允许带内",
+        detail: "80.6 MW 虽然越过目标，但没有超过 81 MW 上边界，属于允许波动。",
+        measured: 80.6,
+        status: "允许带内",
+        detectorState: "normal",
+        x: 400,
+        y: 95,
+        timer: 0,
+        timerText: "未启动"
+      },
+      {
+        phase: "进入过调候选",
+        detail: "实测达到 82 MW，已经超过死区上边界；先启动持续计时，不立即确认。",
+        measured: 82,
+        status: "过调候选",
+        detectorState: "candidate",
+        x: 490,
+        y: 85,
+        timer: 40,
+        timerText: "0.4 / 1.0 s"
+      },
+      {
+        phase: "确认过调",
+        detail: "超限连续达到 1 秒，过调标志置位，后级可以冻结积分或减小升功率指令。",
+        measured: 82.3,
+        status: "过调已确认",
+        detectorState: "alarm",
+        x: 580,
+        y: 83,
+        timer: 100,
+        timerText: "1.0 / 1.0 s"
+      },
+      {
+        phase: "回到复归区间",
+        detail: "修正后回到 80.4 MW，并满足复归条件；标志解除，避免在边界附近反复跳变。",
+        measured: 80.4,
+        status: "已复归",
+        detectorState: "recovered",
+        x: 670,
+        y: 96,
+        timer: 0,
+        timerText: "已清零"
+      }
+    ];
+
+    const measured = root.querySelector('[data-role="measured"]');
+    const status = root.querySelector('[data-role="status"]');
+    const clip = root.querySelector('[data-role="clip"]');
+    const cursor = root.querySelector('[data-role="cursor"]');
+    const point = root.querySelector('[data-role="point"]');
+    const pointLabel = root.querySelector('[data-role="point-label"]');
+    const timerFill = root.querySelector('[data-role="timer-fill"]');
+    const timerValue = root.querySelector('[data-role="timer-value"]');
+    const phase = root.querySelector('[data-role="phase"]');
+    const detail = root.querySelector('[data-role="detail"]');
+    const stepLabel = root.querySelector('[data-role="step-label"]');
+    const progress = root.querySelector('[data-role="progress"]');
+    const play = root.querySelector('[data-action="play"]');
+    let index = 0;
+    let interval = null;
+
+    function render() {
+      const state = states[index];
+      root.dataset.state = state.detectorState;
+      measured.textContent = `${state.measured.toFixed(1)} MW`;
+      status.textContent = state.status;
+      clip.setAttribute("width", String(state.x - 60));
+      cursor.setAttribute("x1", String(state.x));
+      cursor.setAttribute("x2", String(state.x));
+      point.setAttribute("cx", String(state.x));
+      point.setAttribute("cy", String(state.y));
+      pointLabel.setAttribute("x", String(state.x > 620 ? state.x - 12 : state.x + 12));
+      pointLabel.setAttribute("y", String(state.y - 10));
+      pointLabel.setAttribute("text-anchor", state.x > 620 ? "end" : "start");
+      pointLabel.textContent = `${state.measured.toFixed(1)} MW`;
+      timerFill.style.width = `${state.timer}%`;
+      timerValue.textContent = state.timerText;
+      phase.textContent = state.phase;
+      detail.textContent = state.detail;
+      stepLabel.textContent = `步骤 ${index + 1} / ${states.length}`;
+      progress.style.width = `${((index + 1) / states.length) * 100}%`;
+    }
+
+    function stop() {
+      if (interval) window.clearInterval(interval);
+      interval = null;
+      play.textContent = "自动演示";
+    }
+
+    function advance() {
+      index = (index + 1) % states.length;
+      render();
+      if (index === states.length - 1 && interval) stop();
+    }
+
+    root.querySelector('[data-action="next"]').addEventListener("click", () => {
+      stop();
+      advance();
+    });
+
+    root.querySelector('[data-action="reset"]').addEventListener("click", () => {
+      stop();
+      index = 0;
+      render();
+    });
+
+    play.addEventListener("click", () => {
+      if (interval) {
+        stop();
+        return;
+      }
+      if (index === states.length - 1) index = 0;
+      render();
+      play.textContent = "暂停";
+      interval = window.setInterval(advance, 2600);
+    });
+
+    render();
+  })();
+</script>

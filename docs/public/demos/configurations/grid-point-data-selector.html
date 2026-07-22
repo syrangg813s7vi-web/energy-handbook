@@ -1,0 +1,433 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./visualize.css">
+<div id="grid-point-selector-demo">
+  <div class="viz-controls" aria-label="动画控制">
+    <button type="button" class="btn btn-primary" data-action="play">自动演示</button>
+    <button type="button" class="btn" data-action="next">下一步</button>
+    <button type="button" class="btn btn-ghost" data-action="reset">复位</button>
+    <span class="viz-badge" data-role="step-label">步骤 1 / 6</span>
+  </div>
+
+  <div class="selector-stage" data-role="stage">
+    <svg class="selector-wires" viewBox="0 0 736 300" role="img" aria-labelledby="gps-title gps-desc">
+      <title id="gps-title">并网点主备测量数据选择动画</title>
+      <desc id="gps-desc">主测量和备用测量进入数据选择器；选择器根据品质、更新时间和回切延时，为场站控制器提供一个可信的并网点功率值。</desc>
+
+      <path class="wire main-wire" d="M 186 78 C 280 78, 260 128, 350 128" />
+      <path class="wire backup-wire" d="M 186 222 C 280 222, 260 172, 350 172" />
+      <path class="wire output-wire" d="M 486 150 L 604 150" />
+
+      <circle class="packet main-packet" r="6">
+        <animateMotion dur="1.6s" repeatCount="indefinite" path="M 186 78 C 280 78, 260 128, 350 128" />
+      </circle>
+      <circle class="packet backup-packet" r="6">
+        <animateMotion dur="1.6s" repeatCount="indefinite" path="M 186 222 C 280 222, 260 172, 350 172" />
+      </circle>
+      <circle class="packet output-packet" r="6">
+        <animateMotion dur="1.2s" repeatCount="indefinite" path="M 486 150 L 604 150" />
+      </circle>
+    </svg>
+
+    <section class="source source-main" aria-label="主测量">
+      <span class="source-name">主测量 A</span>
+      <strong data-role="main-value">50.2 MW</strong>
+      <span class="source-meta" data-role="main-meta">品质正常 · 刚刚更新</span>
+    </section>
+
+    <section class="source source-backup" aria-label="备用测量">
+      <span class="source-name">备用测量 B</span>
+      <strong data-role="backup-value">50.4 MW</strong>
+      <span class="source-meta" data-role="backup-meta">品质正常 · 刚刚更新</span>
+    </section>
+
+    <section class="selector-node" aria-label="数据选择器">
+      <span>数据选择器</span>
+      <strong data-role="selected-source">选择 A</strong>
+      <span class="source-meta" data-role="selector-rule">主测量有效，优先使用</span>
+    </section>
+
+    <section class="controller-node" aria-label="场站控制器">
+      <span>送往控制器</span>
+      <strong data-role="output-value">50.2 MW</strong>
+      <span class="source-meta">唯一可信输入</span>
+    </section>
+  </div>
+
+  <div class="current-detail" role="status" aria-live="polite">
+    <strong data-role="phase">正常运行</strong>
+    <span data-role="detail">两路数据都正常，选择器按优先级采用主测量 A。</span>
+  </div>
+
+  <div class="progress-track" aria-hidden="true">
+    <span data-role="progress"></span>
+  </div>
+</div>
+
+<style>
+  #grid-point-selector-demo {
+    color: var(--foreground);
+  }
+
+  #grid-point-selector-demo .viz-controls {
+    margin-bottom: 16px;
+  }
+
+  #grid-point-selector-demo .selector-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 736 / 300;
+    min-height: 300px;
+  }
+
+  #grid-point-selector-demo .selector-wires {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  #grid-point-selector-demo .wire {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 2;
+    transition: stroke 300ms ease, opacity 300ms ease;
+  }
+
+  #grid-point-selector-demo .packet {
+    fill: var(--viz-series-1);
+    opacity: 0;
+    transition: opacity 250ms ease;
+  }
+
+  #grid-point-selector-demo .source,
+  #grid-point-selector-demo .selector-node,
+  #grid-point-selector-demo .controller-node {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    min-height: 82px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card);
+    color: var(--card-foreground);
+    transition: border-color 300ms ease, background 300ms ease, opacity 300ms ease, transform 300ms ease;
+  }
+
+  #grid-point-selector-demo .source {
+    left: 0;
+    width: 186px;
+  }
+
+  #grid-point-selector-demo .source-main {
+    top: 36px;
+  }
+
+  #grid-point-selector-demo .source-backup {
+    top: 180px;
+  }
+
+  #grid-point-selector-demo .selector-node {
+    left: 350px;
+    top: 105px;
+    width: 136px;
+    text-align: center;
+  }
+
+  #grid-point-selector-demo .controller-node {
+    left: 604px;
+    top: 105px;
+    width: 132px;
+  }
+
+  #grid-point-selector-demo .source-name,
+  #grid-point-selector-demo .selector-node > span:first-child,
+  #grid-point-selector-demo .controller-node > span:first-child {
+    color: var(--muted-foreground);
+  }
+
+  #grid-point-selector-demo .source-meta {
+    color: var(--muted-foreground);
+  }
+
+  #grid-point-selector-demo .is-selected {
+    border-color: var(--viz-series-1);
+    background: color-mix(in srgb, var(--viz-series-1) 12%, var(--card));
+    transform: translateY(-2px);
+  }
+
+  #grid-point-selector-demo .is-invalid {
+    border-color: var(--destructive);
+    background: color-mix(in srgb, var(--destructive) 10%, var(--card));
+  }
+
+  #grid-point-selector-demo[data-selected="main"] .main-wire,
+  #grid-point-selector-demo[data-selected="backup"] .backup-wire,
+  #grid-point-selector-demo .output-wire {
+    stroke: var(--viz-series-1);
+  }
+
+  #grid-point-selector-demo[data-selected="main"] .main-packet,
+  #grid-point-selector-demo[data-selected="backup"] .backup-packet,
+  #grid-point-selector-demo .output-packet {
+    opacity: 1;
+  }
+
+  #grid-point-selector-demo[data-hold="true"] .output-packet {
+    opacity: 0;
+  }
+
+  #grid-point-selector-demo[data-hold="true"] .output-wire {
+    stroke-dasharray: 5 5;
+  }
+
+  #grid-point-selector-demo .current-detail {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    min-height: 48px;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  #grid-point-selector-demo .current-detail strong {
+    flex: 0 0 auto;
+  }
+
+  #grid-point-selector-demo .current-detail span {
+    color: var(--muted-foreground);
+  }
+
+  #grid-point-selector-demo .progress-track {
+    height: 4px;
+    overflow: hidden;
+    background: var(--muted);
+    border-radius: 999px;
+  }
+
+  #grid-point-selector-demo .progress-track span {
+    display: block;
+    height: 100%;
+    width: 16.666%;
+    background: var(--viz-series-1);
+    transition: width 350ms ease;
+  }
+
+  @media (max-width: 600px) {
+    #grid-point-selector-demo .selector-stage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      aspect-ratio: auto;
+      min-height: 0;
+    }
+
+    #grid-point-selector-demo .selector-wires {
+      display: none;
+    }
+
+    #grid-point-selector-demo .source,
+    #grid-point-selector-demo .selector-node,
+    #grid-point-selector-demo .controller-node {
+      position: static;
+      width: auto;
+      min-height: 96px;
+    }
+
+    #grid-point-selector-demo .selector-node,
+    #grid-point-selector-demo .controller-node {
+      text-align: left;
+    }
+
+    #grid-point-selector-demo .current-detail {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 12px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #grid-point-selector-demo *,
+    #grid-point-selector-demo *::before,
+    #grid-point-selector-demo *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.getElementById("grid-point-selector-demo");
+    if (!root) return;
+
+    const states = [
+      {
+        phase: "正常运行",
+        detail: "两路数据都正常，选择器按优先级采用主测量 A。",
+        mainValue: "50.2 MW",
+        mainMeta: "品质正常 · 刚刚更新",
+        backupValue: "50.4 MW",
+        backupMeta: "品质正常 · 刚刚更新",
+        selected: "main",
+        sourceLabel: "选择 A",
+        rule: "主测量有效，优先使用",
+        output: "50.2 MW",
+        invalidMain: false,
+        hold: false
+      },
+      {
+        phase: "发现异常",
+        detail: "A 的数值看似合理，但时间戳停止更新；选择器开始判定数据是否失效。",
+        mainValue: "50.2 MW",
+        mainMeta: "品质正常 · 已 1.2 s 未更新",
+        backupValue: "50.6 MW",
+        backupMeta: "品质正常 · 刚刚更新",
+        selected: "main",
+        sourceLabel: "暂用 A",
+        rule: "等待失效确认延时",
+        output: "50.2 MW",
+        invalidMain: false,
+        hold: false
+      },
+      {
+        phase: "确认失效",
+        detail: "A 超过允许的数据龄期。切换瞬间短暂保持最后可信值，避免坏数据进入控制器。",
+        mainValue: "50.2 MW",
+        mainMeta: "数据超时 · 判定无效",
+        backupValue: "50.8 MW",
+        backupMeta: "品质正常 · 刚刚更新",
+        selected: "none",
+        sourceLabel: "切换中",
+        rule: "保持最后可信值",
+        output: "50.2 MW",
+        invalidMain: true,
+        hold: true
+      },
+      {
+        phase: "切到备用",
+        detail: "备用 B 通过品质、范围和新鲜度检查，成为新的并网点控制数据。",
+        mainValue: "50.2 MW",
+        mainMeta: "数据超时 · 判定无效",
+        backupValue: "50.9 MW",
+        backupMeta: "品质正常 · 刚刚更新",
+        selected: "backup",
+        sourceLabel: "选择 B",
+        rule: "主无效，备用有效",
+        output: "50.9 MW",
+        invalidMain: true,
+        hold: false
+      },
+      {
+        phase: "主测量恢复",
+        detail: "A 已恢复，但选择器继续使用 B，并等待 A 连续稳定一段时间，防止来回切换。",
+        mainValue: "51.1 MW",
+        mainMeta: "已恢复 · 稳定 1.0 s",
+        backupValue: "51.0 MW",
+        backupMeta: "品质正常 · 刚刚更新",
+        selected: "backup",
+        sourceLabel: "仍选择 B",
+        rule: "主测量回切延时",
+        output: "51.0 MW",
+        invalidMain: false,
+        hold: false
+      },
+      {
+        phase: "稳定回切",
+        detail: "A 连续稳定并满足回切条件，选择器恢复主测量；控制器始终只接收一路可信数据。",
+        mainValue: "51.3 MW",
+        mainMeta: "品质正常 · 稳定 5.0 s",
+        backupValue: "51.2 MW",
+        backupMeta: "品质正常 · 刚刚更新",
+        selected: "main",
+        sourceLabel: "选择 A",
+        rule: "主测量稳定，恢复优先级",
+        output: "51.3 MW",
+        invalidMain: false,
+        hold: false
+      }
+    ];
+
+    const els = {
+      mainValue: root.querySelector('[data-role="main-value"]'),
+      mainMeta: root.querySelector('[data-role="main-meta"]'),
+      backupValue: root.querySelector('[data-role="backup-value"]'),
+      backupMeta: root.querySelector('[data-role="backup-meta"]'),
+      sourceLabel: root.querySelector('[data-role="selected-source"]'),
+      rule: root.querySelector('[data-role="selector-rule"]'),
+      output: root.querySelector('[data-role="output-value"]'),
+      phase: root.querySelector('[data-role="phase"]'),
+      detail: root.querySelector('[data-role="detail"]'),
+      label: root.querySelector('[data-role="step-label"]'),
+      progress: root.querySelector('[data-role="progress"]'),
+      play: root.querySelector('[data-action="play"]'),
+      mainSource: root.querySelector(".source-main"),
+      backupSource: root.querySelector(".source-backup")
+    };
+
+    let index = 0;
+    let timer = null;
+
+    function render() {
+      const state = states[index];
+      els.mainValue.textContent = state.mainValue;
+      els.mainMeta.textContent = state.mainMeta;
+      els.backupValue.textContent = state.backupValue;
+      els.backupMeta.textContent = state.backupMeta;
+      els.sourceLabel.textContent = state.sourceLabel;
+      els.rule.textContent = state.rule;
+      els.output.textContent = state.output;
+      els.phase.textContent = state.phase;
+      els.detail.textContent = state.detail;
+      els.label.textContent = `步骤 ${index + 1} / ${states.length}`;
+      els.progress.style.width = `${((index + 1) / states.length) * 100}%`;
+      root.dataset.selected = state.selected;
+      root.dataset.hold = String(state.hold);
+      els.mainSource.classList.toggle("is-selected", state.selected === "main");
+      els.backupSource.classList.toggle("is-selected", state.selected === "backup");
+      els.mainSource.classList.toggle("is-invalid", state.invalidMain);
+    }
+
+    function stop() {
+      if (timer) window.clearInterval(timer);
+      timer = null;
+      els.play.textContent = "自动演示";
+    }
+
+    function advance() {
+      index = (index + 1) % states.length;
+      render();
+      if (index === states.length - 1 && timer) stop();
+    }
+
+    root.querySelector('[data-action="next"]').addEventListener("click", () => {
+      stop();
+      advance();
+    });
+
+    root.querySelector('[data-action="reset"]').addEventListener("click", () => {
+      stop();
+      index = 0;
+      render();
+    });
+
+    els.play.addEventListener("click", () => {
+      if (timer) {
+        stop();
+        return;
+      }
+      if (index === states.length - 1) index = 0;
+      render();
+      els.play.textContent = "暂停";
+      timer = window.setInterval(advance, 2300);
+    });
+
+    render();
+  })();
+</script>

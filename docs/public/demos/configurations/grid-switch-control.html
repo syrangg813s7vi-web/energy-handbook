@@ -1,0 +1,482 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./visualize.css">
+<div id="grid-switch-control-demo">
+  <div class="viz-controls" aria-label="动画控制">
+    <button type="button" class="btn btn-primary" data-action="play">自动演示</button>
+    <button type="button" class="btn" data-action="next">下一步</button>
+    <button type="button" class="btn btn-ghost" data-action="reset">复位</button>
+    <span class="viz-badge" data-role="step-label">步骤 1 / 7</span>
+  </div>
+
+  <div class="viz-grid sync-metrics" aria-live="polite">
+    <section class="card viz-stat">
+      <span class="text-muted">两侧电压差</span>
+      <strong class="viz-stat-value" data-role="dv">6.0%</strong>
+    </section>
+    <section class="card viz-stat">
+      <span class="text-muted">两侧频率差</span>
+      <strong class="viz-stat-value" data-role="df">0.25 Hz</strong>
+    </section>
+    <section class="card viz-stat">
+      <span class="text-muted">两侧相角差</span>
+      <strong class="viz-stat-value" data-role="angle">28.0°</strong>
+    </section>
+  </div>
+
+  <div class="switch-stage">
+    <svg class="switch-wires" viewBox="0 0 736 350" role="img" aria-labelledby="gsc-title gsc-desc">
+      <title id="gsc-title">并网开关控制与同期检查</title>
+      <desc id="gsc-desc">控制器读取电网侧和微网侧电压、频率与相角，检查保护和开关联锁，条件持续满足后发出合闸命令；电网故障时保护命令开关分闸。</desc>
+
+      <path class="wire interlock-wire" data-role="interlock-wire" d="M 162 65 L 258 65"></path>
+      <path class="wire adjust-wire" data-role="adjust-wire" d="M 478 65 L 574 65"></path>
+      <path class="wire control-wire" data-role="control-wire" d="M 368 110 L 368 145"></path>
+      <path class="wire measure-wire active" d="M 132 185 C 186 111 246 76 300 70"></path>
+      <path class="wire measure-wire active" d="M 603 185 C 552 111 494 76 438 70"></path>
+      <path class="wire power-wire" data-role="grid-power-wire" d="M 132 185 L 298 185"></path>
+      <path class="wire power-wire" data-role="microgrid-power-wire" d="M 438 185 L 603 185"></path>
+
+      <circle class="packet measure-packet visible" r="4">
+        <animateMotion dur="1.45s" repeatCount="indefinite" path="M 132 185 C 186 111 246 76 300 70"></animateMotion>
+      </circle>
+      <circle class="packet measure-packet visible" r="4">
+        <animateMotion dur="1.55s" repeatCount="indefinite" path="M 603 185 C 552 111 494 76 438 70"></animateMotion>
+      </circle>
+      <circle class="packet interlock-packet" data-role="interlock-packet" r="5">
+        <animateMotion dur="1.15s" repeatCount="indefinite" path="M 162 65 L 258 65"></animateMotion>
+      </circle>
+      <circle class="packet adjust-packet" data-role="adjust-packet" r="5">
+        <animateMotion dur="1.2s" repeatCount="indefinite" path="M 478 65 L 574 65"></animateMotion>
+      </circle>
+      <circle class="packet control-packet" data-role="control-packet" r="5">
+        <animateMotion dur=".9s" repeatCount="indefinite" path="M 368 110 L 368 145"></animateMotion>
+      </circle>
+      <circle class="packet power-packet" data-role="grid-power-packet" r="5">
+        <animateMotion dur="1.3s" repeatCount="indefinite" path="M 132 185 L 298 185"></animateMotion>
+      </circle>
+      <circle class="packet power-packet" data-role="microgrid-power-packet" r="5">
+        <animateMotion dur="1.3s" repeatCount="indefinite" path="M 438 185 L 603 185"></animateMotion>
+      </circle>
+    </svg>
+
+    <section class="card switch-node interlock-node" data-role="interlock-node">
+      <span class="text-muted">联锁与保护</span>
+      <strong data-role="interlock-status">条件正常</strong>
+      <small class="text-muted" data-role="interlock-note">无跳闸 · 开关就绪</small>
+    </section>
+
+    <section class="card switch-node logic-node" data-role="logic-node">
+      <span class="text-muted">gridswitch_ctrl</span>
+      <strong data-role="logic-status">等待合闸请求</strong>
+      <small class="text-muted" data-role="logic-note">合闸许可：否</small>
+    </section>
+
+    <section class="card switch-node adjust-node" data-role="adjust-node">
+      <span class="text-muted">同期调节</span>
+      <strong data-role="adjust-status">未启动</strong>
+      <small class="text-muted">调电压 · 频率 · 相角</small>
+    </section>
+
+    <section class="card switch-node grid-node">
+      <span class="text-muted">公共电网侧</span>
+      <strong>50.00 Hz</strong>
+      <small class="text-muted">1.00 pu · 0°</small>
+    </section>
+
+    <section class="card switch-node breaker-node" data-role="breaker-node">
+      <span class="text-muted">并网开关</span>
+      <strong data-role="breaker-state">断开</strong>
+      <small class="text-muted" data-role="breaker-note">两侧电气隔离</small>
+    </section>
+
+    <section class="card switch-node microgrid-node" data-role="microgrid-node">
+      <span class="text-muted">微网侧</span>
+      <strong data-role="micro-frequency">49.75 Hz</strong>
+      <small class="text-muted" data-role="micro-electric">0.94 pu · −28°</small>
+    </section>
+  </div>
+
+  <div class="current-detail" role="status" aria-live="polite">
+    <strong data-role="phase">开关保持断开</strong>
+    <span data-role="detail">电网侧和微网侧都带电，但三项同期差值超限，直接合闸会产生冲击电流和转矩。</span>
+  </div>
+
+  <div class="progress-track" aria-hidden="true">
+    <span data-role="progress"></span>
+  </div>
+</div>
+
+<style>
+  #grid-switch-control-demo {
+    color: var(--foreground);
+  }
+
+  #grid-switch-control-demo .viz-controls {
+    margin-bottom: 14px;
+  }
+
+  #grid-switch-control-demo .sync-metrics {
+    margin-bottom: 12px;
+  }
+
+  #grid-switch-control-demo .switch-stage {
+    position: relative;
+    width: 100%;
+    min-height: 350px;
+    aspect-ratio: 736 / 350;
+  }
+
+  #grid-switch-control-demo .switch-wires {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  #grid-switch-control-demo .wire {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 2;
+    transition: stroke 400ms ease, opacity 400ms ease;
+  }
+
+  #grid-switch-control-demo .wire.active {
+    stroke: var(--viz-series-1);
+  }
+
+  #grid-switch-control-demo .wire.trip {
+    stroke: var(--destructive);
+    stroke-dasharray: 6 5;
+  }
+
+  #grid-switch-control-demo .measure-wire {
+    stroke-dasharray: 5 5;
+  }
+
+  #grid-switch-control-demo .packet {
+    fill: var(--viz-series-1);
+    opacity: 0;
+    transition: opacity 300ms ease;
+  }
+
+  #grid-switch-control-demo .packet.visible {
+    opacity: 1;
+  }
+
+  #grid-switch-control-demo .packet.trip {
+    fill: var(--destructive);
+  }
+
+  #grid-switch-control-demo .switch-node {
+    position: absolute;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    min-height: 90px;
+  }
+
+  #grid-switch-control-demo .switch-node strong {
+    font-variant-numeric: tabular-nums;
+  }
+
+  #grid-switch-control-demo .interlock-node {
+    top: 20px;
+    left: 0;
+    width: 22%;
+  }
+
+  #grid-switch-control-demo .logic-node {
+    top: 20px;
+    left: 35%;
+    width: 30%;
+  }
+
+  #grid-switch-control-demo .adjust-node {
+    top: 20px;
+    left: 78%;
+    width: 22%;
+  }
+
+  #grid-switch-control-demo .grid-node {
+    top: 145px;
+    left: 0;
+    width: 18%;
+  }
+
+  #grid-switch-control-demo .breaker-node {
+    top: 145px;
+    left: 40.5%;
+    width: 19%;
+  }
+
+  #grid-switch-control-demo .microgrid-node {
+    top: 145px;
+    left: 82%;
+    width: 18%;
+  }
+
+  #grid-switch-control-demo .breaker-node.closed {
+    color: var(--foreground);
+  }
+
+  #grid-switch-control-demo .breaker-node.tripped,
+  #grid-switch-control-demo .interlock-node.tripped {
+    color: var(--destructive);
+  }
+
+  #grid-switch-control-demo .current-detail {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    min-height: 48px;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  #grid-switch-control-demo .current-detail strong {
+    flex: 0 0 auto;
+  }
+
+  #grid-switch-control-demo .current-detail span {
+    color: var(--muted-foreground);
+  }
+
+  #grid-switch-control-demo .progress-track {
+    height: 4px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--muted);
+  }
+
+  #grid-switch-control-demo .progress-track span {
+    display: block;
+    width: 14.286%;
+    height: 100%;
+    background: var(--viz-series-1);
+    transition: width 450ms ease;
+  }
+
+  @media (max-width: 680px) {
+    #grid-switch-control-demo .switch-stage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      min-height: 0;
+      aspect-ratio: auto;
+    }
+
+    #grid-switch-control-demo .switch-wires {
+      display: none;
+    }
+
+    #grid-switch-control-demo .switch-node {
+      position: static;
+      width: auto;
+      min-height: 94px;
+    }
+
+    #grid-switch-control-demo .interlock-node { order: 1; }
+    #grid-switch-control-demo .logic-node { order: 2; }
+    #grid-switch-control-demo .grid-node { order: 3; }
+    #grid-switch-control-demo .microgrid-node { order: 4; }
+    #grid-switch-control-demo .adjust-node { order: 5; }
+    #grid-switch-control-demo .breaker-node { order: 6; }
+
+    #grid-switch-control-demo .current-detail {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 4px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #grid-switch-control-demo .packet {
+      display: none;
+    }
+
+    #grid-switch-control-demo *,
+    #grid-switch-control-demo *::before,
+    #grid-switch-control-demo *::after {
+      transition-duration: 0.001ms !important;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.getElementById("grid-switch-control-demo");
+    if (!root) return;
+
+    const states = [
+      {
+        phase: "开关保持断开",
+        detail: "电网侧和微网侧都带电，但三项同期差值超限，直接合闸会产生冲击电流和转矩。",
+        dv: 6, df: .25, angle: 28, microF: 49.75, microV: .94,
+        request: false, adjusting: false, permit: false, closed: false, trip: false,
+        logic: "等待合闸请求", logicNote: "合闸许可：否", interlock: "条件正常", interlockNote: "无跳闸 · 开关就绪",
+        adjust: "未启动", breaker: "断开", breakerNote: "两侧电气隔离",
+      },
+      {
+        phase: "收到并网请求",
+        detail: "控制器先检查保护未动作、开关机构就绪、控制电源正常、运行模式允许等联锁条件。",
+        dv: 6, df: .25, angle: 28, microF: 49.75, microV: .94,
+        request: true, adjusting: false, permit: false, closed: false, trip: false,
+        logic: "检查合闸联锁", logicNote: "合闸许可：否", interlock: "联锁通过", interlockNote: "保护复归 · 开关就绪",
+        adjust: "等待同期调节", breaker: "断开", breakerNote: "禁止直接合闸",
+      },
+      {
+        phase: "微网向电网靠拢",
+        detail: "同期控制调节构网源参考，使微网侧电压、频率和相角逐渐接近公共电网。",
+        dv: 2, df: .08, angle: 12, microF: 49.92, microV: .98,
+        request: true, adjusting: true, permit: false, closed: false, trip: false,
+        logic: "监视同期窗口", logicNote: "合闸许可：否", interlock: "联锁保持", interlockNote: "保护复归 · 开关就绪",
+        adjust: "正在调节", breaker: "断开", breakerNote: "等待差值进入窗口",
+      },
+      {
+        phase: "同期条件持续满足",
+        detail: "电压差、频率差和相角差都进入设定窗口，并连续保持到确认延时结束，才生成合闸许可。",
+        dv: .8, df: .03, angle: 2.5, microF: 49.97, microV: .992,
+        request: true, adjusting: true, permit: true, closed: false, trip: false,
+        logic: "同期检查通过", logicNote: "合闸许可：是", interlock: "联锁保持", interlockNote: "稳定计时完成",
+        adjust: "差值已对齐", breaker: "待合闸", breakerNote: "进入安全合闸窗口",
+      },
+      {
+        phase: "发出合闸命令",
+        detail: "控制器考虑断路器机械合闸时间，在合适的相角提前发令，并等待辅助触点返回真实位置。",
+        dv: .5, df: .02, angle: 1.2, microF: 49.98, microV: .995,
+        request: true, adjusting: false, permit: true, closed: true, trip: false,
+        logic: "合闸命令已发出", logicNote: "等待 52a 位置反馈", interlock: "联锁保持", interlockNote: "合闸回路允许",
+        adjust: "保持参考值", breaker: "闭合", breakerNote: "辅助触点确认闭合",
+      },
+      {
+        phase: "转入并网运行",
+        detail: "开关闭合且反馈一致后，控制权交给并网控制；同期调节退出，并网点功率从小值平滑增加。",
+        dv: 0, df: 0, angle: 0, microF: 50, microV: 1,
+        request: false, adjusting: false, permit: true, closed: true, trip: false,
+        logic: "并网状态确认", logicNote: "模式：并网运行", interlock: "运行联锁正常", interlockNote: "位置与电流一致",
+        adjust: "已退出", breaker: "闭合", breakerNote: "交换功率 2 MW",
+      },
+      {
+        phase: "电网故障立即分闸",
+        detail: "保护跳闸优先级高于合闸逻辑；检测到电网故障后，控制器撤销许可并分闸，使微网重新电气隔离。",
+        dv: 18, df: .9, angle: 35, microF: 49.95, microV: .99,
+        request: false, adjusting: false, permit: false, closed: false, trip: true,
+        logic: "跳闸优先", logicNote: "合闸许可：撤销", interlock: "保护动作", interlockNote: "闭锁再次合闸",
+        adjust: "停止调节", breaker: "保护分闸", breakerNote: "微网与故障电网隔离",
+      },
+    ];
+
+    const el = {
+      play: root.querySelector('[data-action="play"]'),
+      dv: root.querySelector('[data-role="dv"]'),
+      df: root.querySelector('[data-role="df"]'),
+      angle: root.querySelector('[data-role="angle"]'),
+      interlockNode: root.querySelector('[data-role="interlock-node"]'),
+      interlockStatus: root.querySelector('[data-role="interlock-status"]'),
+      interlockNote: root.querySelector('[data-role="interlock-note"]'),
+      logicNode: root.querySelector('[data-role="logic-node"]'),
+      logicStatus: root.querySelector('[data-role="logic-status"]'),
+      logicNote: root.querySelector('[data-role="logic-note"]'),
+      adjustNode: root.querySelector('[data-role="adjust-node"]'),
+      adjustStatus: root.querySelector('[data-role="adjust-status"]'),
+      breakerNode: root.querySelector('[data-role="breaker-node"]'),
+      breakerState: root.querySelector('[data-role="breaker-state"]'),
+      breakerNote: root.querySelector('[data-role="breaker-note"]'),
+      microFrequency: root.querySelector('[data-role="micro-frequency"]'),
+      microElectric: root.querySelector('[data-role="micro-electric"]'),
+      interlockWire: root.querySelector('[data-role="interlock-wire"]'),
+      adjustWire: root.querySelector('[data-role="adjust-wire"]'),
+      controlWire: root.querySelector('[data-role="control-wire"]'),
+      gridPowerWire: root.querySelector('[data-role="grid-power-wire"]'),
+      microgridPowerWire: root.querySelector('[data-role="microgrid-power-wire"]'),
+      interlockPacket: root.querySelector('[data-role="interlock-packet"]'),
+      adjustPacket: root.querySelector('[data-role="adjust-packet"]'),
+      controlPacket: root.querySelector('[data-role="control-packet"]'),
+      gridPowerPacket: root.querySelector('[data-role="grid-power-packet"]'),
+      microgridPowerPacket: root.querySelector('[data-role="microgrid-power-packet"]'),
+      phase: root.querySelector('[data-role="phase"]'),
+      detail: root.querySelector('[data-role="detail"]'),
+      stepLabel: root.querySelector('[data-role="step-label"]'),
+      progress: root.querySelector('[data-role="progress"]'),
+    };
+
+    let index = 0;
+    let timer = 0;
+
+    function render() {
+      const state = states[index];
+      el.dv.textContent = `${state.dv.toFixed(1)}%`;
+      el.df.textContent = `${state.df.toFixed(2)} Hz`;
+      el.angle.textContent = `${state.angle.toFixed(1)}°`;
+      el.interlockStatus.textContent = state.interlock;
+      el.interlockNote.textContent = state.interlockNote;
+      el.logicStatus.textContent = state.logic;
+      el.logicNote.textContent = state.logicNote;
+      el.adjustStatus.textContent = state.adjust;
+      el.breakerState.textContent = state.breaker;
+      el.breakerNote.textContent = state.breakerNote;
+      el.microFrequency.textContent = `${state.microF.toFixed(2)} Hz`;
+      const angleText = state.angle === 0 ? "0.0°" : `−${state.angle.toFixed(1)}°`;
+      el.microElectric.textContent = `${state.microV.toFixed(3)} pu · ${angleText}`;
+      el.phase.textContent = state.phase;
+      el.detail.textContent = state.detail;
+      el.stepLabel.textContent = `步骤 ${index + 1} / ${states.length}`;
+      el.progress.style.width = `${((index + 1) / states.length) * 100}%`;
+
+      el.interlockWire.className.baseVal = `wire interlock-wire ${state.request ? "active" : ""} ${state.trip ? "trip" : ""}`.trim();
+      el.adjustWire.className.baseVal = `wire adjust-wire ${state.adjusting ? "active" : ""}`.trim();
+      el.controlWire.className.baseVal = `wire control-wire ${state.permit || state.trip ? "active" : ""} ${state.trip ? "trip" : ""}`.trim();
+      el.gridPowerWire.className.baseVal = `wire power-wire ${state.closed ? "active" : ""} ${state.trip ? "trip" : ""}`.trim();
+      el.microgridPowerWire.className.baseVal = `wire power-wire ${state.closed ? "active" : ""} ${state.trip ? "trip" : ""}`.trim();
+      el.interlockPacket.className.baseVal = `packet interlock-packet ${state.request || state.trip ? "visible" : ""} ${state.trip ? "trip" : ""}`.trim();
+      el.adjustPacket.className.baseVal = `packet adjust-packet ${state.adjusting ? "visible" : ""}`.trim();
+      el.controlPacket.className.baseVal = `packet control-packet ${state.permit || state.trip ? "visible" : ""} ${state.trip ? "trip" : ""}`.trim();
+      el.gridPowerPacket.className.baseVal = `packet power-packet ${state.closed ? "visible" : ""}`.trim();
+      el.microgridPowerPacket.className.baseVal = `packet power-packet ${state.closed ? "visible" : ""}`.trim();
+      el.interlockNode.className = `card switch-node interlock-node ${state.trip ? "tripped" : ""}`.trim();
+      el.logicNode.className = "card switch-node logic-node";
+      el.adjustNode.className = "card switch-node adjust-node";
+      el.breakerNode.className = `card switch-node breaker-node ${state.closed ? "closed" : ""} ${state.trip ? "tripped" : ""}`.trim();
+    }
+
+    function stop() {
+      window.clearInterval(timer);
+      timer = 0;
+      el.play.textContent = "自动演示";
+    }
+
+    function advance() {
+      index = (index + 1) % states.length;
+      render();
+      if (index === states.length - 1) stop();
+    }
+
+    root.querySelector('[data-action="next"]').addEventListener("click", () => {
+      stop();
+      advance();
+    });
+
+    root.querySelector('[data-action="reset"]').addEventListener("click", () => {
+      stop();
+      index = 0;
+      render();
+    });
+
+    el.play.addEventListener("click", () => {
+      if (timer) {
+        stop();
+        return;
+      }
+      if (index === states.length - 1) index = 0;
+      render();
+      el.play.textContent = "暂停";
+      timer = window.setInterval(advance, 2800);
+    });
+
+    render();
+  })();
+</script>

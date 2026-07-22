@@ -1,0 +1,597 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./visualize.css">
+<div id="photovoltaic-balancing-demo">
+  <div class="viz-controls" aria-label="动画控制">
+    <button type="button" class="btn btn-primary" data-action="play">自动演示</button>
+    <button type="button" class="btn" data-action="next">下一步</button>
+    <button type="button" class="btn btn-ghost" data-action="reset">复位</button>
+    <span class="viz-badge" data-role="step-label">步骤 1 / 6</span>
+  </div>
+
+  <div class="balance-header" aria-live="polite">
+    <div>
+      <span class="metric-label">场站目标</span>
+      <strong>60.0 MW</strong>
+    </div>
+    <div>
+      <span class="metric-label">合计出力</span>
+      <strong data-role="total-output">0.0 MW</strong>
+    </div>
+    <div>
+      <span class="metric-label">待分配</span>
+      <strong data-role="residual">60.0 MW</strong>
+    </div>
+  </div>
+
+  <div class="balance-flow" role="img" aria-labelledby="pvb-title pvb-desc">
+    <span id="pvb-title" class="sr-only">光伏场站功率均衡分配动画</span>
+    <span id="pvb-desc" class="sr-only">场站目标功率按各光伏单元的可发能力进行分配；单元达到上限后，剩余功率转移给仍有调节裕度的单元。</span>
+
+    <div class="target-node">
+      <span>场站目标</span>
+      <strong>60 MW</strong>
+    </div>
+    <div class="flow-line">
+      <span class="flow-packet"></span>
+    </div>
+    <div class="dispatch-node">
+      <span>均衡分配器</span>
+      <strong data-role="strategy">读取能力</strong>
+    </div>
+  </div>
+
+  <div class="unit-chart">
+    <div class="scale-row" aria-hidden="true">
+      <span>0</span>
+      <span>10</span>
+      <span>20</span>
+      <span>30</span>
+      <span>40 MW</span>
+    </div>
+
+    <div class="unit-row" data-unit="0">
+      <div class="unit-label">
+        <strong>光伏 A</strong>
+        <span data-role="unit-meta">可发 40 MW</span>
+      </div>
+      <div class="bar-track">
+        <span class="available-bar"></span>
+        <span class="output-bar"></span>
+        <span class="request-marker"></span>
+      </div>
+      <div class="unit-value">
+        <strong data-role="unit-output">0.0 MW</strong>
+        <span data-role="unit-request">指令 0.0</span>
+      </div>
+    </div>
+
+    <div class="unit-row" data-unit="1">
+      <div class="unit-label">
+        <strong>光伏 B</strong>
+        <span data-role="unit-meta">可发 30 MW</span>
+      </div>
+      <div class="bar-track">
+        <span class="available-bar"></span>
+        <span class="output-bar"></span>
+        <span class="request-marker"></span>
+      </div>
+      <div class="unit-value">
+        <strong data-role="unit-output">0.0 MW</strong>
+        <span data-role="unit-request">指令 0.0</span>
+      </div>
+    </div>
+
+    <div class="unit-row" data-unit="2">
+      <div class="unit-label">
+        <strong>光伏 C</strong>
+        <span data-role="unit-meta">可发 10 MW</span>
+      </div>
+      <div class="bar-track">
+        <span class="available-bar"></span>
+        <span class="output-bar"></span>
+        <span class="request-marker"></span>
+      </div>
+      <div class="unit-value">
+        <strong data-role="unit-output">0.0 MW</strong>
+        <span data-role="unit-request">指令 0.0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend" aria-label="图例">
+    <span><i class="legend-available"></i>可发上限</span>
+    <span><i class="legend-output"></i>实际分配</span>
+    <span><i class="legend-request"></i>请求位置</span>
+  </div>
+
+  <div class="current-detail" role="status" aria-live="polite">
+    <strong data-role="phase">读取可发能力</strong>
+    <span data-role="detail">分配器先确认各单元当前最多能发多少，而不是直接把目标除以设备数量。</span>
+  </div>
+
+  <div class="progress-track" aria-hidden="true">
+    <span data-role="progress"></span>
+  </div>
+</div>
+
+<style>
+  #photovoltaic-balancing-demo {
+    color: var(--foreground);
+  }
+
+  #photovoltaic-balancing-demo .viz-controls {
+    margin-bottom: 14px;
+  }
+
+  #photovoltaic-balancing-demo .balance-header {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 10px 0 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  #photovoltaic-balancing-demo .balance-header > div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  #photovoltaic-balancing-demo .metric-label {
+    color: var(--muted-foreground);
+  }
+
+  #photovoltaic-balancing-demo .balance-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 90px;
+    padding: 14px 0 8px;
+  }
+
+  #photovoltaic-balancing-demo .target-node,
+  #photovoltaic-balancing-demo .dispatch-node {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 128px;
+    min-height: 62px;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card);
+    color: var(--card-foreground);
+  }
+
+  #photovoltaic-balancing-demo .target-node span,
+  #photovoltaic-balancing-demo .dispatch-node span {
+    color: var(--muted-foreground);
+  }
+
+  #photovoltaic-balancing-demo .flow-line {
+    position: relative;
+    width: 120px;
+    height: 2px;
+    margin: 0 14px;
+    background: var(--viz-series-1);
+  }
+
+  #photovoltaic-balancing-demo .flow-line::after {
+    position: absolute;
+    top: -4px;
+    right: -1px;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 8px solid var(--viz-series-1);
+    content: "";
+  }
+
+  #photovoltaic-balancing-demo .flow-packet {
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--viz-series-1);
+    animation: pv-balance-flow 1.8s linear infinite;
+  }
+
+  @keyframes pv-balance-flow {
+    from { transform: translateX(0); }
+    to { transform: translateX(108px); }
+  }
+
+  #photovoltaic-balancing-demo .unit-chart {
+    padding: 4px 0;
+  }
+
+  #photovoltaic-balancing-demo .scale-row,
+  #photovoltaic-balancing-demo .unit-row {
+    display: grid;
+    grid-template-columns: 112px minmax(220px, 1fr) 116px;
+    gap: 14px;
+    align-items: center;
+  }
+
+  #photovoltaic-balancing-demo .scale-row {
+    position: relative;
+    grid-template-columns: 112px minmax(220px, 1fr) 116px;
+    min-height: 22px;
+  }
+
+  #photovoltaic-balancing-demo .scale-row::before {
+    content: "";
+  }
+
+  #photovoltaic-balancing-demo .scale-row span {
+    color: var(--muted-foreground);
+  }
+
+  #photovoltaic-balancing-demo .scale-row span:first-child {
+    grid-column: 2;
+  }
+
+  #photovoltaic-balancing-demo .scale-row {
+    padding-left: 0;
+  }
+
+  #photovoltaic-balancing-demo .scale-row > span {
+    position: absolute;
+    top: 0;
+  }
+
+  #photovoltaic-balancing-demo .scale-row > span:nth-child(1) { left: calc(112px + 14px); }
+  #photovoltaic-balancing-demo .scale-row > span:nth-child(2) { left: calc(112px + 14px + (100% - 256px) * 0.25); }
+  #photovoltaic-balancing-demo .scale-row > span:nth-child(3) { left: calc(112px + 14px + (100% - 256px) * 0.5); }
+  #photovoltaic-balancing-demo .scale-row > span:nth-child(4) { left: calc(112px + 14px + (100% - 256px) * 0.75); }
+  #photovoltaic-balancing-demo .scale-row > span:nth-child(5) { right: 130px; }
+
+  #photovoltaic-balancing-demo .unit-row {
+    min-height: 72px;
+    border-top: 1px solid var(--border);
+  }
+
+  #photovoltaic-balancing-demo .unit-label,
+  #photovoltaic-balancing-demo .unit-value {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  #photovoltaic-balancing-demo .unit-label span,
+  #photovoltaic-balancing-demo .unit-value span {
+    color: var(--muted-foreground);
+  }
+
+  #photovoltaic-balancing-demo .unit-value {
+    text-align: right;
+  }
+
+  #photovoltaic-balancing-demo .bar-track {
+    position: relative;
+    height: 28px;
+    overflow: visible;
+    background:
+      linear-gradient(to right, transparent calc(25% - 1px), var(--border) 25%, transparent calc(25% + 1px)),
+      linear-gradient(to right, transparent calc(50% - 1px), var(--border) 50%, transparent calc(50% + 1px)),
+      linear-gradient(to right, transparent calc(75% - 1px), var(--border) 75%, transparent calc(75% + 1px)),
+      var(--muted);
+    border-radius: 6px;
+  }
+
+  #photovoltaic-balancing-demo .available-bar,
+  #photovoltaic-balancing-demo .output-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: 6px;
+    transition: width 500ms ease;
+  }
+
+  #photovoltaic-balancing-demo .available-bar {
+    width: 0;
+    background: color-mix(in srgb, var(--viz-series-2) 28%, transparent);
+  }
+
+  #photovoltaic-balancing-demo .output-bar {
+    width: 0;
+    background: color-mix(in srgb, var(--viz-series-1) 72%, transparent);
+  }
+
+  #photovoltaic-balancing-demo .request-marker {
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 2px;
+    height: 38px;
+    background: var(--foreground);
+    transition: left 500ms ease, background 300ms ease;
+  }
+
+  #photovoltaic-balancing-demo .request-marker::before {
+    position: absolute;
+    top: -2px;
+    left: -3px;
+    width: 8px;
+    height: 8px;
+    transform: rotate(45deg);
+    background: inherit;
+    content: "";
+  }
+
+  #photovoltaic-balancing-demo .unit-row.is-limited .request-marker {
+    background: var(--destructive);
+  }
+
+  #photovoltaic-balancing-demo .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    padding: 10px 0 6px 126px;
+    color: var(--muted-foreground);
+  }
+
+  #photovoltaic-balancing-demo .legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  #photovoltaic-balancing-demo .legend i {
+    display: inline-block;
+    width: 16px;
+    height: 8px;
+  }
+
+  #photovoltaic-balancing-demo .legend-available {
+    background: color-mix(in srgb, var(--viz-series-2) 28%, transparent);
+  }
+
+  #photovoltaic-balancing-demo .legend-output {
+    background: color-mix(in srgb, var(--viz-series-1) 72%, transparent);
+  }
+
+  #photovoltaic-balancing-demo .legend-request {
+    width: 2px !important;
+    height: 14px !important;
+    background: var(--foreground);
+  }
+
+  #photovoltaic-balancing-demo .current-detail {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    min-height: 48px;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  #photovoltaic-balancing-demo .current-detail strong {
+    flex: 0 0 auto;
+  }
+
+  #photovoltaic-balancing-demo .current-detail span {
+    color: var(--muted-foreground);
+  }
+
+  #photovoltaic-balancing-demo .progress-track {
+    height: 4px;
+    overflow: hidden;
+    background: var(--muted);
+    border-radius: 999px;
+  }
+
+  #photovoltaic-balancing-demo .progress-track span {
+    display: block;
+    width: 16.666%;
+    height: 100%;
+    background: var(--viz-series-1);
+    transition: width 350ms ease;
+  }
+
+  @media (max-width: 600px) {
+    #photovoltaic-balancing-demo .balance-header {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    #photovoltaic-balancing-demo .balance-flow {
+      justify-content: flex-start;
+    }
+
+    #photovoltaic-balancing-demo .flow-line {
+      width: 52px;
+      margin: 0 8px;
+    }
+
+    #photovoltaic-balancing-demo .flow-packet {
+      display: none;
+    }
+
+    #photovoltaic-balancing-demo .target-node,
+    #photovoltaic-balancing-demo .dispatch-node {
+      min-width: 0;
+      flex: 1;
+    }
+
+    #photovoltaic-balancing-demo .scale-row {
+      display: none;
+    }
+
+    #photovoltaic-balancing-demo .unit-row {
+      grid-template-columns: 84px minmax(100px, 1fr);
+      gap: 10px;
+      padding: 8px 0;
+    }
+
+    #photovoltaic-balancing-demo .unit-value {
+      grid-column: 2;
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+    }
+
+    #photovoltaic-balancing-demo .legend {
+      padding-left: 0;
+    }
+
+    #photovoltaic-balancing-demo .current-detail {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 4px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #photovoltaic-balancing-demo *,
+    #photovoltaic-balancing-demo *::before,
+    #photovoltaic-balancing-demo *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.getElementById("photovoltaic-balancing-demo");
+    if (!root) return;
+
+    const states = [
+      {
+        phase: "读取可发能力",
+        detail: "分配器先确认各单元当前最多能发多少，而不是直接把目标除以设备数量。",
+        strategy: "读取能力",
+        available: [40, 30, 10],
+        requested: [0, 0, 0],
+        output: [0, 0, 0]
+      },
+      {
+        phase: "简单平均失败",
+        detail: "每台都请求 20 MW，但 C 最多只能发 10 MW，场站最终少了 10 MW。",
+        strategy: "平均 20 MW",
+        available: [40, 30, 10],
+        requested: [20, 20, 20],
+        output: [20, 20, 10]
+      },
+      {
+        phase: "按能力同比例分配",
+        detail: "目标按 40∶30∶10 分配为 30、22.5、7.5 MW，三个单元都运行在可发能力的 75%。",
+        strategy: "能力加权",
+        available: [40, 30, 10],
+        requested: [30, 22.5, 7.5],
+        output: [30, 22.5, 7.5]
+      },
+      {
+        phase: "单元能力突然下降",
+        detail: "C 受到云影影响，可发上限降至 4 MW；原指令被限幅，场站产生 3.5 MW 缺口。",
+        strategy: "检测限幅",
+        available: [40, 30, 4],
+        requested: [30, 22.5, 7.5],
+        output: [30, 22.5, 4]
+      },
+      {
+        phase: "计算剩余裕度",
+        detail: "A 还能增加 10 MW，B 还能增加 7.5 MW，C 已无裕度；缺口只在 A、B 之间重新分配。",
+        strategy: "寻找裕度",
+        available: [40, 30, 4],
+        requested: [30, 22.5, 4],
+        output: [30, 22.5, 4]
+      },
+      {
+        phase: "完成二次分配",
+        detail: "A 增加 2 MW、B 增加 1.5 MW、C 保持 4 MW，场站重新达到 60 MW。",
+        strategy: "剩余量再分",
+        available: [40, 30, 4],
+        requested: [32, 24, 4],
+        output: [32, 24, 4]
+      }
+    ];
+
+    const rows = Array.from(root.querySelectorAll(".unit-row"));
+    const totalEl = root.querySelector('[data-role="total-output"]');
+    const residualEl = root.querySelector('[data-role="residual"]');
+    const strategyEl = root.querySelector('[data-role="strategy"]');
+    const phaseEl = root.querySelector('[data-role="phase"]');
+    const detailEl = root.querySelector('[data-role="detail"]');
+    const labelEl = root.querySelector('[data-role="step-label"]');
+    const progressEl = root.querySelector('[data-role="progress"]');
+    const playEl = root.querySelector('[data-action="play"]');
+    let index = 0;
+    let timer = null;
+
+    function format(value) {
+      return `${value.toFixed(1)} MW`;
+    }
+
+    function render() {
+      const state = states[index];
+      const total = state.output.reduce((sum, value) => sum + value, 0);
+      const residual = Math.max(0, 60 - total);
+
+      totalEl.textContent = format(total);
+      residualEl.textContent = format(residual);
+      strategyEl.textContent = state.strategy;
+      phaseEl.textContent = state.phase;
+      detailEl.textContent = state.detail;
+      labelEl.textContent = `步骤 ${index + 1} / ${states.length}`;
+      progressEl.style.width = `${((index + 1) / states.length) * 100}%`;
+
+      rows.forEach((row, unitIndex) => {
+        const available = state.available[unitIndex];
+        const requested = state.requested[unitIndex];
+        const output = state.output[unitIndex];
+        row.querySelector('[data-role="unit-meta"]').textContent = `可发 ${available.toFixed(1)} MW`;
+        row.querySelector('[data-role="unit-output"]').textContent = format(output);
+        row.querySelector('[data-role="unit-request"]').textContent = `指令 ${requested.toFixed(1)}`;
+        row.querySelector(".available-bar").style.width = `${(available / 40) * 100}%`;
+        row.querySelector(".output-bar").style.width = `${(output / 40) * 100}%`;
+        row.querySelector(".request-marker").style.left = `calc(${(requested / 40) * 100}% - 1px)`;
+        row.classList.toggle("is-limited", requested > available);
+      });
+    }
+
+    function stop() {
+      if (timer) window.clearInterval(timer);
+      timer = null;
+      playEl.textContent = "自动演示";
+    }
+
+    function advance() {
+      index = (index + 1) % states.length;
+      render();
+      if (index === states.length - 1 && timer) stop();
+    }
+
+    root.querySelector('[data-action="next"]').addEventListener("click", () => {
+      stop();
+      advance();
+    });
+
+    root.querySelector('[data-action="reset"]').addEventListener("click", () => {
+      stop();
+      index = 0;
+      render();
+    });
+
+    playEl.addEventListener("click", () => {
+      if (timer) {
+        stop();
+        return;
+      }
+      if (index === states.length - 1) index = 0;
+      render();
+      playEl.textContent = "暂停";
+      timer = window.setInterval(advance, 2500);
+    });
+
+    render();
+  })();
+</script>
