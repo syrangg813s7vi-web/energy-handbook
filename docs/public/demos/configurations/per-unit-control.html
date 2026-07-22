@@ -1,0 +1,521 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./visualize.css">
+<div id="per-unit-control-demo">
+  <div class="viz-controls" aria-label="动画控制">
+    <button type="button" class="btn btn-primary" data-action="play">自动演示</button>
+    <button type="button" class="btn" data-action="next">下一步</button>
+    <button type="button" class="btn btn-ghost" data-action="reset">复位</button>
+    <span class="viz-badge" data-role="step-label">步骤 1 / 5</span>
+  </div>
+
+  <div class="controller-lane" data-role="controller-lane" aria-live="polite">
+    <span>统一控制尺度</span>
+    <strong data-role="controller-value">等待标幺化</strong>
+    <span data-role="controller-error">目标 0.80 pu</span>
+  </div>
+
+  <div class="conversion-chart" role="img" aria-labelledby="puc-title puc-desc">
+    <span id="puc-title" class="sr-only">标幺值控制换算动画</span>
+    <span id="puc-desc" class="sr-only">三台容量不同的光伏设备，先用各自功率基准把兆瓦实测值换算成标幺值，控制器在统一尺度上计算，再把标幺指令换回各设备的兆瓦指令。</span>
+
+    <div class="chart-head" aria-hidden="true">
+      <span>设备</span>
+      <span data-role="physical-heading">物理实测值</span>
+      <span>基准换算</span>
+      <span>统一尺度</span>
+    </div>
+
+    <div class="device-row" data-device="0">
+      <div class="device-name">
+        <strong>光伏 A</strong>
+        <span>额定 100 MW</span>
+      </div>
+      <div class="physical-value">
+        <strong data-role="physical">50 MW</strong>
+      </div>
+      <div class="conversion-block">
+        <span class="conversion-arrow" aria-hidden="true">→</span>
+        <strong data-role="operation">尚未换算</strong>
+      </div>
+      <div class="pu-result">
+        <div class="pu-track">
+          <span class="pu-fill"></span>
+          <i class="target-marker"></i>
+        </div>
+        <strong data-role="pu-value">—</strong>
+      </div>
+    </div>
+
+    <div class="device-row" data-device="1">
+      <div class="device-name">
+        <strong>光伏 B</strong>
+        <span>额定 50 MW</span>
+      </div>
+      <div class="physical-value">
+        <strong data-role="physical">25 MW</strong>
+      </div>
+      <div class="conversion-block">
+        <span class="conversion-arrow" aria-hidden="true">→</span>
+        <strong data-role="operation">尚未换算</strong>
+      </div>
+      <div class="pu-result">
+        <div class="pu-track">
+          <span class="pu-fill"></span>
+          <i class="target-marker"></i>
+        </div>
+        <strong data-role="pu-value">—</strong>
+      </div>
+    </div>
+
+    <div class="device-row" data-device="2">
+      <div class="device-name">
+        <strong>光伏 C</strong>
+        <span>额定 20 MW</span>
+      </div>
+      <div class="physical-value">
+        <strong data-role="physical">10 MW</strong>
+      </div>
+      <div class="conversion-block">
+        <span class="conversion-arrow" aria-hidden="true">→</span>
+        <strong data-role="operation">尚未换算</strong>
+      </div>
+      <div class="pu-result">
+        <div class="pu-track">
+          <span class="pu-fill"></span>
+          <i class="target-marker"></i>
+        </div>
+        <strong data-role="pu-value">—</strong>
+      </div>
+    </div>
+
+    <div class="pu-axis" aria-hidden="true">
+      <span>0</span>
+      <span>0.5</span>
+      <span>目标 0.8</span>
+      <span>1.0 pu</span>
+    </div>
+  </div>
+
+  <div class="current-detail" role="status" aria-live="polite">
+    <strong data-role="phase">先看物理量</strong>
+    <span data-role="detail">50、25、10 MW 看起来不同，但设备容量也不同，不能直接判断谁的负载更重。</span>
+  </div>
+
+  <div class="progress-track" aria-hidden="true">
+    <span data-role="progress"></span>
+  </div>
+</div>
+
+<style>
+  #per-unit-control-demo {
+    color: var(--foreground);
+  }
+
+  #per-unit-control-demo .viz-controls {
+    margin-bottom: 14px;
+  }
+
+  #per-unit-control-demo .controller-lane {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 14px;
+    min-height: 54px;
+    padding: 10px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  #per-unit-control-demo .controller-lane span {
+    color: var(--muted-foreground);
+  }
+
+  #per-unit-control-demo .controller-lane span:last-child {
+    text-align: right;
+  }
+
+  #per-unit-control-demo .controller-lane.is-active strong {
+    color: var(--foreground);
+  }
+
+  #per-unit-control-demo .conversion-chart {
+    padding-top: 8px;
+  }
+
+  #per-unit-control-demo .chart-head,
+  #per-unit-control-demo .device-row {
+    display: grid;
+    grid-template-columns: 100px 118px 150px minmax(180px, 1fr);
+    gap: 14px;
+    align-items: center;
+  }
+
+  #per-unit-control-demo .chart-head {
+    min-height: 34px;
+    color: var(--muted-foreground);
+  }
+
+  #per-unit-control-demo .device-row {
+    min-height: 82px;
+    border-top: 1px solid var(--border);
+  }
+
+  #per-unit-control-demo .device-name,
+  #per-unit-control-demo .physical-value,
+  #per-unit-control-demo .conversion-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  #per-unit-control-demo .device-name span {
+    color: var(--muted-foreground);
+  }
+
+  #per-unit-control-demo .physical-value {
+    justify-content: center;
+    min-height: 44px;
+    padding: 6px 10px;
+    border-left: 3px solid var(--viz-series-2);
+    background: color-mix(in srgb, var(--viz-series-2) 10%, transparent);
+    transition: background 350ms ease, border-color 350ms ease;
+  }
+
+  #per-unit-control-demo .conversion-block {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #per-unit-control-demo .conversion-block strong {
+    color: var(--muted-foreground);
+    transition: color 300ms ease;
+  }
+
+  #per-unit-control-demo .conversion-arrow {
+    width: 100%;
+    color: var(--border);
+    letter-spacing: 6px;
+    transition: color 300ms ease, transform 400ms ease;
+  }
+
+  #per-unit-control-demo[data-mode="normalize"] .conversion-arrow,
+  #per-unit-control-demo[data-mode="control"] .conversion-arrow,
+  #per-unit-control-demo[data-mode="denormalize"] .conversion-arrow {
+    color: var(--viz-series-1);
+  }
+
+  #per-unit-control-demo[data-mode="denormalize"] .conversion-arrow {
+    transform: rotate(180deg);
+  }
+
+  #per-unit-control-demo[data-mode="normalize"] .conversion-block strong,
+  #per-unit-control-demo[data-mode="control"] .conversion-block strong,
+  #per-unit-control-demo[data-mode="denormalize"] .conversion-block strong {
+    color: var(--foreground);
+  }
+
+  #per-unit-control-demo .pu-result {
+    display: grid;
+    grid-template-columns: minmax(100px, 1fr) 62px;
+    gap: 10px;
+    align-items: center;
+  }
+
+  #per-unit-control-demo .pu-track {
+    position: relative;
+    height: 24px;
+    overflow: visible;
+    background:
+      linear-gradient(to right, transparent calc(50% - 1px), var(--border) 50%, transparent calc(50% + 1px)),
+      var(--muted);
+    border-radius: 6px;
+  }
+
+  #per-unit-control-demo .pu-fill {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--viz-series-1) 72%, transparent);
+    transition: width 500ms ease;
+  }
+
+  #per-unit-control-demo .target-marker {
+    position: absolute;
+    top: -4px;
+    left: calc(80% - 1px);
+    display: none;
+    width: 2px;
+    height: 32px;
+    background: var(--foreground);
+  }
+
+  #per-unit-control-demo .target-marker::before {
+    position: absolute;
+    top: -1px;
+    left: -3px;
+    width: 8px;
+    height: 8px;
+    transform: rotate(45deg);
+    background: inherit;
+    content: "";
+  }
+
+  #per-unit-control-demo[data-mode="control"] .target-marker,
+  #per-unit-control-demo[data-mode="denormalize"] .target-marker {
+    display: block;
+  }
+
+  #per-unit-control-demo .pu-axis {
+    position: relative;
+    height: 28px;
+    margin-left: 424px;
+    margin-right: 72px;
+    color: var(--muted-foreground);
+  }
+
+  #per-unit-control-demo .pu-axis span {
+    position: absolute;
+    top: 2px;
+    transform: translateX(-50%);
+  }
+
+  #per-unit-control-demo .pu-axis span:nth-child(1) {
+    left: 0;
+    transform: none;
+  }
+
+  #per-unit-control-demo .pu-axis span:nth-child(2) { left: 50%; }
+  #per-unit-control-demo .pu-axis span:nth-child(3) { left: 80%; }
+
+  #per-unit-control-demo .pu-axis span:nth-child(4) {
+    right: 0;
+    left: auto;
+    transform: none;
+  }
+
+  #per-unit-control-demo .current-detail {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    min-height: 48px;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  #per-unit-control-demo .current-detail strong {
+    flex: 0 0 auto;
+  }
+
+  #per-unit-control-demo .current-detail span {
+    color: var(--muted-foreground);
+  }
+
+  #per-unit-control-demo .progress-track {
+    height: 4px;
+    overflow: hidden;
+    background: var(--muted);
+    border-radius: 999px;
+  }
+
+  #per-unit-control-demo .progress-track span {
+    display: block;
+    width: 20%;
+    height: 100%;
+    background: var(--viz-series-1);
+    transition: width 350ms ease;
+  }
+
+  @media (max-width: 620px) {
+    #per-unit-control-demo .controller-lane {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+
+    #per-unit-control-demo .controller-lane span:last-child {
+      text-align: left;
+    }
+
+    #per-unit-control-demo .chart-head {
+      display: none;
+    }
+
+    #per-unit-control-demo .device-row {
+      grid-template-columns: 82px 1fr;
+      gap: 8px 10px;
+      padding: 10px 0;
+    }
+
+    #per-unit-control-demo .physical-value {
+      min-height: 34px;
+    }
+
+    #per-unit-control-demo .conversion-block {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    #per-unit-control-demo .pu-result {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    #per-unit-control-demo .pu-axis {
+      display: none;
+    }
+
+    #per-unit-control-demo .current-detail {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 4px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #per-unit-control-demo *,
+    #per-unit-control-demo *::before,
+    #per-unit-control-demo *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.getElementById("per-unit-control-demo");
+    if (!root) return;
+
+    const states = [
+      {
+        phase: "先看物理量",
+        detail: "50、25、10 MW 看起来不同，但设备容量也不同，不能直接判断谁的负载更重。",
+        mode: "raw",
+        heading: "物理实测值",
+        physical: ["50 MW", "25 MW", "10 MW"],
+        operation: ["尚未换算", "尚未换算", "尚未换算"],
+        pu: [null, null, null],
+        controller: "等待标幺化",
+        error: "目标 0.80 pu"
+      },
+      {
+        phase: "绑定各自基准",
+        detail: "每一路实测值必须和自己的基准配对：A 用 100 MW，B 用 50 MW，C 用 20 MW。",
+        mode: "normalize",
+        heading: "物理实测值",
+        physical: ["50 MW", "25 MW", "10 MW"],
+        operation: ["÷ 100 MW", "÷ 50 MW", "÷ 20 MW"],
+        pu: [0, 0, 0],
+        controller: "基准已确认",
+        error: "目标 0.80 pu"
+      },
+      {
+        phase: "得到统一标幺值",
+        detail: "三路结果都是 0.50 pu，说明它们虽然 MW 不同，却都运行在自身能力的 50%。",
+        mode: "normalize",
+        heading: "物理实测值",
+        physical: ["50 MW", "25 MW", "10 MW"],
+        operation: ["÷ 100 MW", "÷ 50 MW", "÷ 20 MW"],
+        pu: [0.5, 0.5, 0.5],
+        controller: "实测均为 0.50 pu",
+        error: "目标 0.80 pu"
+      },
+      {
+        phase: "控制器统一算偏差",
+        detail: "控制器不再分别处理 30、15、6 MW，而是对三路使用相同的偏差：0.80 − 0.50 = 0.30 pu。",
+        mode: "control",
+        heading: "当前物理值",
+        physical: ["50 MW", "25 MW", "10 MW"],
+        operation: ["÷ 100 MW", "÷ 50 MW", "÷ 20 MW"],
+        pu: [0.5, 0.5, 0.5],
+        controller: "统一偏差 +0.30 pu",
+        error: "目标 0.80 − 实测 0.50"
+      },
+      {
+        phase: "换回设备物理指令",
+        detail: "同一个 0.80 pu 指令乘以各自基准，得到 A 80、B 40、C 16 MW，设备负载率仍然一致。",
+        mode: "denormalize",
+        heading: "下发物理指令",
+        physical: ["80 MW", "40 MW", "16 MW"],
+        operation: ["× 100 MW", "× 50 MW", "× 20 MW"],
+        pu: [0.8, 0.8, 0.8],
+        controller: "下发 0.80 pu",
+        error: "分别换算回 MW"
+      }
+    ];
+
+    const rows = Array.from(root.querySelectorAll(".device-row"));
+    const controllerLane = root.querySelector('[data-role="controller-lane"]');
+    const controllerValue = root.querySelector('[data-role="controller-value"]');
+    const controllerError = root.querySelector('[data-role="controller-error"]');
+    const heading = root.querySelector('[data-role="physical-heading"]');
+    const phase = root.querySelector('[data-role="phase"]');
+    const detail = root.querySelector('[data-role="detail"]');
+    const stepLabel = root.querySelector('[data-role="step-label"]');
+    const progress = root.querySelector('[data-role="progress"]');
+    const play = root.querySelector('[data-action="play"]');
+    let index = 0;
+    let timer = null;
+
+    function render() {
+      const state = states[index];
+      root.dataset.mode = state.mode;
+      controllerValue.textContent = state.controller;
+      controllerError.textContent = state.error;
+      controllerLane.classList.toggle("is-active", state.mode === "control" || state.mode === "denormalize");
+      heading.textContent = state.heading;
+      phase.textContent = state.phase;
+      detail.textContent = state.detail;
+      stepLabel.textContent = `步骤 ${index + 1} / ${states.length}`;
+      progress.style.width = `${((index + 1) / states.length) * 100}%`;
+
+      rows.forEach((row, rowIndex) => {
+        const puValue = state.pu[rowIndex];
+        row.querySelector('[data-role="physical"]').textContent = state.physical[rowIndex];
+        row.querySelector('[data-role="operation"]').textContent = state.operation[rowIndex];
+        row.querySelector('[data-role="pu-value"]').textContent = puValue === null ? "—" : `${puValue.toFixed(2)} pu`;
+        row.querySelector(".pu-fill").style.width = puValue === null ? "0%" : `${puValue * 100}%`;
+      });
+    }
+
+    function stop() {
+      if (timer) window.clearInterval(timer);
+      timer = null;
+      play.textContent = "自动演示";
+    }
+
+    function advance() {
+      index = (index + 1) % states.length;
+      render();
+      if (index === states.length - 1 && timer) stop();
+    }
+
+    root.querySelector('[data-action="next"]').addEventListener("click", () => {
+      stop();
+      advance();
+    });
+
+    root.querySelector('[data-action="reset"]').addEventListener("click", () => {
+      stop();
+      index = 0;
+      render();
+    });
+
+    play.addEventListener("click", () => {
+      if (timer) {
+        stop();
+        return;
+      }
+      if (index === states.length - 1) index = 0;
+      render();
+      play.textContent = "暂停";
+      timer = window.setInterval(advance, 2600);
+    });
+
+    render();
+  })();
+</script>

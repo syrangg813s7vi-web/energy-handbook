@@ -1,0 +1,290 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./visualize.css">
+<div id="sample-data-manager-demo">
+  <div class="viz-controls" aria-label="动画控制">
+    <button type="button" class="btn btn-primary" data-action="play">自动演示</button>
+    <button type="button" class="btn" data-action="next">下一步</button>
+    <button type="button" class="btn btn-ghost" data-action="reset">复位</button>
+    <span class="viz-badge" data-role="step-label">步骤 1 / 6</span>
+  </div>
+
+  <div class="viz-grid sample-metrics" aria-live="polite">
+    <section class="card viz-stat">
+      <span class="text-muted">示例接收速率</span>
+      <strong class="viz-stat-value" data-role="ingest-rate">12,000 点/s</strong>
+    </section>
+    <section class="card viz-stat">
+      <span class="text-muted">有效数据率</span>
+      <strong class="viz-stat-value" data-role="good-rate">—</strong>
+    </section>
+    <section class="card viz-stat">
+      <span class="text-muted">当前处理层</span>
+      <strong class="viz-stat-value" data-role="layer">采集</strong>
+    </section>
+  </div>
+
+  <div class="sample-stage">
+    <svg class="sample-wires" viewBox="0 0 736 390" role="img" aria-labelledby="sdm-title sdm-desc">
+      <title id="sdm-title">采样数据管理流程</title>
+      <desc id="sdm-desc">不同设备的采样值进入数据管理器，经过时间戳和质量检查、时间对齐与缓存后，一路供实时算法读取，一路降采样写入历史数据库。</desc>
+
+      <path class="wire ingest-wire active" d="M 147 185 C 188 185 218 185 258 185"></path>
+      <path class="wire quality-wire" data-role="quality-wire" d="M 368 110 L 368 140"></path>
+      <path class="wire cache-wire" data-role="cache-wire" d="M 478 185 C 535 151 568 100 589 85"></path>
+      <path class="wire history-wire" data-role="history-wire" d="M 478 185 C 535 220 568 270 589 285"></path>
+      <path class="wire consumer-wire" data-role="consumer-wire" d="M 258 185 C 211 228 168 294 147 325"></path>
+
+      <circle class="packet ingest-packet visible" r="5">
+        <animateMotion dur="1.05s" repeatCount="indefinite" path="M 147 185 C 188 185 218 185 258 185"></animateMotion>
+      </circle>
+      <circle class="packet quality-packet" data-role="quality-packet" r="5">
+        <animateMotion dur=".9s" repeatCount="indefinite" path="M 368 110 L 368 140"></animateMotion>
+      </circle>
+      <circle class="packet cache-packet" data-role="cache-packet" r="5">
+        <animateMotion dur="1.25s" repeatCount="indefinite" path="M 478 185 C 535 151 568 100 589 85"></animateMotion>
+      </circle>
+      <circle class="packet history-packet" data-role="history-packet" r="5">
+        <animateMotion dur="1.35s" repeatCount="indefinite" path="M 478 185 C 535 220 568 270 589 285"></animateMotion>
+      </circle>
+      <circle class="packet consumer-packet" data-role="consumer-packet" r="5">
+        <animateMotion dur="1.3s" repeatCount="indefinite" path="M 258 185 C 211 228 168 294 147 325"></animateMotion>
+      </circle>
+    </svg>
+
+    <section class="card sample-node source-node">
+      <span class="text-muted">设备采样流</span>
+      <strong data-role="source-status">不同周期持续上送</strong>
+      <small class="text-muted">功率 · 电压 · SOC · 状态位</small>
+    </section>
+
+    <section class="card sample-node quality-node" data-role="quality-node">
+      <span class="text-muted">时间与质量规则</span>
+      <strong data-role="quality-status">等待检查</strong>
+      <small class="text-muted" data-role="quality-note">源时间戳 · 状态码</small>
+    </section>
+
+    <section class="card sample-node manager-node" data-role="manager-node">
+      <span class="text-muted">sample_data_manager</span>
+      <strong data-role="manager-status">接收原始样本</strong>
+      <small class="text-muted" data-role="manager-note">按点表识别变量</small>
+    </section>
+
+    <section class="card sample-node cache-node" data-role="cache-node">
+      <span class="text-muted">实时缓存</span>
+      <strong data-role="cache-status">等待更新</strong>
+      <small class="text-muted" data-role="cache-note">最新值与短时间窗</small>
+    </section>
+
+    <section class="card sample-node history-node" data-role="history-node">
+      <span class="text-muted">历史数据层</span>
+      <strong data-role="history-status">尚未写入</strong>
+      <small class="text-muted" data-role="history-note">原始值与聚合值</small>
+    </section>
+
+    <section class="card sample-node consumer-node" data-role="consumer-node">
+      <span class="text-muted">使用者</span>
+      <strong data-role="consumer-status">等待数据</strong>
+      <small class="text-muted" data-role="consumer-note">控制算法 · 趋势 · 报表</small>
+    </section>
+  </div>
+
+  <div class="current-detail" role="status" aria-live="polite">
+    <strong data-role="phase">接收设备采样</strong>
+    <span data-role="detail">设备以不同周期上送数据；管理器先根据点表识别变量、单位和来源，而不是把所有数字混在一起。</span>
+  </div>
+
+  <div class="progress-track" aria-hidden="true">
+    <span data-role="progress"></span>
+  </div>
+</div>
+
+<style>
+  #sample-data-manager-demo { color: var(--foreground); }
+  #sample-data-manager-demo .viz-controls { margin-bottom: 14px; }
+  #sample-data-manager-demo .sample-metrics { margin-bottom: 12px; }
+
+  #sample-data-manager-demo .sample-stage {
+    position: relative;
+    width: 100%;
+    min-height: 390px;
+    aspect-ratio: 736 / 390;
+  }
+
+  #sample-data-manager-demo .sample-wires {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  #sample-data-manager-demo .wire {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 2;
+    transition: stroke 400ms ease, opacity 400ms ease;
+  }
+
+  #sample-data-manager-demo .wire.active { stroke: var(--viz-series-1); }
+  #sample-data-manager-demo .quality-wire { stroke-dasharray: 5 5; }
+
+  #sample-data-manager-demo .packet {
+    fill: var(--viz-series-1);
+    opacity: 0;
+    transition: opacity 300ms ease;
+  }
+
+  #sample-data-manager-demo .packet.visible { opacity: 1; }
+
+  #sample-data-manager-demo .sample-node {
+    position: absolute;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    min-height: 90px;
+  }
+
+  #sample-data-manager-demo .sample-node strong { font-variant-numeric: tabular-nums; }
+  #sample-data-manager-demo .source-node { top: 140px; left: 0; width: 20%; }
+  #sample-data-manager-demo .quality-node { top: 20px; left: 35%; width: 30%; }
+  #sample-data-manager-demo .manager-node { top: 140px; left: 35%; width: 30%; }
+  #sample-data-manager-demo .cache-node { top: 40px; left: 80%; width: 20%; }
+  #sample-data-manager-demo .history-node { top: 240px; left: 80%; width: 20%; }
+  #sample-data-manager-demo .consumer-node { top: 280px; left: 0; width: 20%; }
+
+  #sample-data-manager-demo .sample-node.active { color: var(--foreground); }
+  #sample-data-manager-demo .sample-node.warning { color: var(--destructive); }
+
+  #sample-data-manager-demo .current-detail {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    min-height: 48px;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  #sample-data-manager-demo .current-detail strong { flex: 0 0 auto; }
+  #sample-data-manager-demo .current-detail span { color: var(--muted-foreground); }
+
+  #sample-data-manager-demo .progress-track {
+    height: 4px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--muted);
+  }
+
+  #sample-data-manager-demo .progress-track span {
+    display: block;
+    width: 16.667%;
+    height: 100%;
+    background: var(--viz-series-1);
+    transition: width 450ms ease;
+  }
+
+  @media (max-width: 680px) {
+    #sample-data-manager-demo .sample-stage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      min-height: 0;
+      aspect-ratio: auto;
+    }
+
+    #sample-data-manager-demo .sample-wires { display: none; }
+
+    #sample-data-manager-demo .sample-node {
+      position: static;
+      width: auto;
+      min-height: 94px;
+    }
+
+    #sample-data-manager-demo .source-node { order: 1; }
+    #sample-data-manager-demo .quality-node { order: 2; }
+    #sample-data-manager-demo .manager-node { order: 3; }
+    #sample-data-manager-demo .cache-node { order: 4; }
+    #sample-data-manager-demo .history-node { order: 5; }
+    #sample-data-manager-demo .consumer-node { order: 6; }
+
+    #sample-data-manager-demo .current-detail {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 4px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #sample-data-manager-demo .packet { display: none; }
+    #sample-data-manager-demo *,
+    #sample-data-manager-demo *::before,
+    #sample-data-manager-demo *::after { transition-duration: 0.001ms !important; }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.getElementById("sample-data-manager-demo");
+    if (!root) return;
+
+    const states = [
+      { phase: "接收设备采样", detail: "设备以不同周期上送数据；管理器先根据点表识别变量、单位和来源，而不是把所有数字混在一起。", rate: "12,000 点/s", good: "—", layer: "采集", source: "不同周期持续上送", quality: "等待检查", qualityNote: "源时间戳 · 状态码", manager: "接收原始样本", managerNote: "按点表识别变量", cache: "等待更新", cacheNote: "最新值与短时间窗", history: "尚未写入", historyNote: "原始值与聚合值", consumer: "等待数据", consumerNote: "控制算法 · 趋势 · 报表", qualityOn: false, cacheOn: false, historyOn: false, consumerOn: false, warning: false },
+      { phase: "检查时间戳和数据质量", detail: "每个样本不仅有数值，还应带来源时间、接收时间和质量状态；超时、坏值、乱序数据需要标记，不能悄悄当成正常值。", rate: "12,000 点/s", good: "99.8%", layer: "质量检查", source: "持续上送", quality: "24 个坏点已标记", qualityNote: "不删除证据，保留质量码", manager: "校验并规范化", managerNote: "单位、量程、时间统一", cache: "等待有效样本", cacheNote: "坏值不覆盖好值", history: "记录质量状态", historyNote: "值与质量码一起保存", consumer: "等待有效数据", consumerNote: "可选择是否接受可疑值", qualityOn: true, cacheOn: false, historyOn: false, consumerOn: false, warning: true },
+      { phase: "把不同周期的数据对齐", detail: "快速电气量、慢速温度和事件状态并不同时到达；管理器按统一时间轴重采样、保持或插值，并明确标记数据来源。", rate: "11,976 点/s", good: "99.8%", layer: "时间对齐", source: "10 ms · 100 ms · 1 s", quality: "源时间已对齐", qualityNote: "保留原始时间戳", manager: "统一时间基准", managerNote: "保持值或插值需可追溯", cache: "准备批量更新", cacheNote: "同一时刻形成数据帧", history: "等待批次", historyNote: "避免逐点随机写入", consumer: "等待完整数据帧", consumerNote: "防止变量来自不同时刻", qualityOn: true, cacheOn: false, historyOn: false, consumerOn: false, warning: false },
+      { phase: "更新最新值和短时缓存", detail: "实时消费者读取的是最新有效值或最近一段时间窗；短时缓存还能在通信短暂中断时吸收数据，恢复后再补写。", rate: "11,976 点/s", good: "99.8%", layer: "实时缓存", source: "持续上送", quality: "质量状态正常", qualityNote: "坏值保持可见", manager: "批次写入缓存", managerNote: "最新值 + 短时间窗", cache: "实时缓存已更新", cacheNote: "断链时暂存待补写", history: "等待落盘", historyNote: "批次尚在内存", consumer: "实时算法可读取", consumerNote: "读取最新有效值", qualityOn: true, cacheOn: true, historyOn: false, consumerOn: true, warning: false },
+      { phase: "原始数据与聚合数据分层保存", detail: "近期保留高分辨率原始值，较长期保存分钟或小时的最小、最大、平均等聚合结果，以控制存储量。", rate: "11,976 点/s", good: "99.8%", layer: "分层存储", source: "持续上送", quality: "质量码随数据保存", qualityNote: "聚合时统计有效覆盖率", manager: "执行批量落盘", managerNote: "压缩与保留策略", cache: "保留近期窗口", cacheNote: "支持快速趋势查询", history: "原始 + 1 min 聚合", historyNote: "最小 · 最大 · 平均 · 质量", consumer: "实时与历史均可读", consumerNote: "按时间范围选择分辨率", qualityOn: true, cacheOn: true, historyOn: true, consumerOn: true, warning: false },
+      { phase: "按变量、时间和质量查询", detail: "趋势、报表、性能分析和模型训练按变量与时间范围读取数据；历史查询不应阻塞实时采集和控制数据路径。", rate: "11,976 点/s", good: "99.8%", layer: "查询服务", source: "持续采集不受影响", quality: "返回值和质量状态", qualityNote: "区分原始、插值与聚合", manager: "采集与查询解耦", managerNote: "查询走独立读路径", cache: "提供近期快速查询", cacheNote: "最新值延迟最低", history: "按时间范围返回", historyNote: "自动选择合适分辨率", consumer: "趋势 · 报表 · 分析", consumerNote: "控制仍使用实时数据路径", qualityOn: true, cacheOn: true, historyOn: true, consumerOn: true, warning: false },
+    ];
+
+    const el = {
+      play: root.querySelector('[data-action="play"]'), ingestRate: root.querySelector('[data-role="ingest-rate"]'), goodRate: root.querySelector('[data-role="good-rate"]'), layer: root.querySelector('[data-role="layer"]'),
+      sourceStatus: root.querySelector('[data-role="source-status"]'), qualityNode: root.querySelector('[data-role="quality-node"]'), qualityStatus: root.querySelector('[data-role="quality-status"]'), qualityNote: root.querySelector('[data-role="quality-note"]'),
+      managerNode: root.querySelector('[data-role="manager-node"]'), managerStatus: root.querySelector('[data-role="manager-status"]'), managerNote: root.querySelector('[data-role="manager-note"]'),
+      cacheNode: root.querySelector('[data-role="cache-node"]'), cacheStatus: root.querySelector('[data-role="cache-status"]'), cacheNote: root.querySelector('[data-role="cache-note"]'),
+      historyNode: root.querySelector('[data-role="history-node"]'), historyStatus: root.querySelector('[data-role="history-status"]'), historyNote: root.querySelector('[data-role="history-note"]'),
+      consumerNode: root.querySelector('[data-role="consumer-node"]'), consumerStatus: root.querySelector('[data-role="consumer-status"]'), consumerNote: root.querySelector('[data-role="consumer-note"]'),
+      qualityWire: root.querySelector('[data-role="quality-wire"]'), cacheWire: root.querySelector('[data-role="cache-wire"]'), historyWire: root.querySelector('[data-role="history-wire"]'), consumerWire: root.querySelector('[data-role="consumer-wire"]'),
+      qualityPacket: root.querySelector('[data-role="quality-packet"]'), cachePacket: root.querySelector('[data-role="cache-packet"]'), historyPacket: root.querySelector('[data-role="history-packet"]'), consumerPacket: root.querySelector('[data-role="consumer-packet"]'),
+      phase: root.querySelector('[data-role="phase"]'), detail: root.querySelector('[data-role="detail"]'), stepLabel: root.querySelector('[data-role="step-label"]'), progress: root.querySelector('[data-role="progress"]'),
+    };
+
+    let index = 0;
+    let timer = 0;
+
+    function flow(wire, packet, active, roleClass) {
+      wire.className.baseVal = `wire ${roleClass} ${active ? "active" : ""}`.trim();
+      packet.className.baseVal = `packet ${active ? "visible" : ""}`.trim();
+    }
+
+    function render() {
+      const state = states[index];
+      el.ingestRate.textContent = state.rate; el.goodRate.textContent = state.good; el.layer.textContent = state.layer;
+      el.sourceStatus.textContent = state.source; el.qualityStatus.textContent = state.quality; el.qualityNote.textContent = state.qualityNote;
+      el.managerStatus.textContent = state.manager; el.managerNote.textContent = state.managerNote;
+      el.cacheStatus.textContent = state.cache; el.cacheNote.textContent = state.cacheNote;
+      el.historyStatus.textContent = state.history; el.historyNote.textContent = state.historyNote;
+      el.consumerStatus.textContent = state.consumer; el.consumerNote.textContent = state.consumerNote;
+      flow(el.qualityWire, el.qualityPacket, state.qualityOn, "quality-wire");
+      flow(el.cacheWire, el.cachePacket, state.cacheOn, "cache-wire");
+      flow(el.historyWire, el.historyPacket, state.historyOn, "history-wire");
+      flow(el.consumerWire, el.consumerPacket, state.consumerOn, "consumer-wire");
+      el.qualityNode.className = `card sample-node quality-node ${state.qualityOn ? "active" : ""} ${state.warning ? "warning" : ""}`.trim();
+      el.managerNode.className = "card sample-node manager-node active";
+      el.cacheNode.className = `card sample-node cache-node ${state.cacheOn ? "active" : ""}`.trim();
+      el.historyNode.className = `card sample-node history-node ${state.historyOn ? "active" : ""}`.trim();
+      el.consumerNode.className = `card sample-node consumer-node ${state.consumerOn ? "active" : ""}`.trim();
+      el.phase.textContent = state.phase; el.detail.textContent = state.detail;
+      el.stepLabel.textContent = `步骤 ${index + 1} / ${states.length}`;
+      el.progress.style.width = `${((index + 1) / states.length) * 100}%`;
+    }
+
+    function stop() { window.clearInterval(timer); timer = 0; el.play.textContent = "自动演示"; }
+    function advance() { index = (index + 1) % states.length; render(); if (index === states.length - 1) stop(); }
+    root.querySelector('[data-action="next"]').addEventListener("click", () => { stop(); advance(); });
+    root.querySelector('[data-action="reset"]').addEventListener("click", () => { stop(); index = 0; render(); });
+    el.play.addEventListener("click", () => { if (timer) { stop(); return; } if (index === states.length - 1) index = 0; render(); el.play.textContent = "暂停"; timer = window.setInterval(advance, 2850); });
+    render();
+  })();
+</script>

@@ -1,0 +1,572 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./visualize.css">
+<div id="pv-storage-allocation-demo">
+  <div class="viz-controls" aria-label="动画控制">
+    <button type="button" class="btn btn-primary" data-action="play">自动演示</button>
+    <button type="button" class="btn" data-action="next">下一步</button>
+    <button type="button" class="btn btn-ghost" data-action="reset">复位</button>
+    <span class="viz-badge" data-role="step-label">步骤 1 / 6</span>
+  </div>
+
+  <div class="viz-grid allocation-metrics" aria-live="polite">
+    <section class="card viz-stat">
+      <span class="text-muted">并网点目标</span>
+      <strong class="viz-stat-value" data-role="target">60 MW</strong>
+    </section>
+    <section class="card viz-stat">
+      <span class="text-muted">光储合计</span>
+      <strong class="viz-stat-value" data-role="actual">60 MW</strong>
+    </section>
+    <section class="card viz-stat">
+      <span class="text-muted">未完成量</span>
+      <strong class="viz-stat-value" data-role="gap">0 MW</strong>
+    </section>
+  </div>
+
+  <div class="allocation-stage" data-role="stage">
+    <svg class="allocation-wires" viewBox="0 0 736 270" role="img" aria-labelledby="psa-title psa-desc">
+      <title id="psa-title">光伏与储能有功变量分配</title>
+      <desc id="psa-desc">场站并网点目标进入变量分配器，分配器根据光伏可发能力、储能荷电状态和充放电限制，生成光伏功率指令与储能功率指令，两者合计形成并网点功率。</desc>
+      <path class="wire target-wire active" d="M 130 135 L 190 135"></path>
+      <path class="wire pv-command-wire active" d="M 330 135 C 365 135, 365 75, 400 75"></path>
+      <path class="wire storage-command-wire active" d="M 330 135 C 365 135, 365 195, 400 195"></path>
+      <path class="wire pv-power-wire active" d="M 540 75 C 575 75, 575 135, 606 135"></path>
+      <path class="wire storage-power-wire" data-role="storage-wire" d="M 540 195 C 575 195, 575 135, 606 135"></path>
+
+      <circle class="packet target-packet" r="5">
+        <animateMotion dur="1.4s" repeatCount="indefinite" path="M 130 135 L 190 135"></animateMotion>
+      </circle>
+      <circle class="packet pv-command-packet" r="5">
+        <animateMotion dur="1.7s" repeatCount="indefinite" path="M 330 135 C 365 135, 365 75, 400 75"></animateMotion>
+      </circle>
+      <circle class="packet storage-command-packet" r="5">
+        <animateMotion dur="1.7s" repeatCount="indefinite" path="M 330 135 C 365 135, 365 195, 400 195"></animateMotion>
+      </circle>
+      <circle class="packet pv-power-packet" r="5">
+        <animateMotion dur="1.5s" repeatCount="indefinite" path="M 540 75 C 575 75, 575 135, 606 135"></animateMotion>
+      </circle>
+      <circle class="packet storage-power-packet" data-role="storage-packet" r="5">
+        <animateMotion dur="1.5s" repeatCount="indefinite" path="M 540 195 C 575 195, 575 135, 606 135"></animateMotion>
+      </circle>
+    </svg>
+
+    <section class="card alloc-node target-node">
+      <span class="text-muted">并网点目标</span>
+      <strong data-role="target-node">60 MW</strong>
+    </section>
+
+    <section class="card alloc-node allocator-node">
+      <span class="text-muted">变量分配器</span>
+      <strong data-role="strategy">光伏优先</strong>
+      <small class="text-muted">约束后再求和</small>
+    </section>
+
+    <section class="card alloc-node pv-node">
+      <span class="text-muted">光伏指令</span>
+      <strong data-role="pv-command">60 MW</strong>
+      <small class="text-muted" data-role="pv-meta">可发 72 MW</small>
+    </section>
+
+    <section class="card alloc-node storage-node" data-role="storage-node">
+      <span class="text-muted">储能指令</span>
+      <strong data-role="storage-command">0 MW</strong>
+      <small class="text-muted" data-role="storage-meta">SOC 55% · 待命</small>
+    </section>
+
+    <section class="card alloc-node output-node" data-role="output-node">
+      <span class="text-muted">并网点实发</span>
+      <strong data-role="output">60 MW</strong>
+      <small class="text-muted" data-role="output-meta">目标已完成</small>
+    </section>
+  </div>
+
+  <div class="resource-bars" aria-label="光伏与储能约束">
+    <div class="resource-row">
+      <span>光伏可发 / 指令</span>
+      <div class="resource-track pv-track" aria-hidden="true">
+        <i class="available-fill" data-role="pv-available"></i>
+        <i class="command-fill" data-role="pv-fill"></i>
+      </div>
+      <strong data-role="pv-ratio">60 / 72 MW</strong>
+    </div>
+    <div class="resource-row">
+      <span>储能 SOC</span>
+      <div class="resource-track soc-track" aria-hidden="true">
+        <i class="soc-safe"></i>
+        <i class="soc-fill" data-role="soc-fill"></i>
+      </div>
+      <strong data-role="soc-value">55%</strong>
+    </div>
+  </div>
+
+  <div class="current-detail" role="status" aria-live="polite">
+    <strong data-role="phase">光伏可以独立完成目标</strong>
+    <span data-role="detail">光伏可发能力高于场站目标，分配器令光伏承担 60 MW，储能保持待命。</span>
+  </div>
+
+  <div class="progress-track" aria-hidden="true">
+    <span data-role="progress"></span>
+  </div>
+</div>
+
+<style>
+  #pv-storage-allocation-demo {
+    color: var(--foreground);
+  }
+
+  #pv-storage-allocation-demo .viz-controls {
+    margin-bottom: 14px;
+  }
+
+  #pv-storage-allocation-demo .allocation-metrics {
+    margin-bottom: 14px;
+  }
+
+  #pv-storage-allocation-demo .allocation-stage {
+    position: relative;
+    width: 100%;
+    min-height: 270px;
+    aspect-ratio: 736 / 270;
+  }
+
+  #pv-storage-allocation-demo .allocation-wires {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  #pv-storage-allocation-demo .wire {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 2;
+    transition: stroke 400ms ease, opacity 400ms ease;
+  }
+
+  #pv-storage-allocation-demo .wire.active {
+    stroke: var(--viz-series-1);
+  }
+
+  #pv-storage-allocation-demo .storage-power-wire.charge {
+    stroke: var(--viz-series-2);
+    stroke-dasharray: 6 4;
+  }
+
+  #pv-storage-allocation-demo .storage-power-wire.limited {
+    stroke: var(--destructive);
+  }
+
+  #pv-storage-allocation-demo .packet {
+    fill: var(--viz-series-1);
+  }
+
+  #pv-storage-allocation-demo .storage-power-packet {
+    opacity: 0;
+    transition: opacity 300ms ease;
+  }
+
+  #pv-storage-allocation-demo .storage-power-packet.active {
+    opacity: 1;
+  }
+
+  #pv-storage-allocation-demo .storage-power-packet.charge {
+    fill: var(--viz-series-2);
+  }
+
+  #pv-storage-allocation-demo .storage-power-packet.limited {
+    fill: var(--destructive);
+  }
+
+  #pv-storage-allocation-demo .alloc-node {
+    position: absolute;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    min-height: 80px;
+  }
+
+  #pv-storage-allocation-demo .alloc-node strong {
+    font-variant-numeric: tabular-nums;
+  }
+
+  #pv-storage-allocation-demo .target-node {
+    top: 95px;
+    left: 0;
+    width: 17.66%;
+  }
+
+  #pv-storage-allocation-demo .allocator-node {
+    top: 95px;
+    left: 25.82%;
+    width: 19.02%;
+  }
+
+  #pv-storage-allocation-demo .pv-node {
+    top: 35px;
+    left: 54.35%;
+    width: 19.02%;
+  }
+
+  #pv-storage-allocation-demo .storage-node {
+    top: 155px;
+    left: 54.35%;
+    width: 19.02%;
+    transition: color 350ms ease;
+  }
+
+  #pv-storage-allocation-demo .output-node {
+    top: 95px;
+    left: 82.34%;
+    width: 17.66%;
+    transition: color 350ms ease;
+  }
+
+  #pv-storage-allocation-demo .storage-node.charge {
+    color: var(--viz-series-2);
+  }
+
+  #pv-storage-allocation-demo .storage-node.limited,
+  #pv-storage-allocation-demo .output-node.limited {
+    color: var(--destructive);
+  }
+
+  #pv-storage-allocation-demo .resource-bars {
+    border-top: 1px solid var(--border);
+  }
+
+  #pv-storage-allocation-demo .resource-row {
+    display: grid;
+    grid-template-columns: 132px minmax(180px, 1fr) 94px;
+    gap: 12px;
+    align-items: center;
+    min-height: 52px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  #pv-storage-allocation-demo .resource-row > span {
+    color: var(--muted-foreground);
+  }
+
+  #pv-storage-allocation-demo .resource-row > strong {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #pv-storage-allocation-demo .resource-track {
+    position: relative;
+    height: 18px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--muted);
+  }
+
+  #pv-storage-allocation-demo .resource-track i {
+    position: absolute;
+    inset: 0;
+    display: block;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 650ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  #pv-storage-allocation-demo .available-fill {
+    background: color-mix(in srgb, var(--viz-series-2) 28%, transparent);
+  }
+
+  #pv-storage-allocation-demo .command-fill {
+    background: color-mix(in srgb, var(--viz-series-1) 72%, transparent);
+  }
+
+  #pv-storage-allocation-demo .soc-track .soc-safe {
+    inset: 0 10%;
+    transform: none;
+    background: color-mix(in srgb, var(--viz-series-2) 16%, transparent);
+  }
+
+  #pv-storage-allocation-demo .soc-fill {
+    background: color-mix(in srgb, var(--viz-series-1) 72%, transparent);
+  }
+
+  #pv-storage-allocation-demo .current-detail {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    min-height: 48px;
+    padding: 12px 0;
+  }
+
+  #pv-storage-allocation-demo .current-detail strong {
+    flex: 0 0 auto;
+  }
+
+  #pv-storage-allocation-demo .current-detail span {
+    color: var(--muted-foreground);
+  }
+
+  #pv-storage-allocation-demo .progress-track {
+    height: 4px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--muted);
+  }
+
+  #pv-storage-allocation-demo .progress-track span {
+    display: block;
+    width: 16.667%;
+    height: 100%;
+    background: var(--viz-series-1);
+    transition: width 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @media (max-width: 600px) {
+    #pv-storage-allocation-demo .allocation-stage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      min-height: 0;
+      aspect-ratio: auto;
+    }
+
+    #pv-storage-allocation-demo .allocation-wires {
+      display: none;
+    }
+
+    #pv-storage-allocation-demo .alloc-node {
+      position: static;
+      width: auto;
+      min-height: 94px;
+    }
+
+    #pv-storage-allocation-demo .target-node { order: 1; }
+    #pv-storage-allocation-demo .allocator-node { order: 2; }
+    #pv-storage-allocation-demo .pv-node { order: 3; }
+    #pv-storage-allocation-demo .storage-node { order: 4; }
+    #pv-storage-allocation-demo .output-node {
+      grid-column: 1 / -1;
+      order: 5;
+    }
+
+    #pv-storage-allocation-demo .resource-row {
+      grid-template-columns: 1fr 70px;
+      gap: 6px 10px;
+      padding: 8px 0;
+    }
+
+    #pv-storage-allocation-demo .resource-track {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+
+    #pv-storage-allocation-demo .current-detail {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 4px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #pv-storage-allocation-demo .packet {
+      display: none;
+    }
+
+    #pv-storage-allocation-demo *,
+    #pv-storage-allocation-demo *::before,
+    #pv-storage-allocation-demo *::after {
+      transition-duration: 0.001ms !important;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.getElementById("pv-storage-allocation-demo");
+    if (!root) return;
+
+    const states = [
+      {
+        phase: "光伏可以独立完成目标",
+        detail: "光伏可发能力高于场站目标，分配器令光伏承担 60 MW，储能保持待命。",
+        strategy: "光伏优先",
+        target: 60,
+        available: 72,
+        pv: 60,
+        storage: 0,
+        soc: 55,
+        storageMode: "待命",
+        status: "normal",
+      },
+      {
+        phase: "云影造成光伏缺口",
+        detail: "光伏可发能力降到 42 MW；储能放电 18 MW 填补缺口，使并网点仍保持 60 MW。",
+        strategy: "储能补缺口",
+        target: 60,
+        available: 42,
+        pv: 42,
+        storage: 18,
+        soc: 55,
+        storageMode: "放电",
+        status: "discharge",
+      },
+      {
+        phase: "SOC 下限限制放电",
+        detail: "SOC 接近下限后，储能只允许放电 6 MW；光储合计 48 MW，分配器必须报告 12 MW 目标不可达。",
+        strategy: "约束后限幅",
+        target: 60,
+        available: 42,
+        pv: 42,
+        storage: 6,
+        soc: 22,
+        storageMode: "限功率放电",
+        status: "limited",
+      },
+      {
+        phase: "利用富余光伏给储能充电",
+        detail: "并网点目标为 45 MW；光伏发 60 MW，储能吸收 15 MW，送到并网点的合计仍是 45 MW。",
+        strategy: "富余功率充电",
+        target: 45,
+        available: 70,
+        pv: 60,
+        storage: -15,
+        soc: 35,
+        storageMode: "充电",
+        status: "charge",
+      },
+      {
+        phase: "SOC 上限限制充电",
+        detail: "SOC 接近上限后，储能只能吸收 4 MW；为了维持 45 MW 并网目标，光伏指令降为 49 MW。",
+        strategy: "充电限幅后限光",
+        target: 45,
+        available: 70,
+        pv: 49,
+        storage: -4,
+        soc: 90,
+        storageMode: "限功率充电",
+        status: "charge",
+      },
+      {
+        phase: "光伏与储能协同升功率",
+        detail: "目标升到 65 MW，光伏可发 52 MW，储能在 SOC 允许范围内放电 13 MW，共同完成目标。",
+        strategy: "协同跟踪目标",
+        target: 65,
+        available: 52,
+        pv: 52,
+        storage: 13,
+        soc: 65,
+        storageMode: "放电",
+        status: "discharge",
+      },
+    ];
+
+    const elements = {
+      play: root.querySelector('[data-action="play"]'),
+      target: root.querySelector('[data-role="target"]'),
+      actual: root.querySelector('[data-role="actual"]'),
+      gap: root.querySelector('[data-role="gap"]'),
+      targetNode: root.querySelector('[data-role="target-node"]'),
+      strategy: root.querySelector('[data-role="strategy"]'),
+      pvCommand: root.querySelector('[data-role="pv-command"]'),
+      pvMeta: root.querySelector('[data-role="pv-meta"]'),
+      storageCommand: root.querySelector('[data-role="storage-command"]'),
+      storageMeta: root.querySelector('[data-role="storage-meta"]'),
+      storageNode: root.querySelector('[data-role="storage-node"]'),
+      storageWire: root.querySelector('[data-role="storage-wire"]'),
+      storagePacket: root.querySelector('[data-role="storage-packet"]'),
+      outputNode: root.querySelector('[data-role="output-node"]'),
+      output: root.querySelector('[data-role="output"]'),
+      outputMeta: root.querySelector('[data-role="output-meta"]'),
+      pvAvailable: root.querySelector('[data-role="pv-available"]'),
+      pvFill: root.querySelector('[data-role="pv-fill"]'),
+      pvRatio: root.querySelector('[data-role="pv-ratio"]'),
+      socFill: root.querySelector('[data-role="soc-fill"]'),
+      socValue: root.querySelector('[data-role="soc-value"]'),
+      phase: root.querySelector('[data-role="phase"]'),
+      detail: root.querySelector('[data-role="detail"]'),
+      stepLabel: root.querySelector('[data-role="step-label"]'),
+      progress: root.querySelector('[data-role="progress"]'),
+    };
+
+    let index = 0;
+    let timer = 0;
+
+    const power = (value) => `${value > 0 ? "+" : ""}${value} MW`;
+
+    function render() {
+      const state = states[index];
+      const actual = state.pv + state.storage;
+      const gap = Math.max(0, state.target - actual);
+      const storageClass = state.status === "limited"
+        ? "limited"
+        : state.storage < 0
+          ? "charge"
+          : state.storage > 0
+            ? "active"
+            : "";
+
+      elements.target.textContent = `${state.target} MW`;
+      elements.actual.textContent = `${actual} MW`;
+      elements.gap.textContent = `${gap} MW`;
+      elements.targetNode.textContent = `${state.target} MW`;
+      elements.strategy.textContent = state.strategy;
+      elements.pvCommand.textContent = `${state.pv} MW`;
+      elements.pvMeta.textContent = `可发 ${state.available} MW`;
+      elements.storageCommand.textContent = power(state.storage);
+      elements.storageMeta.textContent = `SOC ${state.soc}% · ${state.storageMode}`;
+      elements.output.textContent = `${actual} MW`;
+      elements.outputMeta.textContent = gap > 0 ? `缺少 ${gap} MW` : "目标已完成";
+      elements.pvAvailable.style.transform = `scaleX(${state.available / 80})`;
+      elements.pvFill.style.transform = `scaleX(${state.pv / 80})`;
+      elements.pvRatio.textContent = `${state.pv} / ${state.available} MW`;
+      elements.socFill.style.transform = `scaleX(${state.soc / 100})`;
+      elements.socValue.textContent = `${state.soc}%`;
+      elements.phase.textContent = state.phase;
+      elements.detail.textContent = state.detail;
+      elements.stepLabel.textContent = `步骤 ${index + 1} / ${states.length}`;
+      elements.progress.style.width = `${((index + 1) / states.length) * 100}%`;
+
+      elements.storageNode.className = `card alloc-node storage-node ${storageClass}`.trim();
+      elements.storageWire.className.baseVal = `wire storage-power-wire ${storageClass}`.trim();
+      elements.storagePacket.className.baseVal = `packet storage-power-packet ${storageClass}`.trim();
+      elements.outputNode.className = `card alloc-node output-node ${gap > 0 ? "limited" : ""}`.trim();
+    }
+
+    function stop() {
+      window.clearInterval(timer);
+      timer = 0;
+      elements.play.textContent = "自动演示";
+    }
+
+    function advance() {
+      index = (index + 1) % states.length;
+      render();
+      if (index === states.length - 1) stop();
+    }
+
+    root.querySelector('[data-action="next"]').addEventListener("click", () => {
+      stop();
+      advance();
+    });
+
+    root.querySelector('[data-action="reset"]').addEventListener("click", () => {
+      stop();
+      index = 0;
+      render();
+    });
+
+    elements.play.addEventListener("click", () => {
+      if (timer) {
+        stop();
+        return;
+      }
+      if (index === states.length - 1) index = 0;
+      render();
+      elements.play.textContent = "暂停";
+      timer = window.setInterval(advance, 2600);
+    });
+
+    render();
+  })();
+</script>
