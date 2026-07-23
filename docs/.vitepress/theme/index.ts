@@ -2,6 +2,7 @@ import DefaultTheme from "vitepress/theme";
 import type { Theme } from "vitepress";
 import { h } from "vue";
 import EnergyFlowDemo from "./components/EnergyFlowDemo.vue";
+import EnergyControllerPanoramaDemo from "./components/EnergyControllerPanoramaDemo.vue";
 import EnergyManagementDemo from "./components/EnergyManagementDemo.vue";
 import EnergySystemRoles from "./components/EnergySystemRoles.vue";
 import FocusReadingToggle from "./components/FocusReadingToggle.vue";
@@ -29,6 +30,7 @@ export default {
   }),
   enhanceApp({ app }) {
     app.component("EnergyFlowDemo", EnergyFlowDemo);
+    app.component("EnergyControllerPanoramaDemo", EnergyControllerPanoramaDemo);
     app.component("EnergyManagementDemo", EnergyManagementDemo);
     app.component("EnergySystemRoles", EnergySystemRoles);
     app.component("GridPointDataSelectionDemo", GridPointDataSelectionDemo);
