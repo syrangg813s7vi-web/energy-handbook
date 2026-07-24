@@ -5,6 +5,8 @@
 - EnergyBook现有内容按`docs/knowledge/`组织，洞察类内容单独放入`docs/insights/`，避免与基础知识和工业控制教程混杂。
 - 站点生产地址为`https://energybook.foxtiny.com`，`main`分支推送后由GitHub Pages工作流构建发布。
 - 新文章不需要交互组件；正文、表格和原始来源在JavaScript失效时仍可完整阅读。
+- 正式路由为`/insights/europe-energy-outlook-2026-2030`；首页、顶部导航、侧边栏和sitemap均已包含入口。
+- 本次GitHub Pages部署耗时约4分钟，明显长于以往但最终成功；GitHub状态页在此期间显示Actions与Pages均正常。
 
 ## 2026-07-23：IEC 104设计初衷概要文章
 
