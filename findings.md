@@ -6,6 +6,7 @@
 - 生产站点为`https://energybook.foxtiny.com`，`main`分支更新后由GitHub Pages工作流发布。
 - 当前分支比`main`多一个既有发布记录提交；本次发布需保留该提交，采用非破坏方式整合。
 - 新文章路由确定为`/insights/europe-storage-microgrid-opportunities`；顶部“行业洞察”改为下拉菜单，以同时保留现有文章与新文章入口。
+- GitHub Pages运行`30078648324`构建与部署成功。工作流提示部分官方Action仍声明Node.js 20并由运行器强制切换至Node.js 24；本次构建未受影响，后续可在工作流依赖升级时消除提示。
 
 ## 2026-07-24：欧洲能源产业洞察发布
 
