@@ -1,5 +1,12 @@
 # 发现与决策依据
 
+## 2026-07-24：储能与微网文章发布
+
+- 文章应进入`docs/insights/`，并由`docs/.vitepress/config.mts`维护顶部导航和侧边栏入口。
+- 生产站点为`https://energybook.foxtiny.com`，`main`分支更新后由GitHub Pages工作流发布。
+- 当前分支比`main`多一个既有发布记录提交；本次发布需保留该提交，采用非破坏方式整合。
+- 新文章路由确定为`/insights/europe-storage-microgrid-opportunities`；顶部“行业洞察”改为下拉菜单，以同时保留现有文章与新文章入口。
+
 ## 2026-07-24：欧洲能源产业洞察发布
 
 - EnergyBook现有内容按`docs/knowledge/`组织，洞察类内容单独放入`docs/insights/`，避免与基础知识和工业控制教程混杂。

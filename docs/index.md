@@ -14,6 +14,10 @@ hero:
       link: /roadmap
 
 features:
+  - title: 理解储能与微网机会
+    details: 从高比例风光、并网约束和储能时长变化，判断欧洲储能、微网与VPP的市场空间。
+    link: /insights/europe-storage-microgrid-opportunities
+    linkText: 阅读储能与微网洞察
   - title: 看见产业价值迁移
     details: 从政策、运行数据和厂商动作，判断欧洲能源产业2026—2030年的机会。
     link: /insights/europe-energy-outlook-2026-2030
