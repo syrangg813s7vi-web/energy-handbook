@@ -1,5 +1,11 @@
 # 发现与决策依据
 
+## 2026-07-24：欧洲能源产业洞察发布
+
+- EnergyBook现有内容按`docs/knowledge/`组织，洞察类内容单独放入`docs/insights/`，避免与基础知识和工业控制教程混杂。
+- 站点生产地址为`https://energybook.foxtiny.com`，`main`分支推送后由GitHub Pages工作流构建发布。
+- 新文章不需要交互组件；正文、表格和原始来源在JavaScript失效时仍可完整阅读。
+
 ## 2026-07-23：IEC 104设计初衷概要文章
 
 - 目标读者需要先建立业务视角和协议视角，不从 TypeID、常量或位定义开始。
