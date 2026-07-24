@@ -14,6 +14,10 @@ hero:
       link: /roadmap
 
 features:
+  - title: 看见产业价值迁移
+    details: 从政策、运行数据和厂商动作，判断欧洲能源产业2026—2030年的机会。
+    link: /insights/europe-energy-outlook-2026-2030
+    linkText: 阅读欧洲能源洞察
   - title: 建立共同语言
     details: 从能量、功率、效率和容量开始，分清容易混淆的概念与单位。
     link: /knowledge/energy-basics

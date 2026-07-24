@@ -38,6 +38,7 @@ export default defineConfig({
     },
     nav: [
       { text: "首页", link: "/" },
+      { text: "行业洞察", link: "/insights/europe-energy-outlook-2026-2030" },
       { text: "能源基础", link: "/knowledge/energy-basics" },
       { text: "能量管理", link: "/knowledge/energy-management" },
       { text: "车桩协议", link: "/knowledge/ev-charging-protocols" },
@@ -46,6 +47,12 @@ export default defineConfig({
       { text: "在线批阅", link: "/guides/online-review" },
     ],
     sidebar: [
+      {
+        text: "行业洞察",
+        items: [
+          { text: "欧洲能源产业2026—2030", link: "/insights/europe-energy-outlook-2026-2030" },
+        ],
+      },
       {
         text: "能源基础",
         items: [
