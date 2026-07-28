@@ -14,6 +14,10 @@ hero:
       link: /roadmap
 
 features:
+  - title: 看懂AI如何预测负荷
+    details: 用同一组负荷数据和四段交互动画，看决策树、GBDT与LightGBM如何一步步训练。
+    link: /knowledge/lightgbm-load-forecasting
+    linkText: 学习LightGBM
   - title: 理解储能与微网机会
     details: 从高比例风光、并网约束和储能时长变化，判断欧洲储能、微网与VPP的市场空间。
     link: /insights/europe-storage-microgrid-opportunities

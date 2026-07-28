@@ -46,6 +46,7 @@ export default defineConfig({
         ],
       },
       { text: "能源基础", link: "/knowledge/energy-basics" },
+      { text: "AI负荷预测", link: "/knowledge/lightgbm-load-forecasting" },
       { text: "能量管理", link: "/knowledge/energy-management" },
       { text: "车桩协议", link: "/knowledge/ev-charging-protocols" },
       { text: "IEC 104", link: "/knowledge/iec104-design-intent" },
@@ -64,6 +65,7 @@ export default defineConfig({
         text: "能源基础",
         items: [
           { text: "能量、功率与效率", link: "/knowledge/energy-basics" },
+          { text: "从决策树到LightGBM", link: "/knowledge/lightgbm-load-forecasting" },
           { text: "能量管理是在做什么", link: "/knowledge/energy-management" },
           { text: "车桩协议：从第一性原理出发", link: "/knowledge/ev-charging-protocols" },
         ],
