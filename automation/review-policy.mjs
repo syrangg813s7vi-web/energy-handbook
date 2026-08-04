@@ -15,12 +15,14 @@ const forbiddenCodePatterns = [
   { pattern: /\bimport\s*\(\s*["']https?:\/\//, reason: "禁止远程动态导入" },
 ];
 
-const allowedSiteOrigins = new Set([
-  "https://syrangg813s7vi-web.github.io",
-  "http://127.0.0.1:4173",
-]);
+const localPreviewOrigins = ["http://127.0.0.1:4173"];
 const maxBatchItems = 20;
 const maxBatchCharacters = 24_000;
+
+export function parseAllowedSiteOrigins(value, fallback = localPreviewOrigins) {
+  const configured = String(value || "").split(",").map((item) => item.trim()).filter(Boolean);
+  return new Set(configured.length ? configured : fallback);
+}
 
 export function normalizeRepositoryPath(filePath) {
   const normalized = filePath.replaceAll("\\", "/").replace(/^\.\//, "");
@@ -67,9 +69,12 @@ function validateReviewItem(value, index) {
   };
 }
 
-export function validateReviewPayload(value) {
+export function validateReviewPayload(value, options = {}) {
   if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("请求必须是 JSON 对象");
   const payload = value;
+  const allowedSiteOrigins = options.allowedSiteOrigins instanceof Set
+    ? options.allowedSiteOrigins
+    : new Set(options.allowedSiteOrigins ?? parseAllowedSiteOrigins(process.env.REVIEW_ALLOWED_ORIGINS));
   const legacyItem = !Array.isArray(payload.items) ? payload : null;
   const rawItems = legacyItem ? [legacyItem] : payload.items;
   if (!rawItems.length || rawItems.length > maxBatchItems) throw new Error(`批阅清单必须包含 1–${maxBatchItems} 条批注`);

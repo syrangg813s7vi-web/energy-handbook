@@ -27,6 +27,41 @@
 - 正式路由为`/insights/europe-energy-outlook-2026-2030`；首页、顶部导航、侧边栏和sitemap均已包含入口。
 - 本次GitHub Pages部署耗时约4分钟，明显长于以往但最终成功；GitHub状态页在此期间显示Actions与Pages均正常。
 
+## 2026-08-04：批阅功能健康检查
+
+- 用户要求确认现有批阅功能是否正常；本轮以诊断和验证为范围，不主动提交真实批阅任务，避免产生 Cloud 任务、分支或 PR 等外部写入。
+- 已有计划记录显示批阅链路包括：VitePress 前端、GitHub OAuth/短期会话网关、n8n 工作流、Codex Cloud 执行器、READY diff 发布器与 GitHub PR 门禁。
+- `package.json` 的 `npm run check` 会依次执行全部批阅 Node 测试和 VitePress 生产构建；当前批阅测试覆盖策略、网关、执行器 API 与发布器。
+- Pages 工作流已向生产构建注入批阅网关地址，前端仅在 `VITE_REVIEW_API_URL` 存在时显示批阅层。
+- 批量交互实现位于 `ReviewLayer.vue`：使用 sessionStorage 保存短期会话和最多 20 条批阅草稿，通过 `/reviews` 一次提交整批内容。
+- `npm run check` 实测通过：20/20 项批阅测试成功，VitePress 1.6.4 客户端、服务端渲染与 sitemap 生成均成功。
+- 生产站点首页和批阅网关健康端点均返回 HTTP 200；网关健康负载为 `{"ok":true,"service":"energy-review-gateway"}`。
+- 登录起点返回 HTTP 302 到 GitHub OAuth，包含独立 `state`、S256 PKCE `code_challenge`、回调地址和 `allow_signup=false`。
+- 生产文章页在未登录状态下真实浏览器渲染正常，可访问树中存在“登录批阅”按钮，批阅入口未丢失。
+- 在生产文章页真实点击“登录批阅”后，浏览器成功到达 GitHub 登录页，OAuth 参数保留 PKCE、state 和正确的回调路径。
+- GitHub 实际 PR 历史显示，最后几个明确由“在线批阅”触发的 PR 停留在 2026-07-20 及之前；之后的内容 PR 都是其他发布分支，没有新的批阅分支记录。
+- 服务器上网关、执行器和发布器三个 systemd 服务当前均为 `active`，但持久化任务目录只有 2026-07-15 和 2026-07-16 两条旧任务，一条 `pushed`、一条 `failed`；没有用户近期批阅对应的新任务文件。
+- 上述证据将故障范围收窄到“前端提交→网关/n8n→执行器入队”之间，而不是 GitHub 合并或 Pages 发布阶段。
+- n8n 数据库确认批阅工作流仍为 active，POST 提交和 GET 状态查询两个 webhook 均已注册。
+- 实际批阅工作流在 2026-08-04 12:39 UTC 有一次 webhook 执行（执行 ID 8133），约 2.6 秒后以 n8n 状态 `success` 结束；这与用户当时网站批阅的时间线吻合。
+- 该执行没有在受限执行器中生成新任务文件；因此 n8n 的 `success` 很可能表示“错误处理/响应分支成功执行”，而不是批阅任务创建成功。
+- 执行 ID 8133 的脱敏错误输出已确认：“站点来源不在白名单内”，HTTP 400，错误类型 `validation_error`。
+- 根因是两层白名单不一致：网关允许正式自定义域名，而 `review-policy.mjs` 的执行器负载校验仍只硬编码了 GitHub Pages 来源和本地预览来源，漏掉正式自定义域名。
+- 因此所有从正式自定义域名发起的批阅都会在进入 Codex Cloud 前被拒绝；不会生成任务、分支、PR 或 Pages 发布。
+- 现有 20 项自动化测试全部使用 GitHub Pages 来源或单层注入的测试来源，没有覆盖“正式自定义域名同时通过网关与执行器”的集成场景，所以本次白名单漂移未被测试发现。
+
+## 2026-08-04：修复批阅来源白名单漂移
+
+- 已建立 Linear TIN-408，状态为 In Progress，优先级为 High。
+- 设计决定：不再将真实部署来源硬编码在策略中；网关、API 和 Runner 共用 `REVIEW_ALLOWED_ORIGINS` 契约，但仍在独立进程中分别校验。
+- 未配置时只保留本地预览默认值，生产来源必须由仓库外环境文件显式注入。
+- API 进程和 Cloud Runner 是两次独立的负载校验；修复已同时向两处注入解析后的来源集合，避免 API 通过后 Runner 再次拒绝。
+- 单元测试已从真实环境值改为 `example.com` 类中性夹具，并显式注入允许来源；新增未知来源不调用 runner 的断言。
+- 批阅测试由 20 项增加到 23 项，23/23 全部通过。
+- 仓库完整 `npm run check` 通过：23 项批阅测试、VitePress 客户端和 SSR 构建、sitemap 生成均成功，`git diff --check` 无错误。
+- 恢复演练在排除 `.git`、`node_modules`、构建产物和浏览器临时文件的隔离副本中执行 `npm ci` 和 `npm run check`，23 项测试与生产构建再次通过。
+- `npm ci` 同时报告 1 项既有的中等级开发依赖告警；它不阻断本次批阅生产故障修复，本轮不扩大到依赖升级。
+
 ## 2026-07-23：IEC 104设计初衷概要文章
 
 - 目标读者需要先建立业务视角和协议视角，不从 TypeID、常量或位定义开始。

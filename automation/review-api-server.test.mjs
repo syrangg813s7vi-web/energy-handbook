@@ -9,7 +9,7 @@ const validPayload = {
   before: "能量与功率。",
   after: "因此，一台设备。",
   instruction: "补充一句通俗解释。",
-  siteOrigin: "https://syrangg813s7vi-web.github.io",
+  siteOrigin: "https://review.example.com",
   actorEmail: "reviewer@example.com",
 };
 
@@ -18,6 +18,7 @@ async function withServer(run) {
   const server = createReviewServer({
     token: "test-token",
     allowedAddresses: new Set(["127.0.0.1"]),
+    allowedSiteOrigins: new Set([validPayload.siteOrigin]),
     runRunner: async (command, argument) => {
       calls.push([command, argument]);
       return command === "submit"
@@ -44,6 +45,16 @@ test("在调用执行器前验证批阅负载", async () => withServer(async (or
     method: "POST",
     headers: { "content-type": "application/json", "x-review-executor-token": "test-token" },
     body: JSON.stringify({ ...validPayload, instruction: "" }),
+  });
+  assert.equal(response.status, 400);
+  assert.equal(calls.length, 0);
+}));
+
+test("拒绝未注入的站点来源且不调用 runner", async () => withServer(async (origin, calls) => {
+  const response = await fetch(`${origin}/v1/reviews/submit`, {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-review-executor-token": "test-token" },
+    body: JSON.stringify({ ...validPayload, siteOrigin: "https://unknown.example.com" }),
   });
   assert.equal(response.status, 400);
   assert.equal(calls.length, 0);

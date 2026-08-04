@@ -4,9 +4,12 @@ import {
   buildCloudPrompt,
   isAllowedReviewPath,
   pagePathToMarkdown,
+  parseAllowedSiteOrigins,
   validateReviewPayload,
 } from "./review-policy.mjs";
 
+const siteOrigin = "https://pages.example.com";
+const allowedSiteOrigins = new Set([siteOrigin]);
 const payload = {
   pagePath: "/energy-handbook/knowledge/energy-basics",
   pageTitle: "能量、功率与效率",
@@ -14,9 +17,21 @@ const payload = {
   before: "能量与功率。",
   after: "因此，一台设备。",
   instruction: "增加一个交互动画。",
-  siteOrigin: "https://syrangg813s7vi-web.github.io",
+  siteOrigin,
   requestId: "abcd1234",
 };
+
+function validate(value) {
+  return validateReviewPayload(value, { allowedSiteOrigins });
+}
+
+test("解析部署来源并仅在未配置时使用本地回退", () => {
+  assert.deepEqual([...parseAllowedSiteOrigins(" https://example.com,https://pages.example.com ")], [
+    "https://example.com",
+    "https://pages.example.com",
+  ]);
+  assert.deepEqual([...parseAllowedSiteOrigins("")], ["http://127.0.0.1:4173"]);
+});
 
 test("允许文章与动画路径", () => {
   assert.equal(isAllowedReviewPath("docs/knowledge/energy-basics.md"), true);
@@ -37,7 +52,7 @@ test("页面路由可靠映射到 Markdown", () => {
 });
 
 test("验证批阅负载并构造受限提示", () => {
-  const clean = validateReviewPayload(payload);
+  const clean = validate(payload);
   assert.equal(clean.items.length, 1);
   const prompt = buildCloudPrompt(clean);
   assert.match(prompt, /docs\/knowledge\/energy-basics\.md/);
@@ -47,7 +62,7 @@ test("验证批阅负载并构造受限提示", () => {
 });
 
 test("将多条批注合成一个受限 Cloud 任务", () => {
-  const clean = validateReviewPayload({
+  const clean = validate({
     siteOrigin: payload.siteOrigin,
     requestId: payload.requestId,
     items: [
@@ -70,12 +85,17 @@ test("将多条批注合成一个受限 Cloud 任务", () => {
 });
 
 test("限制批阅清单条数和总内容", () => {
-  assert.throws(() => validateReviewPayload({
+  assert.throws(() => validate({
     siteOrigin: payload.siteOrigin,
     items: Array.from({ length: 21 }, () => payload),
   }), /1–20/);
-  assert.throws(() => validateReviewPayload({
+  assert.throws(() => validate({
     siteOrigin: payload.siteOrigin,
     items: Array.from({ length: 13 }, () => ({ ...payload, text: "能".repeat(2_000) })),
   }), /24000/);
+});
+
+test("允许显式注入的正式来源并拒绝未知来源", () => {
+  assert.equal(validate({ ...payload, siteOrigin: "https://pages.example.com" }).siteOrigin, siteOrigin);
+  assert.throws(() => validate({ ...payload, siteOrigin: "https://unknown.example.com" }), /站点来源不在白名单内/);
 });
