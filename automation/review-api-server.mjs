@@ -5,7 +5,7 @@ import http from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
-import { validateReviewPayload } from "./review-policy.mjs";
+import { parseAllowedSiteOrigins, validateReviewPayload } from "./review-policy.mjs";
 
 const execFileAsync = promisify(execFile);
 const moduleDirectory = path.dirname(fileURLToPath(import.meta.url));
@@ -61,6 +61,9 @@ export function createReviewServer(options = {}) {
     options.allowedAddresses
       ?? String(process.env.REVIEW_ALLOWED_ADDRESSES || "172.18.0.2").split(",").map((value) => value.trim()).filter(Boolean),
   );
+  const allowedSiteOrigins = new Set(
+    options.allowedSiteOrigins ?? parseAllowedSiteOrigins(process.env.REVIEW_ALLOWED_ORIGINS),
+  );
   const maxBodyBytes = options.maxBodyBytes ?? 32 * 1024;
   const timeoutMs = options.timeoutMs ?? Number(process.env.REVIEW_RUNNER_TIMEOUT_MS || 16 * 60 * 1000);
   const runnerPath = options.runnerPath ?? process.env.REVIEW_RUNNER_PATH ?? defaultRunner;
@@ -94,7 +97,7 @@ export function createReviewServer(options = {}) {
         if (submitInFlight) {
           return json(response, 429, { ok: false, error: "busy", requestId }, { "retry-after": "30" });
         }
-        const payload = validateReviewPayload(await readJson(request, maxBodyBytes));
+        const payload = validateReviewPayload(await readJson(request, maxBodyBytes), { allowedSiteOrigins });
         submitInFlight = true;
         try {
           const encoded = Buffer.from(JSON.stringify(payload)).toString("base64url");

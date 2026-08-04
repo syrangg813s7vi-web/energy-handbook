@@ -6,6 +6,7 @@ import path from "node:path";
 import process from "node:process";
 import {
   buildCloudPrompt,
+  parseAllowedSiteOrigins,
   validateReviewPayload,
 } from "./review-policy.mjs";
 
@@ -22,7 +23,10 @@ function run(command, args, options = {}) {
 function parsePayload(encoded) {
   if (!/^[A-Za-z0-9+/=_-]+$/.test(encoded || "")) throw new Error("任务参数编码非法");
   if (encoded.length > 16_000) throw new Error("任务参数过长");
-  return validateReviewPayload(JSON.parse(Buffer.from(encoded, "base64url").toString("utf8")));
+  return validateReviewPayload(
+    JSON.parse(Buffer.from(encoded, "base64url").toString("utf8")),
+    { allowedSiteOrigins: parseAllowedSiteOrigins(process.env.REVIEW_ALLOWED_ORIGINS) },
+  );
 }
 
 function parseTaskId(output) {
