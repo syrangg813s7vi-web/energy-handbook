@@ -284,3 +284,6 @@
 - 七个官方来源链接均返回HTTP 200；`git diff --check`通过。
 - `npm run check`通过：20项自动化测试成功，VitePress客户端、SSR和sitemap构建成功。
 - 真实浏览器验收通过：文章渲染10张表格；1280 px桌面和390×844移动端均无页面级横向溢出，无错误覆盖层或控制台警告；首页路由正常。
+- 提交已推送到`codex/tin-405-china-generation-trends`；PR #38门禁通过并完成squash合并，`main`合并提交为`1dc35d9`。
+- GitHub Pages运行`30908833205`的构建和部署均成功；正式文章与首页返回HTTP 200，HTML包含文章标题、路由和国家统计局来源。
+- 阶段3.4完成；剩余动作仅为提交本次完成状态记录并将Linear TIN-405标记完成。
