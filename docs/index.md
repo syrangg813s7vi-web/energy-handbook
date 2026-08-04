@@ -14,6 +14,10 @@ hero:
       link: /roadmap
 
 features:
+  - title: 观察华为人才的新能源迁徙
+    details: 从近十年5位创业者和5家公司，看创业重心如何由整车转向储能、光储充与能源数字化。
+    link: /insights/huawei-new-energy-entrepreneurs-2016-2026
+    linkText: 阅读华为系新能源创业观察
   - title: 看懂AI如何预测负荷
     details: 用同一组负荷数据和四段交互动画，看决策树、GBDT与LightGBM如何一步步训练。
     link: /knowledge/lightgbm-load-forecasting
