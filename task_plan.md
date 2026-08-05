@@ -1,6 +1,6 @@
 # 能源知识库建设计划
 
-## 阶段 3.6：发布构网型微电网控制器洞察 `in_progress`
+## 阶段 3.6：发布构网型微电网控制器洞察 `complete`
 
 ### 范围
 
@@ -23,7 +23,7 @@
 - [x] 友商分析是路线分类而非无依据排名，资料口径和时效边界清晰。
 - [x] 正式文章可从首页、顶部导航和侧边栏访问。
 - [x] `npm run check`、`git diff --check`和移动端/桌面端页面验收通过。
-- [ ] 变更经 PR 合入 `main`，GitHub Pages 发布成功，正式 URL 和 sitemap 复验通过。
+- [x] 变更经 PR 合入 `main`，GitHub Pages 发布成功，正式 URL 和 sitemap 复验通过。
 
 ### 兼容与回滚
 
