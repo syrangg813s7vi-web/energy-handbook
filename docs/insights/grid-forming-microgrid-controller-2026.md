@@ -90,6 +90,77 @@ DOE OSTI样本中，33条记录提及grid-forming，22条涉及控制器或控�
 
 这三条路线最终会在项目上相遇：自动化厂商向储能和云平台延伸，储能厂商向站级控制和运维延伸，系统集成商则把电网接口、控制和服务打包。竞争边界因此会继续上移。
 
+## 四、在当前系统要求下，各厂商满足到哪里
+
+路线分类只能说明厂商从哪里进入市场，还不能回答一个更直接的问题：如果现在建设一套“光伏＋多台构网储能＋柴油机＋关键负荷”的微电网，各家公开产品能够覆盖系统要求的哪些部分？
+
+本节把前述工程问题归纳为七项统一要求：
+
+1. **构网电源**：PCS能否在无外部电压源时建立并支撑电压、频率。
+2. **状态转换**：是否覆盖计划/非计划孤岛、黑启动、重新同期和失败回退。
+3. **多源协调**：能否协调多台GFM/GFL设备、光伏、储能、柴油机和负荷。
+4. **能量持续性**：能否结合SOC、备用、负荷分级和柴油机管理延长供电。
+5. **保护协同**：能否处理逆变器限流、继电保护、接地方式和开关状态配合。
+6. **开放接入**：能否通过标准接口管理不同厂家、不同代际设备。
+7. **测试与版本证据**：能否说明产品/软件版本，并提供可重复试验或运行依据。
+
+下表评的是**截至2026年8月5日官方公开材料可以证明的满足度**，不是统一试验下的性能排名。`●`表示公开证据较充分，`△`表示部分覆盖、依赖项目集成或尚缺完整证据；“未公开”不等于产品不具备。
+
+| 厂商 | 构网电源 | 状态转换 | 多源协调 | 能量持续性 | 保护协同 | 开放接入 | 测试与版本证据 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 华为 | ● | ● | ● | ● | △ | △ | ●/△ |
+| 阳光电源 | ● | ● | ●/△ | △ | △ | △ | △ |
+| 日立能源 | ● | ● | ● | ● | ●/△ | ● | △ |
+| 施耐德 | △ | ● | ● | ● | ● | ● | ●/△ |
+| 西门子 | △ | ● | ● | ● | ● | ● | △ |
+| SEL | △ | ● | ● | △ | ● | ●/△ | △ |
+
+### 华为：整套同品牌交付的覆盖面较完整
+
+华为已经把构网型储能、PCS、SPPC2000-MGCC、SPMS2000、光伏和柴油机调度放在同一个微电网方案中，公开说明分钟级整网黑启动、快速并离网切换和RT-LAB硬件在环验证。其50MW/100MWh等项目还披露了一次调频、惯量、故障穿越、黑启动和多设备并联测试。因此，在采用同一产品栈时，它对构网电源、状态转换和能量调度的公开覆盖较完整。[华为智能微网方案](https://solar.huawei.com/en/micro-grid/)、[华为构网项目测试](https://solar.huawei.com/news-room/en/2024/news-20240723)
+
+当前边界主要在开放性和证据颗粒度：第三方PCS、保护和柴油机控制器的兼容矩阵不够透明，控制器软件版本与功能变更也不容易公开取得。结论应当是“整套方案公开满足度较高”，而不是外推为“任意多厂商组合都已验证”。
+
+### 阳光电源：构网储能能力清晰，控制平台证据仍需补齐
+
+PowerTitan 3.0公开支持构网/跟网切换、GW级黑启动、SCR 1—40适应和光储同步构网；Amaala离网项目包含125MW光伏、160MW/760MWh储能及备用发电机，并说明频率、电压和多源功率分配。由此可以确认其构网储能和大型离网系统能力已经进入产品化交付。[PowerTitan 3.0](https://en.sungrowpower.com/newsDetail/6491/sungrow-releases-the-groundbreaking-powertitan-3-0-energy-storage-system-platform)、[Amaala项目说明](https://en.sungrowpower.com/newsDetail/6608/grid-forming-technology-is-no-longer-experimental-%E2%80%93-it-s-here-and-working)
+
+但公开资料对微电网控制器状态机、保护定值与接地切换、第三方设备兼容矩阵以及上层软件版本说明较少。因此，阳光的“构网设备满足度”高于当前能够证明的“开放微电网控制平台满足度”。
+
+### 日立能源：从PCS到电气系统集成最均衡
+
+日立能源的公开产品覆盖构网PCS、PPC、e-mesh控制与EMS、BESS、自动化和电网接口。PCS明确支持孤岛、黑启动、惯量和电压支撑；e-mesh具名项目已经展示光伏、储能、柴油机负荷共享和孤网运行，并公开与主流电池及多类柴油机控制器的接口路径。[日立能源PCS](https://www.hitachienergy.com/products-and-solutions/power-conversion/battery-power-conversion-system-pcs)、[e-mesh离网矿区案例](https://www.hitachienergy.com/ch/de/news-and-events/press-releases/2021/02/hitachi-abb-power-grids-enables-greener-mining-with-largest-microgrid-facility-in-indonesia-and-southeast-asia)
+
+它的优势是系统边界完整，而不是某个单项参数特别突出。当前不足是e-mesh最新软件版本、HIL测试矩阵和多构网设备控制结果披露不够系统，因此“集成覆盖广”仍不能替代具体项目的动态验证。
+
+### 施耐德：状态机、保护配合和开放控制较强
+
+EcoStruxure Microgrid Operation公开覆盖电网故障检测、自动解列/重并网、黑启动、负荷共享与恢复、光伏限功率、储能充放电、柴油机启停，以及保护和接地设置调整；同时强调用标准协议控制现有或新增DER。其优势明显集中在微电网控制和工程流程层。[EcoStruxure Microgrid Operation](https://www.se.com/us/en/product-range/65897-ecostruxure-microgrid-operation/)、[施耐德微电网应用指南](https://productinfo.se.com/esxp_digital_apps_iec/mg/English/ESXP2GE020EN-05_Microgrid.pdf)
+
+“构网电源”标为`△`不是表示不能建设构网微电网，而是其控制平台通常需要第三方PCS或发电机提供电压源。多厂家、多台构网PCS能否稳定协同，仍需针对实际设备组合联调和验证。
+
+### 西门子：变电站与微电网融合能力较强
+
+SICAM Microgrid Control公开覆盖停电检测、黑启动、孤岛模式、备用容量和SOC管理、柴油机投入、负荷/发电预测、削峰及开放接口，并把微电网控制纳入SICAM变电站自动化体系。[Siemens SICAM Microgrid Control](https://www.siemens.com/en-gb/products/microgrids/sicam-microgrid-control/)
+
+因此，西门子适合重视IEC 61850、调度和既有变电站系统融合的项目。与施耐德相似，构网源通常由外部设备提供；公开资料也不足以证明所有第三方构网PCS组合的动态协调效果。
+
+### SEL：关键负荷保护与确定性切换最有特色
+
+SEL公开强调无缝孤岛、自动同期重并网、亚周波级控制、多级控制区域、快速切负荷、保护融合及DERMS/ADMS接入。这些能力直接对应关键负荷微电网最担心的故障识别、解列、减载和恢复问题。[SEL Microgrid Control Systems](https://selinc.com/services/microgrids-power-management/microgrid-control-systems/)
+
+SEL通常不提供完整的电池、PCS和长时间经济调度设备栈，因此其系统满足度取决于组合方案。它更适合作为“保护和确定性控制基座”评价，而不是与一体化储能厂商直接比较整套设备范围。
+
+### 应按采购场景选择，而不是计算一个总分
+
+- **整套同品牌构网微电网**：华为、日立能源公开覆盖较完整，阳光电源正在从构网储能向完整控制边界扩展。
+- **开放型园区微电网控制平台**：施耐德、西门子的公开产品边界更清晰。
+- **关键负荷、快速解列和保护优先**：SEL最有差异化。
+- **大型构网储能设备**：华为、阳光电源和日立能源的当前产品证据较强。
+- **多厂家混合运行**：日立能源、施耐德和西门子更强调系统集成，但仍不能省略CHIL/HIL和现场联调。
+
+所有厂商的公开证据都还没有同时闭合三件事：不同品牌多台构网PCS的长期稳定并联；构网控制、限流、继电保护与接地方式的全状态协调；控制软件升级后的自动回归与HIL一致性。因此，采购时应要求交付型号与软件版本、状态转换矩阵、兼容矩阵、保护配合说明、HIL用例、第三方试验记录和同类项目运行证据，而不能只验收功能清单。
+
 ### 不能从当前资料得出的结论
 
 - 不能判断哪家厂商的暂态性能、稳定裕度或故障穿越能力最好。
@@ -97,7 +168,7 @@ DOE OSTI样本中，33条记录提及grid-forming，22条涉及控制器或控�
 - 不能把“通过某项认证”外推为所有版本、所有工况都通过。
 - 不能确认未公开的产品路线图；目前能看到的是版本动作和产品组合变化。
 
-## 四、对控制器软件产品的含义
+## 五、对控制器软件产品的含义
 
 核心产品不应被定义为“再做一套项目定制逻辑”，而应是：
 
@@ -123,7 +194,7 @@ DOE OSTI样本中，33条记录提及grid-forming，22条涉及控制器或控�
 
 DOE的可配置控制器研究和厂商产品化趋势都指向同一问题：每个项目重新编程会限制规模化。控制器应把设备模板、状态流程、约束、保护配合和验收场景做成受版本控制的配置，同时保留安全边界。
 
-## 五、建议的产品优先级
+## 六、建议的产品优先级
 
 | 优先级 | 能力包 | 完成标志 |
 |---|---|---|
@@ -135,7 +206,7 @@ DOE的可配置控制器研究和厂商产品化趋势都指向同一问题：�
 
 如果资源有限，第一阶段不要同时建设庞大的算法平台、云端大屏和全厂家适配。先完成一个可测试的垂直切片：两种设备、三种运行模式、一次异常回退、一份自动测试报告。它最接近当前买方需求，也最容易形成可复用的产品合同。
 
-## 六、现有信息是否充分
+## 七、现有信息是否充分
 
 | 决策问题 | 充分度 | 判断 |
 |---|---|---|
@@ -157,7 +228,7 @@ DOE的可配置控制器研究和厂商产品化趋势都指向同一问题：�
 
 长期监测时，最值得设置预警的关键词不是泛化的“微电网”或“构网”，而是：**在线评估、涉网性能测试、并离网无感切换、黑启动、多机协同、构网/跟网切换、弱网、支撑能力、验收和事件分析**。
 
-## 七、最终判断
+## 八、最终判断
 
 构网型微电网的价值重心正在从单机控制能力迁移到系统级可信交付。对控制器软件团队而言，真正可持续的竞争力不是拥有更多零散算法，而是能够：
 
@@ -184,3 +255,9 @@ DOE的可配置控制器研究和厂商产品化趋势都指向同一问题：�
 10. 日立能源：[Grid forming technology](https://www.hitachienergy.com/products-and-solutions/facts/statcom/grid-forming-technology)、[Power Plant Controller（ForesightScope收录页）](https://rss.foxtiny.com/topics/microgrid/items/39f1739df1b1419eb60133b9e7e2db1c)。PPC原厂旧路径在发布前复核时已返回404。
 11. 阳光电源：[瑞典光储混合项目（ForesightScope收录页）](https://rss.foxtiny.com/topics/microgrid/items/5c32588de5a8c74ebbe8d70ac1e1081b)。
 12. ForesightScope微电网专题：厂商产品、案例、采购与测试资料的当前证据快照；统计口径和历史修订说明见本文第一节。
+13. 施耐德电气：[EcoStruxure Microgrid Operation](https://www.se.com/us/en/product-range/65897-ecostruxure-microgrid-operation/)、[Microgrid数字应用指南](https://productinfo.se.com/esxp_digital_apps_iec/mg/English/ESXP2GE020EN-05_Microgrid.pdf)。
+14. 西门子：[SICAM Microgrid Control](https://www.siemens.com/en-gb/products/microgrids/sicam-microgrid-control/)。
+15. SEL：[Microgrid Control Systems](https://selinc.com/services/microgrids-power-management/microgrid-control-systems/)。
+16. 华为数字能源：[Smart Micro-grid Solutions](https://solar.huawei.com/en/micro-grid/)、[100MWh构网储能项目并网测试](https://solar.huawei.com/news-room/en/2024/news-20240723)。
+17. 阳光电源：[PowerTitan 3.0](https://en.sungrowpower.com/newsDetail/6491/sungrow-releases-the-groundbreaking-powertitan-3-0-energy-storage-system-platform)、[Amaala离网微电网说明](https://en.sungrowpower.com/newsDetail/6608/grid-forming-technology-is-no-longer-experimental-%E2%80%93-it-s-here-and-working)。
+18. 日立能源：[Battery Power Conversion System](https://www.hitachienergy.com/products-and-solutions/power-conversion/battery-power-conversion-system-pcs)、[e-mesh离网矿区案例](https://www.hitachienergy.com/ch/de/news-and-events/press-releases/2021/02/hitachi-abb-power-grids-enables-greener-mining-with-largest-microgrid-facility-in-indonesia-and-southeast-asia)。
