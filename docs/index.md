@@ -14,6 +14,10 @@ hero:
       link: /roadmap
 
 features:
+  - title: 判断构网型微电网竞争焦点
+    details: 交叉分析250项厂商、采购和独立测试证据，看控制器竞争为何从“能构网”转向“可验证交付”。
+    link: /insights/grid-forming-microgrid-controller-2026
+    linkText: 阅读构网型微电网控制器洞察
   - title: 观察华为人才的新能源迁徙
     details: 从近十年5位创业者和5家公司，看创业重心如何由整车转向储能、光储充与能源数字化。
     link: /insights/huawei-new-energy-entrepreneurs-2016-2026

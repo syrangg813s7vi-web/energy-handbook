@@ -41,6 +41,7 @@ export default defineConfig({
       {
         text: "行业洞察",
         items: [
+          { text: "构网型微电网控制器", link: "/insights/grid-forming-microgrid-controller-2026" },
           { text: "华为系新能源创业者", link: "/insights/huawei-new-energy-entrepreneurs-2016-2026" },
           { text: "中国发电结构2021—2025", link: "/insights/china-power-generation-trends-2021-2025" },
           { text: "欧洲能源产业2026—2030", link: "/insights/europe-energy-outlook-2026-2030" },
@@ -59,6 +60,7 @@ export default defineConfig({
       {
         text: "行业洞察",
         items: [
+          { text: "构网型微电网控制器", link: "/insights/grid-forming-microgrid-controller-2026" },
           { text: "华为系新能源创业者", link: "/insights/huawei-new-energy-entrepreneurs-2016-2026" },
           { text: "中国发电结构2021—2025", link: "/insights/china-power-generation-trends-2021-2025" },
           { text: "欧洲能源产业2026—2030", link: "/insights/europe-energy-outlook-2026-2030" },
