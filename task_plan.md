@@ -526,3 +526,34 @@
 - `npm ci`报告1项现存中等级开发依赖风险，本功能未修改依赖或锁文件，后续应由独立依赖维护事项处理。
 - GitHub Actions提示Node.js 20 actions正在被强制运行于Node.js 24；本次部署成功，但工作流actions版本应在独立维护中升级。
 - `agent-browser`命令在当前环境不存在；按浏览器验证技能的失败处理要求，改用已配置的Playwright CLI完成等价验证，没有把工具缺失误判为页面失败。
+# MHS 问题与解决方案文章发布（2026-08-31）
+
+## Goal
+
+发布一篇只聚焦 MHS 要解决的问题与解决方案的中文技术文章，并完成导航接入、构建、发布和生产验证。
+
+## Phases
+
+### Phase 1: 确认内容范围与原始证据
+
+**Status:** complete
+
+### Phase 2: 编写文章与接入站点
+
+**Status:** complete
+
+### Phase 3: 构建和页面验证
+
+**Status:** complete
+
+### Phase 4: 发布与生产验证
+
+**Status:** in_progress
+
+## Errors Encountered
+
+| Error | Attempt | Resolution |
+|---|---|---|
+| 内容断言脚本检查英文 `research preview`，而正文采用中文“研究预览”，因此误报缺失 | 1 | 将断言改为检查正文实际使用的“研究预览”；不修改正确的文章内容 |
+
+---

@@ -14,6 +14,10 @@ hero:
       link: /roadmap
 
 features:
+  - title: 理解AI如何连接真实设备
+    details: 从接口碎片化、物理语义、多设备状态和安全控制出发，看MHS如何在Agent与硬件之间建立统一层。
+    link: /insights/model-hardware-standard-problem-solution
+    linkText: 阅读MHS问题与解决方案
   - title: 判断构网型微电网竞争焦点
     details: 交叉分析250项厂商、采购和独立测试证据，看控制器竞争为何从“能构网”转向“可验证交付”。
     link: /insights/grid-forming-microgrid-controller-2026
