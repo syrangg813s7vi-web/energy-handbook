@@ -621,3 +621,43 @@
 |---|---|---|
 
 ---
+# MHS 文章加入 Anthropic 演示视频（2026-08-31）
+
+## Goal
+
+在现有文章最后增加 Anthropic 原始公告中的全部十段演示视频，按主题分组、按需加载，并验证桌面/移动页面和远程媒体可播放性。
+
+## Scope and acceptance criteria
+
+- 视频使用 Anthropic 公告实际引用的 Sanity CDN 原始地址，不上传约780 MB媒体到Git仓库。
+- 覆盖工作原理、UW/CMU、Janelia、QuEra、Tetsuwan共10段视频。
+- 所有播放器设置 `preload="none"` 与 `playsinline`，避免打开文章即下载大型媒体。
+- 视频有中文标题和文字降级；URL、正文和现有导航不变。
+- 六组早期案例改为统一四列表格，并保留关键结果、失败边界和证据限制。
+- 通过构建、远程媒体HTTP检查、PR/Pages发布和生产HTML验证。
+
+## Phases
+
+### Phase 1: 固定十段视频清单与加载策略
+
+**Status:** complete
+
+### Phase 2: 增加最终视频章节与响应式样式
+
+**Status:** complete
+
+### Phase 3: 构建、媒体和页面验证
+
+**Status:** complete
+
+### Phase 4: 发布并验证生产页面
+
+**Status:** in_progress
+
+## Errors Encountered
+
+| Error | Attempt | Resolution |
+|---|---|---|
+| 首次按TSV字段批量探测视频时，空`alt`列使shell字段错位，`curl`收到空URL | 1 | 改为从文章直接提取10个唯一媒体URL；全部以HTTP 206响应并返回正确视频类型 |
+
+---
