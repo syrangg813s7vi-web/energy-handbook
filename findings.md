@@ -319,5 +319,8 @@
 - 内容只覆盖设备接口碎片化、物理语义缺失、多设备编排和实时安全控制四类问题，以及 MHS 的对应设计。
 - MHS 状态需准确标为 2026-08-27 research preview，不能写成已经公开的开源标准。
 - 文章归入 `docs/insights/`，使用原生 Markdown，不引入新组件或运行时依赖。
+- PR #48 已通过构建门禁并 squash 合并到 `main`；Pages 工作流 `33353188828` 的 build 和 deploy 均成功。
+- 正式文章、首页和 sitemap 均返回 HTTP 200；生产 canonical 和 sitemap 已包含新路由。
+- CI 仅报告 GitHub Actions 所用 Node.js 20 runtime 已弃用的维护警告；本次不修改工作流，未影响构建或部署。
 
 ---
