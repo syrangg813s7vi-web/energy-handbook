@@ -1,9 +1,9 @@
 ---
-title: MHS要解决什么问题：让AI Agent安全连接真实设备
+title: Anthropic提出MHS：让AI Agent安全连接与控制真实设备
 description: 从设备接口碎片化、物理语义缺失、多设备编排和安全控制出发，理解Anthropic Model Hardware Standard的设计思路。
 ---
 
-# MHS要解决什么问题：让AI Agent安全连接真实设备
+# Anthropic提出MHS：让AI Agent安全连接与控制真实设备
 
 大模型已经能够理解实验步骤、编写程序和分析数据，但让它真正操作显微镜、机械臂、移液器、相机或激光器，仍然不是“给模型接一个API”这么简单。
 

@@ -386,3 +386,9 @@
 - 正式页面返回 HTTP 200，Genentech、UW、CMU、Janelia、QuEra、Tetsuwan 和共同结论八个检查标记全部存在。本次增补完成。
 
 ---
+# 2026-08-31 MHS 文章标题润色
+
+- 已确定新标题并更新 frontmatter 与正文 H1；URL、导航和正文保持不变。
+- `npm run check` 通过23项自动化测试和VitePress生产构建；生成页面的HTML title与H1均为新标题。
+
+---
