@@ -652,12 +652,13 @@
 
 ### Phase 4: 发布并验证生产页面
 
-**Status:** in_progress
+**Status:** complete
 
 ## Errors Encountered
 
 | Error | Attempt | Resolution |
 |---|---|---|
 | 首次按TSV字段批量探测视频时，空`alt`列使shell字段错位，`curl`收到空URL | 1 | 改为从文章直接提取10个唯一媒体URL；全部以HTTP 206响应并返回正确视频类型 |
+| 正式页检查脚本使用zsh只读变量`status` | 1 | 改名为任务专用变量`prod_status`后重跑；生产页各项检查全部通过 |
 
 ---

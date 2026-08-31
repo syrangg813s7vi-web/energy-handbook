@@ -401,5 +401,7 @@
 - 已把六组案例改为四列表格，并在文章最后加入按主题分组的10个原始视频播放器及响应式样式。
 - `git diff --check`与`npm run check`通过：23项自动化测试及VitePress生产构建成功；生成HTML包含六行案例表和10个`preload="none"`播放器。
 - 10个Anthropic CDN媒体均通过字节范围检查（HTTP 206）；9个返回`video/mp4`，原始MOV返回`video/quicktime`。
+- PR #55通过门禁并squash合并为`e93b429`；Pages运行`33355166641`的构建与部署均成功。
+- 正式文章返回HTTP 200，六个案例、四列表头、最终视频章节和10个播放器全部存在。本次发布完成。
 
 ---
