@@ -595,3 +595,29 @@
 | 一次 `apply_patch` 对同一文件声明了多个独立 Update 操作，校验拒绝整个补丁 | 1 | 合并为每个文件单一 Update 操作后重新应用，未产生部分写入 |
 
 ---
+# MHS 文章标题润色（2026-08-31）
+
+## Goal
+
+将文章标题改为更自然、准确且能体现 MHS 名称与“连接＋控制”双重价值的表达，保持正文、URL和导航兼容。
+
+## Phases
+
+### Phase 1: 确定并更新标题与页面元数据
+
+**Status:** complete
+
+### Phase 2: 构建验证
+
+**Status:** complete
+
+### Phase 3: 发布和生产验证
+
+**Status:** in_progress
+
+## Errors Encountered
+
+| Error | Attempt | Resolution |
+|---|---|---|
+
+---
