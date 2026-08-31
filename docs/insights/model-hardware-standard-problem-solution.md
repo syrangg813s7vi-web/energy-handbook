@@ -1,13 +1,15 @@
 ---
-title: Anthropic提出MHS：让AI Agent安全连接与控制真实设备
-description: 从设备接口碎片化、物理语义缺失、多设备编排和安全控制出发，理解Anthropic Model Hardware Standard的设计思路。
+title: Anthropic提出模型硬件标准：让AI Agent安全连接与控制真实设备
+description: 解释模型硬件标准（Model Hardware Standard，MHS）怎样在AI Agent与真实设备之间统一连接、描述、编排和安全控制。
 ---
 
-# Anthropic提出MHS：让AI Agent安全连接与控制真实设备
+# Anthropic提出模型硬件标准：让AI Agent安全连接与控制真实设备
 
 大模型已经能够理解实验步骤、编写程序和分析数据，但让它真正操作显微镜、机械臂、移液器、相机或激光器，仍然不是“给模型接一个API”这么简单。
 
-Anthropic在2026年8月27日公布的Model Hardware Standard（MHS），试图解决的正是这个断层：**AI Agent有推理能力，却缺少一种统一、可理解、可编排并且受安全约束的方式连接真实设备。**
+Anthropic在2026年8月27日公布的模型硬件标准（Model Hardware Standard，MHS），试图解决的正是这个断层：**AI Agent有推理能力，却缺少一种统一、可理解、可编排并且受安全约束的方式连接真实设备。**
+
+可以把MHS理解为位于AI Agent与真实设备之间的一层通用软件规范。它不是新的电气接口或现场总线，而是试图统一设备如何被发现、怎样描述自己的能力和状态、Agent通过什么方式下达操作，以及哪些安全限制必须由底层强制执行。
 
 MHS目前仍是研究预览。Anthropic公开的是设计方向、合作案例和预览申请入口，并不是已经公开下载的完整标准、SDK或开源代码库。理解这一边界之后，才能准确讨论它在解决什么问题。
 
