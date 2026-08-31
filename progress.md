@@ -371,5 +371,7 @@
 - 已将文章接入首页、顶部“行业洞察”和侧边栏，没有新增组件或运行时依赖。
 - `npm run check` 已通过 23 项自动化测试和 VitePress 生产构建；sitemap、首页、导航与生成文章 HTML 均包含新路由。
 - 本地生产预览中首页、文章页和 sitemap 均返回 HTTP 200；文章 title、canonical、正文关键章节和首页入口均正确。
+- 已推送 `codex/publish-mhs-problem-solution`，PR #48 构建通过并合并为提交 `8efb0a2`。
+- GitHub Pages 工作流 `33353188828` 完成 build/deploy；生产文章、首页入口和 sitemap 均验证为 HTTP 200。本任务完成。
 
 ---
