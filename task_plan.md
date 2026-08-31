@@ -557,3 +557,41 @@
 | 内容断言脚本检查英文 `research preview`，而正文采用中文“研究预览”，因此误报缺失 | 1 | 将断言改为检查正文实际使用的“研究预览”；不修改正确的文章内容 |
 
 ---
+# MHS 文章案例增补（2026-08-31）
+
+## Goal
+
+在现有 MHS 问题与解决方案文章中补充 Anthropic 原始发布的实际案例，用案例验证前文架构，同时保留 PoC、自报结果和当前模型能力边界。
+
+## Scope and acceptance criteria
+
+- 覆盖 Genentech、UW Baker/Pinglay、CMU、HHMI Janelia、QuEra、Tetsuwan 六组原始案例。
+- 每个案例说明设备组合、MHS 发挥的作用、结果和限制，不扩展为合作伙伴宣传名单。
+- 案例数据以已归档的 2026-08-27 Anthropic 原始页面为准；Tetsuwan 页面版本差异需注明。
+- 不改变文章 URL、首页和导航；通过现有测试、构建、PR 和 Pages 流程发布。
+
+## Phases
+
+### Phase 1: 固定案例数据与文章插入结构
+
+**Status:** complete
+
+### Phase 2: 编写六组案例与证据边界
+
+**Status:** complete
+
+### Phase 3: 构建和页面验证
+
+**Status:** complete
+
+### Phase 4: 发布并验证生产页面
+
+**Status:** in_progress
+
+## Errors Encountered
+
+| Error | Attempt | Resolution |
+|---|---|---|
+| 一次 `apply_patch` 对同一文件声明了多个独立 Update 操作，校验拒绝整个补丁 | 1 | 合并为每个文件单一 Update 操作后重新应用，未产生部分写入 |
+
+---
