@@ -363,3 +363,13 @@
 - 提交已推送到`codex/tin-405-china-generation-trends`；PR #38门禁通过并完成squash合并，`main`合并提交为`1dc35d9`。
 - GitHub Pages运行`30908833205`的构建和部署均成功；正式文章与首页返回HTTP 200，HTML包含文章标题、路由和国家统计局来源。
 - 阶段3.4完成；剩余动作仅为提交本次完成状态记录并将Linear TIN-405标记完成。
+# 2026-08-31 MHS 问题与解决方案文章
+
+- 从 `origin/main` 创建独立发布分支。
+- 已确认文章目录、首页入口和 VitePress 导航配置位置，进入写作阶段。
+- 已完成 `docs/insights/model-hardware-standard-problem-solution.md`，内容严格聚焦四类问题和五部分解决方案，并保留 research preview 状态边界。
+- 已将文章接入首页、顶部“行业洞察”和侧边栏，没有新增组件或运行时依赖。
+- `npm run check` 已通过 23 项自动化测试和 VitePress 生产构建；sitemap、首页、导航与生成文章 HTML 均包含新路由。
+- 本地生产预览中首页、文章页和 sitemap 均返回 HTTP 200；文章 title、canonical、正文关键章节和首页入口均正确。
+
+---
