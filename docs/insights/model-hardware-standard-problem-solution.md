@@ -157,72 +157,25 @@ Agent可以负责：
 
 Anthropic的原始发布收录了六组早期案例。它们能够说明MHS的不同设计分别解决了什么具体问题，但证据性质需要先说清楚：这些结果来自Anthropic及参与项目的团队自述，多数仍是研究预览或概念验证，并不等于独立复现、通用可靠性证明或安全认证。
 
-### Genentech：Agent会调用设备，不代表理解流体
+| 案例 | 设备与任务 | MHS的作用与结果 | 限制与证据边界 |
+|---|---|---|---|
+| **Genentech** | 移液器、机械臂和酶标仪执行BCA蛋白检测 | 统一三台设备并闭环调整移液流速；得到水约140 µL/s、黏稠BSA约10 µL/s的设置 | Claude最初使用通用参数造成气泡，且错误重试使问题加重；需要专家解释物理原因并指导修正 |
+| **UW Baker/Pinglay实验室** | 六台仪器统一监控；Agent观察qPCR曲线；机械臂与移液器交接孔板 | 六台设备连同driver在一周内接入；用完成信号和顺序条件避免两台设备进入冲突区域 | 团队明确称其为proof of concept；复杂流程仍需优化，长期在线监控存在计算成本 |
+| **Carnegie Mellon** | 三台电脑上的移液器、酶标仪、机械臂和相机；接口包括目录文件、COM、USB和GUI | 约8小时完成driver和编排层，实验约快3倍；缺板、板旋转、设备繁忙、相机断开、设备不可达和急停六种状态都在动作前被阻断 | 使用染料代替真实药物；无API设备只能通过屏幕结果检查，尚非生产级药物实验验证 |
+| **HHMI Janelia** | 原需按顺序启动七套厂商程序的显微成像装置 | 共享标准化状态字典；确定性程序运行采集—分析核心循环，Agent只在决策点选择区域、参数和分析方法；设备层限制激光功率 | 研究人员仍在监督实验；不是语言模型接管实时循环，也不是已经完成的无人实验室 |
+| **QuEra** | 量子计算机激光失锁恢复 | 原脚本约150秒、58%成功率；迭代后开发阶段约6秒、96%；最终无Agent盲测700次成功695次（99.3%），产物为可检查的确定性脚本 | Claude不擅长诊断部分真实硬件故障，会等待人工批准而暂停，也需要团队提供大量上下文 |
+| **Tetsuwan** | ResearchOS协调相机、机械臂和离心机处理qPCR移液气泡，并闭环优化移液模型 | 可从视觉发现气泡、寻找可用设备并提出跨设备恢复；记录9,143次dispense、300类transfer和1,508个条件，Anthropic页面称预测精度约优于厂商规格12% | 耗材补充仅半无人值守，Agent仍需提示且不擅长蒸发等物理效应；Anthropic页写31/45、p≈0.001，Tetsuwan当前页写33/45、p≈0.003，统计版本存在差异 |
 
-Genentech用MHS连接移液器、机械臂和酶标仪，执行测量蛋白质浓度的BCA实验。Claude通过MHS设置移液流速、执行转移、读取吸光度，再把结果与专家基准比较并调整参数，最后得到水约140 µL/s、黏稠BSA蛋白样品约10 µL/s的合理设置。
-
-这个案例同时暴露了模型的物理知识边界。Claude最初给水和BSA使用相同的通用参数，导致黏稠样品产生气泡；遇到泡沫导致的运行错误时，它一度只会在原孔位重试，反而制造更多气泡。专家必须先告诉它这是物理问题，并指导它换到干净孔位、减少混合次数。
-
-它说明MHS可以统一设备和数据闭环，却不会自动补齐模型缺失的物理常识。领域知识仍需进入设备描述、可复用技能和人工监督。
-
-### UW Baker/Pinglay实验室：把分散仪器变成共享状态系统
-
-华盛顿大学团队用MHS连接六台仪器，建立统一监控面板，让Agent实时观察qPCR扩增曲线，并在合适时机请求停止反应。他们还让Claude Code协调移液器和基于LeRobot的机械臂进行孔板交接：只有移液结束后机械臂才进入，机械臂退出后移液器才继续。
-
-团队称，六台设备连同driver开发在一周内完成；重复测试中没有发生两台设备同时进入冲突区域的情况。这对应了MHS的两个价值：把分散设备状态汇集到一个界面，并用明确的完成信号和顺序条件编排跨设备动作。
-
-但团队也明确把这些演示称为proof of concept。更复杂的流程仍需优化，长时间让Agent在线监控还需要权衡计算成本。
-
-### Carnegie Mellon：统一三台电脑上的四种异构接口
-
-CMU的剂量响应实验跨越三台电脑，包括液体处理器、酶标仪、机械臂和监控相机。底层接口分别涉及目录文件、旧式Windows COM、USB相机和没有正式API的图形界面。
-
-MHS把这些差异转换为统一的状态和操作清单，使Agent能够完成移液、确认孔板方向、搬运、读取曲线并决定是否重做。团队报告从零开始编写driver和编排层约用了8小时，实验速度约为此前的3倍。
-
-团队还人为设置了缺少孔板、孔板旋转、读板器繁忙、相机断开、设备不可达和急停激活六种状态，系统都在任何设备动作之前阻断了流程。这是“安全边界应由底层强制执行”的直接示例。
-
-边界同样明显：实验使用的是便于观察的染料，而不是真实药物；没有API的设备只能通过屏幕可见结果检查操作。它证明了异构集成和安全阻断的可行性，尚不能代表生产级药物实验已经完成验证。
-
-### HHMI Janelia：确定性循环运行，Agent只进入决策点
-
-Janelia的显微成像装置原本需要按固定顺序启动七套厂商程序。MHS把整个装置的状态放入共享的标准化字典，让不同设备和Agent通过同一接口读写变量。
-
-这里没有让语言模型接管显微镜的高速循环。采集与分析之间的核心循环仍由确定性程序执行，Agent只在决策点选择成像区域、采集参数和分析方法；激光功率等限制则由设备层强制执行。
-
-这个案例展示了更接近可靠控制系统的分工：实时、重复的部分保持确定性，Agent负责根据实验目标做较慢的策略选择。研究人员仍在监督实验，因此它不是“无人实验室”的完成形态。
-
-### QuEra：让Agent探索，再把结果固化为无Agent脚本
-
-QuEra用MHS让Agent操作量子计算机中的激光系统，改进激光失锁后的自动恢复。原有脚本一次恢复约需150秒，成功率约58%；经过夜间反复试验和改写，开发阶段达到约6秒和96%的成功率。
-
-最终脚本随后在没有Agent参与控制的情况下进行700次随机扰动盲测，成功恢复695次，即99.3%。简单扰动用时0.9至5.4秒，最困难的情况用时10至14秒。最终产物是可检查的确定性脚本，而不是持续由大模型在线控制激光。
-
-这正好体现MHS的“探索与执行分层”：Agent适合提出假设、反复试验和改写决策树，稳定结果再交给普通程序运行。QuEra同时承认，Claude不擅长排查某些真实硬件故障，会因为等待人工批准让实验暂停，也需要团队提供大量上下文。
-
-### Tetsuwan：从发现异常到跨设备恢复
-
-Tetsuwan把MHS接入ResearchOS，用相机观察移液过程。当视觉算法发现黏稠qPCR试剂中出现气泡时，单靠机械臂无法解决；系统会在网络中寻找其他MHS设备，提出把样品送到离心机低速旋转的恢复方案，并在得到授权后协调执行。
-
-另一组闭环实验用于改进移液参数模型。Anthropic原始发布记录了9,143次dispense、300类transfer和四种液体下的1,508个测量条件；其留出实验结果比厂商技术规格的预测精度约高12%，45次运行中胜出31次。
-
-该结果仍有两个边界。实验中的耗材补充只是半无人值守，Agent在检查点需要较多提示，对蒸发等物理效应的推理也有限。此外，Tetsuwan当前合作方页面后来写成33/45、p≈0.003，而Anthropic的2026年8月27日页面写31/45、p≈0.001，说明统计版本存在差异；这里保留Anthropic原始发布口径，不把两个版本合并。
-
-### 六个案例共同说明了什么
-
-这些案例并没有证明“Agent已经可以独立控制任何硬件”。它们共同支持的是一条更具体的工程路线：
-
-- 用Driver把异构设备转换为共同接口；
-- 把状态、能力和安全限制变成机器可读语义；
-- 让Agent参与开放性的分析、诊断和参数搜索；
-- 把高速、重复和安全关键执行留给确定性程序；
-- 在模型缺少物理知识或风险较高时保留专家监督和批准。
+六个案例没有证明“Agent已经可以独立控制任何硬件”。它们共同支持的是一条更具体的工程路线：用Driver统一异构设备，把状态、能力和安全限制变成机器可读语义，让Agent参与分析、诊断和参数搜索，同时把高速、重复和安全关键执行留给确定性程序，并在物理知识不足或风险较高时保留专家监督。
 
 ## MHS的本质
 
 MHS可以理解为三部分的组合：
 
-> 面向多厂商设备的统一Driver模型  
-> ＋ 面向Agent的设备语义和发现机制  
+> 面向多厂商设备的统一Driver模型
+>
+> ＋ 面向Agent的设备语义和发现机制
+>
 > ＋ 带确定性执行与安全边界的多设备编排层
 
 它真正想解决的不是“怎样让AI发出一条机械臂命令”，而是怎样把设备接口、物理知识、运行状态和安全约束组合成一套可复用的系统，使Agent能够在受控边界内参与真实世界任务。
@@ -236,3 +189,75 @@ MHS可以理解为三部分的组合：
 - [Anthropic：Introducing the Model Context Protocol](https://www.anthropic.com/news/model-context-protocol)
 - [QuEra：Holding the Light](https://www.quera.com/blog-posts/holding-the-light-teaching-an-ai-to-lock-and-tune-our-quantum-computers-lasers)
 - [Tetsuwan：Integrating Anthropic's Model Hardware Standard](https://www.tetsuwan.com/blog/mhs)
+
+## Anthropic原始演示视频
+
+以下10段视频均来自Anthropic原始公告。播放器采用按需加载，只有点击播放后才请求媒体；部分原始文件较大，请根据网络情况选择观看。
+
+### MHS工作原理
+
+<video class="mhs-demo-video" controls preload="none" playsinline aria-label="MHS工作原理演示">
+  <source src="https://cdn.sanity.io/files/4zrzovbb/website/af63049620774e379536a9bb28df7304c62f86af.mp4" type="video/mp4">
+  浏览器不支持视频播放。<a href="https://cdn.sanity.io/files/4zrzovbb/website/af63049620774e379536a9bb28df7304c62f86af.mp4">打开原始视频</a>。
+</video>
+
+### 跨设备孔板交接
+
+华盛顿大学案例中，Agent按照设备完成信号协调移液器和机械臂。
+
+<video class="mhs-demo-video" controls preload="none" playsinline aria-label="跨设备孔板交接演示">
+  <source src="https://cdn.sanity.io/files/4zrzovbb/website/9b75ff5feffe2cb600d5b1111e5ce33f10b3c17b.mp4" type="video/mp4">
+  浏览器不支持视频播放。<a href="https://cdn.sanity.io/files/4zrzovbb/website/9b75ff5feffe2cb600d5b1111e5ce33f10b3c17b.mp4">打开原始视频</a>。
+</video>
+
+### CMU剂量响应自动化
+
+<video class="mhs-demo-video" controls preload="none" playsinline aria-label="CMU剂量响应自动化演示">
+  <source src="https://cdn.sanity.io/files/4zrzovbb/website/0b1b6ca4c78d207af4d8191e193616df2b2dabdd.mp4" type="video/mp4">
+  浏览器不支持视频播放。<a href="https://cdn.sanity.io/files/4zrzovbb/website/0b1b6ca4c78d207af4d8191e193616df2b2dabdd.mp4">打开原始视频</a>。
+</video>
+
+### Janelia显微镜研究
+
+下面四段依次展示显微成像案例、统一设备界面、定量监控和Agent参与的自适应实验。
+
+<video class="mhs-demo-video" controls preload="none" playsinline aria-label="Janelia显微成像案例">
+  <source src="https://cdn.sanity.io/files/4zrzovbb/website/7104f46b19b038fefbaa382d8f1f2be4d4a6a850.mp4" type="video/mp4">
+  浏览器不支持视频播放。<a href="https://cdn.sanity.io/files/4zrzovbb/website/7104f46b19b038fefbaa382d8f1f2be4d4a6a850.mp4">打开原始视频</a>。
+</video>
+
+<video class="mhs-demo-video" controls preload="none" playsinline aria-label="Janelia统一设备界面演示">
+  <source src="https://cdn.sanity.io/files/4zrzovbb/website/af084a36feacb3714d57e84c79c5750010da1b40.mp4" type="video/mp4">
+  浏览器不支持视频播放。<a href="https://cdn.sanity.io/files/4zrzovbb/website/af084a36feacb3714d57e84c79c5750010da1b40.mp4">打开原始视频</a>。
+</video>
+
+<video class="mhs-demo-video" controls preload="none" playsinline aria-label="Janelia定量监控和在线分析演示">
+  <source src="https://cdn.sanity.io/files/4zrzovbb/website/04157144975f52a1e0d9ae8618b04947d51769e5.mp4" type="video/mp4">
+  浏览器不支持视频播放。<a href="https://cdn.sanity.io/files/4zrzovbb/website/04157144975f52a1e0d9ae8618b04947d51769e5.mp4">打开原始视频</a>。
+</video>
+
+<video class="mhs-demo-video" controls preload="none" playsinline aria-label="Janelia自适应实验演示">
+  <source src="https://cdn.sanity.io/files/4zrzovbb/website/114e1e623740cf010903446523b8248f0088a2bc.mp4" type="video/mp4">
+  浏览器不支持视频播放。<a href="https://cdn.sanity.io/files/4zrzovbb/website/114e1e623740cf010903446523b8248f0088a2bc.mp4">打开原始视频</a>。
+</video>
+
+### QuEra激光稳定
+
+<video class="mhs-demo-video" controls preload="none" playsinline aria-label="QuEra激光稳定演示">
+  <source src="https://cdn.sanity.io/files/4zrzovbb/website/1541e894a040db490eac45bf62e65c023d4e90b8.mp4" type="video/mp4">
+  浏览器不支持视频播放。<a href="https://cdn.sanity.io/files/4zrzovbb/website/1541e894a040db490eac45bf62e65c023d4e90b8.mp4">打开原始视频</a>。
+</video>
+
+### Tetsuwan移液监控与工作流
+
+第一段展示相机识别移液中的液面、气隙、气泡和泡沫；第二段展示多设备qPCR工作流。
+
+<video class="mhs-demo-video" controls preload="none" playsinline aria-label="Tetsuwan移液视觉监控演示">
+  <source src="https://cdn.sanity.io/files/4zrzovbb/website/ab7f460b93d47a528fe89266b243a1093bca295e.mp4" type="video/mp4">
+  浏览器不支持视频播放。<a href="https://cdn.sanity.io/files/4zrzovbb/website/ab7f460b93d47a528fe89266b243a1093bca295e.mp4">打开原始视频</a>。
+</video>
+
+<video class="mhs-demo-video" controls preload="none" playsinline aria-label="Tetsuwan多设备qPCR工作流演示">
+  <source src="https://cdn.sanity.io/files/4zrzovbb/website/79c765cd8ec0c2d9e6d06b9a283c78c097dccad1.mov" type="video/quicktime">
+  浏览器不支持视频播放。<a href="https://cdn.sanity.io/files/4zrzovbb/website/79c765cd8ec0c2d9e6d06b9a283c78c097dccad1.mov">打开原始视频</a>。
+</video>
