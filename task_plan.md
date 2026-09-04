@@ -662,3 +662,46 @@
 | 正式页检查脚本使用zsh只读变量`status` | 1 | 改名为任务专用变量`prod_status`后重跑；生产页各项检查全部通过 |
 
 ---
+# 软件定义 PAC 架构分析发布（2026-09-04）
+
+## Goal
+
+将现场资料整理为可公开、可追溯的 EnergyBook 行业洞察，配套原创架构图并发布到正式站点。Linear：TIN-636。
+
+## Scope and acceptance
+
+- 新增软件定义 PAC 文章、原创架构图、首页入口、顶部导航和侧边栏入口。
+- 区分 FIH 目标、虚拟化手段、厂商主张、现场观察与公开事实。
+- 不公开转载现场厂商照片，不新增运行时依赖。
+- `git diff --check`、`npm run check`、桌面/移动浏览器和生产 URL 验证通过。
+- 回滚只需删除新增文章、图形和入口，不影响既有 URL。
+
+## Phases
+
+### Phase 1：资料与设计边界
+
+**Status:** complete
+
+- 确认 CIGRE、Siemens Energy、GE Vernova 与 LF Energy 一手资料。
+- 固化分层内容、证据边界、素材策略和回滚方式。
+
+### Phase 2：文章与原创图形
+
+**Status:** complete
+
+- 编写正文和原创分层架构图。
+- 接入首页、顶部导航和侧边栏。
+
+### Phase 3：构建与浏览器验收
+
+**Status:** complete
+
+- 执行自动化测试、生产构建和桌面/移动页面检查。
+
+### Phase 4：发布与生产复验
+
+**Status:** in progress
+
+- 通过 PR 合并并确认 GitHub Pages、canonical 和 sitemap。
+
+---

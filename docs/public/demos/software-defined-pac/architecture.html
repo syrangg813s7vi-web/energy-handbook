@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>软件定义 PAC 分层架构</title>
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <style>
+      :root { color-scheme: light dark; --bg:#f4f8f7; --card:#fff; --ink:#173331; --muted:#55706d; --line:#a9c8c4; --brand:#087f77; --accent:#ddefec; --warn:#fff2d4; }
+      * { box-sizing: border-box; }
+      body { margin:0; padding:20px; background:var(--bg); color:var(--ink); font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif; }
+      main { max-width:1000px; margin:auto; }
+      h1 { margin:0 0 5px; font-size:clamp(20px,3vw,30px); }
+      .lead { margin:0 0 18px; color:var(--muted); }
+      .layout { display:grid; grid-template-columns:minmax(0,1fr) 210px; gap:16px; align-items:stretch; }
+      .stack { display:grid; gap:9px; }
+      .layer { position:relative; padding:13px 16px 13px 66px; border:1px solid var(--line); border-radius:12px; background:var(--card); box-shadow:0 4px 14px rgba(16,68,64,.06); }
+      .number { position:absolute; left:16px; top:50%; translate:0 -50%; width:34px; height:34px; display:grid; place-items:center; border-radius:50%; background:var(--brand); color:white; font-weight:750; }
+      .layer h2 { margin:0 0 2px; font-size:16px; }
+      .layer p { margin:0; color:var(--muted); font-size:13px; }
+      .governance { display:flex; flex-direction:column; justify-content:center; padding:18px; border:1px solid #d8b55d; border-radius:12px; background:var(--warn); }
+      .governance h2 { margin:0 0 10px; font-size:17px; }
+      .governance ul { margin:0; padding-left:19px; }
+      .goal { margin-top:16px; padding:14px 18px; border-radius:12px; background:var(--accent); border-left:5px solid var(--brand); }
+      .goal strong { color:var(--brand); }
+      .legend { margin-top:10px; color:var(--muted); font-size:12px; }
+      @media (prefers-color-scheme:dark) { :root { --bg:#101817; --card:#172422; --ink:#e4f1ef; --muted:#abc2bf; --line:#31504c; --brand:#39bdb2; --accent:#163f3b; --warn:#3d321e; } .number { color:#071715; } }
+      @media (max-width:660px) {
+        body { padding:10px; font-size:12px; }
+        h1 { font-size:20px; line-height:1.25; }
+        .lead { margin-bottom:8px; font-size:12px; }
+        .layout { grid-template-columns:1fr; gap:7px; }
+        .stack { gap:5px; }
+        .layer { padding:7px 9px 7px 50px; border-radius:9px; }
+        .number { left:11px; width:28px; height:28px; }
+        .layer h2 { font-size:14px; }
+        .layer p { font-size:11px; line-height:1.4; }
+        .governance { min-height:auto; padding:8px 10px; border-radius:9px; }
+        .governance h2 { margin:0 0 4px; font-size:14px; }
+        .governance ul { display:grid; grid-template-columns:repeat(3,1fr); gap:2px 8px; margin:0; padding:0; list-style:none; font-size:11px; }
+        .goal { margin-top:8px; padding:8px 10px; border-radius:9px; font-size:12px; }
+        .legend { margin-top:4px; font-size:10px; }
+      }
+      @media (prefers-reduced-motion:reduce) { * { scroll-behavior:auto !important; transition:none !important; animation:none !important; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>软件定义 PAC：功能与硬件之间多了一组可验证契约</h1>
+      <p class="lead">上层应用只依赖下层公开能力；工程与运维治理贯穿所有层。</p>
+      <div class="layout">
+        <section class="stack" aria-label="软件定义 PAC 技术层级">
+          <article class="layer"><span class="number">4</span><h2>PAC 应用</h2><p>保护 · 间隔控制 · 站级自动化 · 录波 · 监测诊断</p></article>
+          <article class="layer"><span class="number">3</span><h2>实时高可用平台</h2><p>资源隔离 · 确定性调度 · 集群冗余 · 健康监测 · 故障恢复</p></article>
+          <article class="layer"><span class="number">2</span><h2>网络、时间与数据模型</h2><p>IEC 61850 · GOOSE / SV · PTP · 配置与订阅关系</p></article>
+          <article class="layer"><span class="number">1</span><h2>一次设备与过程接口</h2><p>电流电压采集 · 开关状态 · 跳合闸 · 合并单元与过程 I/O</p></article>
+        </section>
+        <aside class="governance">
+          <h2>贯穿全栈的治理</h2>
+          <ul><li>系统工程</li><li>版本与依赖</li><li>测试与证据</li><li>网络安全</li><li>部署与回滚</li><li>责任与审计</li></ul>
+        </aside>
+      </div>
+      <div class="goal"><strong>FIH 是目标：</strong>功能可以脱离特定硬件迁移。<strong>虚拟化是手段：</strong>只有接口、资源、工程和验证边界同时成立，迁移才可信。</div>
+      <p class="legend">原创示意图。它表达职责与依赖，不代表任何单一厂商的产品拓扑。</p>
+    </main>
+  </body>
+</html>
