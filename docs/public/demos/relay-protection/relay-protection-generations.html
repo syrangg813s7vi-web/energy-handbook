@@ -1,0 +1,1751 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Relay Protection Generations</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="Relay Protection Generations" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Relay Protection Generations&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: var(--border-radius-lg, 12.5px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress {
+  display: flex;
+  height: 6px;
+  margin-block: calc((var(--line-height-normal, 1.5em) - 6px) / 2);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed=&quot;true&quot;],
+  [aria-selected=&quot;true&quot;],
+  .is-selected
+) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+@media (pointer: coarse) {
+  .btn,
+  .form-control,
+  .form-select {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .form-control,
+  .form-select {
+    font-size: max(16px, var(--font-size-normal));
+  }
+
+  .form-control[type=&quot;file&quot;]::file-selector-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .form-control-color[type=&quot;color&quot;] {
+    width: 44px;
+    height: 44px;
+  }
+
+  .form-control:is(
+    [type=&quot;date&quot;],
+    [type=&quot;datetime-local&quot;],
+    [type=&quot;month&quot;],
+    [type=&quot;time&quot;],
+    [type=&quot;week&quot;]
+  ) {
+    min-width: 0;
+    max-width: 100%;
+    padding-block: 8px;
+  }
+
+  .form-check {
+    min-height: 44px;
+    padding-inline: 15px;
+  }
+
+  .form-check-input {
+    position: relative;
+  }
+
+  .form-check-input::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    content: &quot;&quot;;
+    transform: translate(-50%, -50%);
+  }
+
+  .form-check-label {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .form-range {
+    height: 44px;
+    touch-action: pan-y;
+  }
+
+  .form-range::-webkit-slider-runnable-track {
+    height: 44px;
+  }
+
+  .form-range::-moz-range-track {
+    height: 44px;
+  }
+
+  .form-range::-webkit-slider-thumb {
+    margin-top: 12px;
+  }
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: 16px !important;
+  height: 16px !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;relay-evolution-viz&quot;&gt;
+  &lt;h2&gt;五代继电保护：控制过程动画&lt;/h2&gt;
+
+  &lt;div class=&quot;viz-controls&quot; aria-label=&quot;选择继电保护代际&quot;&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-gen=&quot;0&quot; aria-pressed=&quot;true&quot;&gt;第一代·机电式&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-gen=&quot;1&quot; aria-pressed=&quot;false&quot;&gt;第二代·静态式&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-gen=&quot;2&quot; aria-pressed=&quot;false&quot;&gt;第三代·微机式&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-gen=&quot;3&quot; aria-pressed=&quot;false&quot;&gt;第四代·网络化&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-gen=&quot;4&quot; aria-pressed=&quot;false&quot;&gt;第五代·虚拟协同&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;relay-stage&quot; role=&quot;img&quot; aria-labelledby=&quot;relay-viz-title relay-viz-desc&quot;&gt;
+    &lt;div class=&quot;relay-heading&quot;&gt;
+      &lt;div&gt;
+        &lt;h3 id=&quot;relay-viz-title&quot;&gt;&lt;/h3&gt;
+        &lt;div id=&quot;relay-viz-change&quot; class=&quot;text-muted&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div id=&quot;relay-viz-counter&quot; class=&quot;text-small tabular-nums&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;svg id=&quot;relay-viz-svg&quot; aria-hidden=&quot;true&quot;&gt;&lt;/svg&gt;
+    &lt;div id=&quot;relay-viz-desc&quot; class=&quot;relay-detail&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;viz-controls relay-actions&quot; aria-label=&quot;动画控制&quot;&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;relay-play&quot;&gt;&lt;i data-lucide=&quot;play&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;播放&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;relay-prev&quot;&gt;&lt;i data-lucide=&quot;chevron-left&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;上一步&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;relay-next&quot;&gt;下一步&lt;i data-lucide=&quot;chevron-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+    &lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; id=&quot;relay-reset&quot;&gt;&lt;i data-lucide=&quot;rotate-ccw&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;复位&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;relay-legend text-small text-muted&quot;&gt;
+    &lt;span&gt;&lt;i class=&quot;relay-key relay-key-active&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;当前动作&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;relay-key relay-key-done&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;已完成&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;relay-key&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;等待动作&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;style&gt;
+    #relay-evolution-viz {
+      width: 100%;
+      color: var(--foreground);
+    }
+    #relay-evolution-viz h2 {
+      margin: 0 0 14px;
+    }
+    #relay-evolution-viz h3 {
+      margin: 0 0 4px;
+    }
+    #relay-evolution-viz .relay-stage {
+      margin-top: 16px;
+    }
+    #relay-evolution-viz .relay-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    #relay-evolution-viz #relay-viz-svg {
+      display: block;
+      width: 100%;
+      min-height: 270px;
+      overflow: visible;
+    }
+    #relay-evolution-viz .relay-node rect {
+      fill: color-mix(in srgb, var(--muted) 72%, transparent);
+      stroke: var(--border);
+      stroke-width: 1.5;
+      transition: fill 260ms ease, stroke 260ms ease, opacity 260ms ease;
+    }
+    #relay-evolution-viz .relay-node text {
+      fill: var(--foreground);
+      font-size: 12px;
+      font-weight: 500;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      pointer-events: none;
+    }
+    #relay-evolution-viz .relay-node.is-done rect {
+      fill: color-mix(in srgb, var(--viz-series-2) 18%, transparent);
+      stroke: var(--viz-series-2);
+    }
+    #relay-evolution-viz .relay-node.is-active rect {
+      fill: color-mix(in srgb, var(--viz-series-1) 24%, transparent);
+      stroke: var(--viz-series-1);
+      stroke-width: 2.5;
+    }
+    #relay-evolution-viz .relay-edge {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: 2;
+      transition: stroke 260ms ease, opacity 260ms ease;
+    }
+    #relay-evolution-viz .relay-edge.is-done {
+      stroke: var(--viz-series-2);
+    }
+    #relay-evolution-viz .relay-edge.is-active {
+      stroke: var(--viz-series-1);
+      stroke-width: 3;
+    }
+    #relay-evolution-viz .relay-edge-label {
+      fill: var(--muted-foreground);
+      font-size: 11px;
+      text-anchor: middle;
+    }
+    #relay-evolution-viz .relay-packet {
+      fill: var(--viz-series-1);
+      opacity: 0;
+    }
+    #relay-evolution-viz .relay-packet.is-moving {
+      opacity: 1;
+    }
+    #relay-evolution-viz .relay-detail {
+      min-height: 44px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    #relay-evolution-viz .relay-detail strong {
+      font-weight: 500;
+    }
+    #relay-evolution-viz .relay-actions {
+      margin-top: 12px;
+    }
+    #relay-evolution-viz .relay-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    #relay-evolution-viz .relay-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    #relay-evolution-viz .relay-key {
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+      background: color-mix(in srgb, var(--muted) 72%, transparent);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+    }
+    #relay-evolution-viz .relay-key-active {
+      background: color-mix(in srgb, var(--viz-series-1) 24%, transparent);
+      border-color: var(--viz-series-1);
+    }
+    #relay-evolution-viz .relay-key-done {
+      background: color-mix(in srgb, var(--viz-series-2) 18%, transparent);
+      border-color: var(--viz-series-2);
+    }
+    @media (max-width: 520px) {
+      #relay-evolution-viz .relay-heading {
+        display: block;
+      }
+      #relay-evolution-viz #relay-viz-counter {
+        margin-top: 5px;
+      }
+      #relay-evolution-viz #relay-viz-svg {
+        min-height: 430px;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #relay-evolution-viz .relay-node rect,
+      #relay-evolution-viz .relay-edge {
+        transition: none;
+      }
+    }
+  &lt;/style&gt;
+
+  &lt;script&gt;
+    (() =&gt; {
+      const root = document.getElementById(&#x27;relay-evolution-viz&#x27;);
+      const svg = root.querySelector(&#x27;#relay-viz-svg&#x27;);
+      const titleEl = root.querySelector(&#x27;#relay-viz-title&#x27;);
+      const changeEl = root.querySelector(&#x27;#relay-viz-change&#x27;);
+      const detailEl = root.querySelector(&#x27;#relay-viz-desc&#x27;);
+      const counterEl = root.querySelector(&#x27;#relay-viz-counter&#x27;);
+      const playBtn = root.querySelector(&#x27;#relay-play&#x27;);
+      const prevBtn = root.querySelector(&#x27;#relay-prev&#x27;);
+      const nextBtn = root.querySelector(&#x27;#relay-next&#x27;);
+      const resetBtn = root.querySelector(&#x27;#relay-reset&#x27;);
+      const genButtons = [...root.querySelectorAll(&#x27;[data-gen]&#x27;)];
+      const reducedMotion = window.matchMedia(&#x27;(prefers-reduced-motion: reduce)&#x27;).matches;
+      const ns = &#x27;http://www.w3.org/2000/svg&#x27;;
+
+      const generations = [
+        {
+          title: &#x27;第一代：机电式继电保护&#x27;,
+          change: &#x27;电气量直接转化为电磁力和机械动作。&#x27;,
+          nodes: [&#x27;CT / VT&#x27;, &#x27;电磁线圈&#x27;, &#x27;衔铁 / 感应盘&#x27;, &#x27;机械触点&#x27;, &#x27;跳闸线圈&#x27;, &#x27;断路器&#x27;],
+          edgeLabels: [&#x27;二次电流/电压&#x27;, &#x27;电磁力&#x27;, &#x27;机械位移&#x27;, &#x27;直流回路&#x27;, &#x27;机械脱扣&#x27;],
+          details: [
+            &#x27;CT、VT把一次大电流和高电压转换为继电器可以承受的二次量。&#x27;,
+            &#x27;二次电流进入线圈并产生磁通，形成与电流大小有关的电磁力。&#x27;,
+            &#x27;当电磁力超过弹簧力或制动力，衔铁吸合或感应盘转动。&#x27;,
+            &#x27;可动机构到达动作位置，机械触点闭合。&#x27;,
+            &#x27;保护触点接通直流跳闸回路，跳闸线圈励磁。&#x27;,
+            &#x27;断路器释放机械锁扣、分开主触头并切除故障。&#x27;
+          ]
+        },
+        {
+          title: &#x27;第二代：静态电子式继电保护&#x27;,
+          change: &#x27;模拟电子电路取代机械测量机构，出口仍以继电器为主。&#x27;,
+          nodes: [&#x27;CT / VT&#x27;, &#x27;模拟滤波&#x27;, &#x27;电子比较器&#x27;, &#x27;逻辑与延时&#x27;, &#x27;出口继电器&#x27;, &#x27;断路器&#x27;],
+          edgeLabels: [&#x27;模拟量&#x27;, &#x27;整形信号&#x27;, &#x27;启动信号&#x27;, &#x27;跳闸逻辑&#x27;, &#x27;硬接点&#x27;],
+          details: [
+            &#x27;CT、VT仍通过铜缆向保护装置提供模拟二次量。&#x27;,
+            &#x27;晶体管和运算放大器对信号进行滤波、放大和相位变换。&#x27;,
+            &#x27;比较器把测量值与电位器或抽头设定的整定值进行比较。&#x27;,
+            &#x27;电子逻辑完成方向、闭锁、与或关系以及动作延时。&#x27;,
+            &#x27;满足条件后驱动出口继电器，闭合跳闸硬接点。&#x27;,
+            &#x27;跳闸线圈通电，断路器通过机械机构切除故障。&#x27;
+          ]
+        },
+        {
+          title: &#x27;第三代：微机继电保护&#x27;,
+          change: &#x27;保护判据由软件实现，但采样和跳闸仍采用点对点接线。&#x27;,
+          nodes: [&#x27;CT / VT&#x27;, &#x27;信号调理&#x27;, &#x27;A/D采样&#x27;, &#x27;CPU保护算法&#x27;, &#x27;出口继电器&#x27;, &#x27;断路器&#x27;],
+          edgeLabels: [&#x27;模拟铜缆&#x27;, &#x27;模拟信号&#x27;, &#x27;数字采样&#x27;, &#x27;软件逻辑&#x27;, &#x27;硬接点&#x27;],
+          details: [
+            &#x27;本间隔CT、VT通过专用模拟电缆接入微机保护装置。&#x27;,
+            &#x27;输入板完成隔离、变换和抗混叠滤波。&#x27;,
+            &#x27;A/D转换器把模拟量变为CPU可以处理的数字采样序列。&#x27;,
+            &#x27;CPU计算电流、相位、阻抗或差流，并执行整定、闭锁和延时逻辑。&#x27;,
+            &#x27;软件动作后驱动实体出口继电器，形成跳闸硬接点。&#x27;,
+            &#x27;断路器完成分闸；保护装置同时保存事件和故障录波。&#x27;
+          ]
+        },
+        {
+          title: &#x27;第四代：数字化、网络化继电保护&#x27;,
+          change: &#x27;SV传测量、GOOSE传命令；多个IED可以共享同一组过程数据。&#x27;,
+          nodes: [&#x27;CT / VT&#x27;, &#x27;合并单元 MU&#x27;, &#x27;SV过程总线&#x27;, &#x27;保护 IED&#x27;, &#x27;GOOSE网络&#x27;, &#x27;智能终端&#x27;, &#x27;断路器&#x27;],
+          edgeLabels: [&#x27;模拟量&#x27;, &#x27;数字采样流&#x27;, &#x27;订阅SV&#x27;, &#x27;发布跳闸&#x27;, &#x27;订阅GOOSE&#x27;, &#x27;出口回路&#x27;],
+          details: [
+            &#x27;一次侧传感器取得电流、电压，模拟引线保持很短。&#x27;,
+            &#x27;MU同步采样并把电流、电压封装成带质量和同步信息的SV。&#x27;,
+            &#x27;过程层交换网络按组播、VLAN和优先级转发SV流。&#x27;,
+            &#x27;保护IED订阅一个或多个MU，运行经过验证的确定性保护算法。&#x27;,
+            &#x27;保护IED发布GOOSE跳闸、闭锁或联跳命令。&#x27;,
+            &#x27;智能终端校验命令、驱动出口，并采集断路器位置和回路状态。&#x27;,
+            &#x27;断路器分闸；位置反馈再经智能终端送回保护系统形成闭环。&#x27;
+          ]
+        },
+        {
+          title: &#x27;第五阶段：虚拟化与智能协同保护&#x27;,
+          change: &#x27;本地快速保护与虚拟化站域保护并行，软件功能不再固定绑定一个盒子。&#x27;,
+          nodes: [&#x27;传感器 / PIU&#x27;, &#x27;冗余实时网络&#x27;, &#x27;边缘保护 IED&#x27;, &#x27;虚拟 IED 集群&#x27;, &#x27;协同决策&#x27;, &#x27;智能执行接口&#x27;, &#x27;断路器&#x27;],
+          edgeLabels: [&#x27;SV与状态&#x27;, &#x27;本地数据&#x27;, &#x27;站域数据&#x27;, &#x27;交叉校验&#x27;, &#x27;GOOSE命令&#x27;, &#x27;出口回路&#x27;],
+          details: [
+            &#x27;PIU集成采样、开入开出和设备状态，把过程信息数字化。&#x27;,
+            &#x27;A、B冗余实时网络同时传输SV、GOOSE、质量和时间同步信息。&#x27;,
+            &#x27;边缘IED保留毫秒级、独立、确定性的主保护与安全降级能力。&#x27;,
+            &#x27;多个虚拟IED在冗余实时服务器上分别保护线路、母线和变压器。&#x27;,
+            &#x27;站域功能综合多间隔、拓扑和设备状态，协调主保护与后备保护。&#x27;,
+            &#x27;经过确定性规则确认后，命令送到PIU或智能终端执行；AI主要辅助诊断。&#x27;,
+            &#x27;断路器完成物理分闸，本地和站域系统共同确认结果并准备后备动作。&#x27;
+          ]
+        }
+      ];
+
+      let generationIndex = 0;
+      let stepIndex = 0;
+      let timer = null;
+      let geometry = null;
+
+      function svgEl(tag, attrs = {}) {
+        const el = document.createElementNS(ns, tag);
+        Object.entries(attrs).forEach(([key, value]) =&gt; el.setAttribute(key, value));
+        return el;
+      }
+
+      function nodeLines(label) {
+        return label.split(&#x27; / &#x27;).length &gt; 1 &amp;&amp; label.length &gt; 11 ? label.split(&#x27; / &#x27;) : [label];
+      }
+
+      function layoutFor(width, count) {
+        const narrow = width &lt; 520;
+        const marginX = narrow ? 14 : 20;
+        const nodeW = narrow ? Math.min(146, width * 0.42) : Math.min(120, (width - 40) / count - 18);
+        const nodeH = 56;
+        const positions = [];
+        if (!narrow) {
+          const gap = (width - marginX * 2 - nodeW * count) / Math.max(1, count - 1);
+          for (let i = 0; i &lt; count; i++) positions.push({ x: marginX + i * (nodeW + gap), y: 96 });
+          return { positions, nodeW, nodeH, height: 260, narrow };
+        }
+        const leftX = marginX;
+        const rightX = width - marginX - nodeW;
+        const rowGap = 72;
+        for (let i = 0; i &lt; count; i++) {
+          const row = Math.floor(i / 2);
+          const evenRow = row % 2 === 0;
+          const col = i % 2;
+          const x = evenRow ? (col === 0 ? leftX : rightX) : (col === 0 ? rightX : leftX);
+          positions.push({ x, y: 24 + row * rowGap });
+        }
+        return { positions, nodeW, nodeH, height: 24 + Math.ceil(count / 2) * rowGap + 62, narrow };
+      }
+
+      function pathBetween(a, b, nodeW, nodeH, narrow) {
+        if (!narrow || Math.abs(a.y - b.y) &lt; 4) {
+          return {
+            d: `M ${a.x + nodeW} ${a.y + nodeH / 2} L ${b.x} ${b.y + nodeH / 2}`,
+            sx: a.x + nodeW,
+            sy: a.y + nodeH / 2,
+            ex: b.x,
+            ey: b.y + nodeH / 2,
+            lx: (a.x + nodeW + b.x) / 2,
+            ly: a.y + nodeH / 2 - 9
+          };
+        }
+        const sx = a.x + nodeW / 2;
+        const sy = a.y + nodeH;
+        const ex = b.x + nodeW / 2;
+        const ey = b.y;
+        const midY = (sy + ey) / 2;
+        return {
+          d: `M ${sx} ${sy} C ${sx} ${midY}, ${ex} ${midY}, ${ex} ${ey}`,
+          sx, sy, ex, ey,
+          lx: (sx + ex) / 2,
+          ly: midY - 4
+        };
+      }
+
+      function renderDiagram() {
+        const data = generations[generationIndex];
+        const width = Math.max(300, Math.floor(svg.getBoundingClientRect().width || root.getBoundingClientRect().width || 736));
+        geometry = layoutFor(width, data.nodes.length);
+        svg.setAttribute(&#x27;viewBox&#x27;, `0 0 ${width} ${geometry.height}`);
+        svg.style.height = `${geometry.height}px`;
+        svg.replaceChildren();
+
+        const defs = svgEl(&#x27;defs&#x27;);
+        const marker = svgEl(&#x27;marker&#x27;, {
+          id: &#x27;relay-arrowhead&#x27;, markerWidth: &#x27;8&#x27;, markerHeight: &#x27;8&#x27;, refX: &#x27;7&#x27;, refY: &#x27;4&#x27;, orient: &#x27;auto&#x27;, markerUnits: &#x27;strokeWidth&#x27;
+        });
+        marker.appendChild(svgEl(&#x27;path&#x27;, { d: &#x27;M 0 0 L 8 4 L 0 8 z&#x27;, fill: &#x27;var(--border)&#x27; }));
+        defs.appendChild(marker);
+        svg.appendChild(defs);
+
+        geometry.paths = [];
+        for (let i = 0; i &lt; data.nodes.length - 1; i++) {
+          const p = pathBetween(geometry.positions[i], geometry.positions[i + 1], geometry.nodeW, geometry.nodeH, geometry.narrow);
+          geometry.paths.push(p);
+          const path = svgEl(&#x27;path&#x27;, { d: p.d, class: &#x27;relay-edge&#x27;, &#x27;data-edge&#x27;: String(i), &#x27;marker-end&#x27;: &#x27;url(#relay-arrowhead)&#x27; });
+          svg.appendChild(path);
+          const label = svgEl(&#x27;text&#x27;, { x: p.lx, y: p.ly, class: &#x27;relay-edge-label&#x27; });
+          label.textContent = data.edgeLabels[i] || &#x27;&#x27;;
+          svg.appendChild(label);
+        }
+
+        data.nodes.forEach((label, i) =&gt; {
+          const pos = geometry.positions[i];
+          const group = svgEl(&#x27;g&#x27;, { class: &#x27;relay-node&#x27;, &#x27;data-node&#x27;: String(i) });
+          group.appendChild(svgEl(&#x27;rect&#x27;, { x: pos.x, y: pos.y, width: geometry.nodeW, height: geometry.nodeH, rx: &#x27;8&#x27; }));
+          const lines = nodeLines(label);
+          lines.forEach((line, lineIndex) =&gt; {
+            const textNode = svgEl(&#x27;text&#x27;, {
+              x: pos.x + geometry.nodeW / 2,
+              y: pos.y + geometry.nodeH / 2 + (lineIndex - (lines.length - 1) / 2) * 15
+            });
+            textNode.textContent = line;
+            group.appendChild(textNode);
+          });
+          svg.appendChild(group);
+        });
+
+        const packet = svgEl(&#x27;circle&#x27;, { r: &#x27;5&#x27;, class: &#x27;relay-packet&#x27;, id: &#x27;relay-packet&#x27; });
+        svg.appendChild(packet);
+        updateState(false);
+      }
+
+      function movePacket(edgeIndex) {
+        if (edgeIndex &lt; 0 || !geometry?.paths[edgeIndex]) return;
+        const packet = svg.querySelector(&#x27;#relay-packet&#x27;);
+        const p = geometry.paths[edgeIndex];
+        packet.classList.remove(&#x27;is-moving&#x27;);
+        packet.style.transition = &#x27;none&#x27;;
+        packet.setAttribute(&#x27;cx&#x27;, p.sx);
+        packet.setAttribute(&#x27;cy&#x27;, p.sy);
+        requestAnimationFrame(() =&gt; {
+          packet.classList.add(&#x27;is-moving&#x27;);
+          packet.style.transition = reducedMotion ? &#x27;none&#x27; : &#x27;cx 520ms ease, cy 520ms ease, opacity 140ms ease&#x27;;
+          packet.setAttribute(&#x27;cx&#x27;, p.ex);
+          packet.setAttribute(&#x27;cy&#x27;, p.ey);
+          window.setTimeout(() =&gt; packet.classList.remove(&#x27;is-moving&#x27;), reducedMotion ? 80 : 600);
+        });
+      }
+
+      function updateState(animateEdge = true) {
+        const data = generations[generationIndex];
+        titleEl.textContent = data.title;
+        changeEl.textContent = data.change;
+        counterEl.textContent = `步骤 ${stepIndex + 1} / ${data.nodes.length}`;
+        detailEl.innerHTML = `&lt;strong&gt;${data.nodes[stepIndex]}：&lt;/strong&gt;${data.details[stepIndex]}`;
+        svg.querySelectorAll(&#x27;.relay-node&#x27;).forEach((node, i) =&gt; {
+          node.classList.toggle(&#x27;is-done&#x27;, i &lt; stepIndex);
+          node.classList.toggle(&#x27;is-active&#x27;, i === stepIndex);
+        });
+        svg.querySelectorAll(&#x27;.relay-edge&#x27;).forEach((edge, i) =&gt; {
+          edge.classList.toggle(&#x27;is-done&#x27;, i &lt; stepIndex - 1);
+          edge.classList.toggle(&#x27;is-active&#x27;, i === stepIndex - 1);
+        });
+        if (animateEdge &amp;&amp; stepIndex &gt; 0) movePacket(stepIndex - 1);
+        prevBtn.disabled = stepIndex === 0;
+        nextBtn.disabled = stepIndex === data.nodes.length - 1;
+      }
+
+      function stopPlayback() {
+        if (timer) window.clearInterval(timer);
+        timer = null;
+        playBtn.classList.add(&#x27;btn-primary&#x27;);
+        playBtn.innerHTML = &#x27;&lt;i data-lucide=&quot;play&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;播放&#x27;;
+        if (window.lucide) window.lucide.createIcons({ attrs: { width: 16, height: 16 } });
+      }
+
+      function startPlayback() {
+        stopPlayback();
+        if (stepIndex &gt;= generations[generationIndex].nodes.length - 1) {
+          stepIndex = 0;
+          updateState(false);
+        }
+        playBtn.classList.remove(&#x27;btn-primary&#x27;);
+        playBtn.innerHTML = &#x27;&lt;i data-lucide=&quot;pause&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;暂停&#x27;;
+        if (window.lucide) window.lucide.createIcons({ attrs: { width: 16, height: 16 } });
+        timer = window.setInterval(() =&gt; {
+          if (stepIndex &gt;= generations[generationIndex].nodes.length - 1) {
+            stopPlayback();
+            return;
+          }
+          stepIndex += 1;
+          updateState(true);
+        }, reducedMotion ? 1400 : 1100);
+      }
+
+      playBtn.addEventListener(&#x27;click&#x27;, () =&gt; timer ? stopPlayback() : startPlayback());
+      prevBtn.addEventListener(&#x27;click&#x27;, () =&gt; {
+        stopPlayback();
+        stepIndex = Math.max(0, stepIndex - 1);
+        updateState(false);
+      });
+      nextBtn.addEventListener(&#x27;click&#x27;, () =&gt; {
+        stopPlayback();
+        stepIndex = Math.min(generations[generationIndex].nodes.length - 1, stepIndex + 1);
+        updateState(true);
+      });
+      resetBtn.addEventListener(&#x27;click&#x27;, () =&gt; {
+        stopPlayback();
+        stepIndex = 0;
+        updateState(false);
+      });
+      genButtons.forEach(button =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; {
+        stopPlayback();
+        generationIndex = Number(button.dataset.gen);
+        stepIndex = 0;
+        genButtons.forEach((peer, index) =&gt; {
+          const selected = index === generationIndex;
+          peer.classList.toggle(&#x27;btn-primary&#x27;, selected);
+          peer.setAttribute(&#x27;aria-pressed&#x27;, String(selected));
+        });
+        renderDiagram();
+      }));
+
+      let resizeTimer = null;
+      const observer = new ResizeObserver(() =&gt; {
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(renderDiagram, 80);
+      });
+      observer.observe(root);
+      renderDiagram();
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+  let lastPointerWasTouch = false;
+  let pinnedByTouch = false;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    pinnedByTouch = false;
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handlePointer = (event) =&gt; {
+    lastPointerWasTouch =
+      event.type === &quot;pointerdown&quot; &amp;&amp; event.pointerType === &quot;touch&quot;;
+  };
+  const handleTouchClick = (event) =&gt; {
+    const isTouch = event.pointerType === &quot;touch&quot; || lastPointerWasTouch;
+    lastPointerWasTouch = false;
+    if (!isTouch || event.detail === 0) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (
+      trigger == null ||
+      !trigger.isConnected ||
+      getContent(trigger).length === 0 ||
+      (pinnedByTouch &amp;&amp; activeTrigger === trigger)
+    ) {
+      if (pinnedByTouch) {
+        closeTooltip();
+      }
+      return;
+    }
+    openTooltip(trigger);
+    pinnedByTouch = activeTrigger === trigger;
+    window.setTimeout(() =&gt; {
+      if (activeTrigger === trigger &amp;&amp; !trigger.isConnected) {
+        closeTooltip(false);
+      }
+    }, 0);
+  };
+  const handleLeave = (event) =&gt; {
+    if (pinnedByTouch) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    lastPointerWasTouch = false;
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    lastPointerWasTouch = false;
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerdown&quot;, handlePointer);
+    document.removeEventListener(&quot;pointercancel&quot;, handlePointer);
+    document.removeEventListener(&quot;click&quot;, handleTouchClick);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerdown&quot;, handlePointer);
+  document.addEventListener(&quot;pointercancel&quot;, handlePointer);
+  document.addEventListener(&quot;click&quot;, handleTouchClick);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>
