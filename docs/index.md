@@ -14,6 +14,10 @@ hero:
       link: /roadmap
 
 features:
+  - title: 看懂继电保护如何换代
+    details: 用五段控制动画理解机电、静态、微机、过程总线和虚拟化保护怎样完成测量、判断与跳闸。
+    link: /knowledge/relay-protection-evolution
+    linkText: 阅读继电保护架构演进
   - title: 看懂软件定义保护与控制
     details: 区分功能独立于硬件与虚拟化，从分层架构、厂商路线和工程验证理解变电站PAC如何软件化。
     link: /insights/software-defined-pac-architecture

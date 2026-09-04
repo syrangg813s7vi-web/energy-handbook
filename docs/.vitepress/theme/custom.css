@@ -267,6 +267,16 @@
   background: #0b0d10;
 }
 
+.vp-doc .relay-evolution-frame {
+  height: 690px;
+}
+
+@media (max-width: 520px) {
+  .vp-doc .relay-evolution-frame {
+    height: 860px;
+  }
+}
+
 .focus-reading-toggle {
   position: fixed;
   top: calc(var(--vp-nav-height) + 14px);
