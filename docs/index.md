@@ -14,6 +14,10 @@ hero:
       link: /roadmap
 
 features:
+  - title: 看懂软件定义保护与控制
+    details: 区分功能独立于硬件与虚拟化，从分层架构、厂商路线和工程验证理解变电站PAC如何软件化。
+    link: /insights/software-defined-pac-architecture
+    linkText: 阅读软件定义PAC分析
   - title: 理解AI如何连接真实设备
     details: 从接口碎片化、物理语义、多设备状态和安全控制出发，看MHS如何在Agent与硬件之间建立统一层。
     link: /insights/model-hardware-standard-problem-solution
