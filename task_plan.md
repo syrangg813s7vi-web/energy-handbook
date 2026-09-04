@@ -700,7 +700,7 @@
 
 ### Phase 4：发布与生产复验
 
-**Status:** in progress
+**Status:** complete
 
 - 通过 PR 合并并确认 GitHub Pages、canonical 和 sitemap。
 
