@@ -597,6 +597,53 @@
 | 内容断言脚本检查英文 `research preview`，而正文采用中文“研究预览”，因此误报缺失 | 1 | 将断言改为检查正文实际使用的“研究预览”；不修改正确的文章内容 |
 
 ---
+
+# CIGRE 2026 厂商现场观察发布（2026-09-05）
+
+## Goal
+
+将已整理的 CIGRE 2026 厂商现场照片与主题分析发布为 EnergyBook 原生行业洞察文章。Linear：当前环境无可用连接器，先以仓库规划文件和 GitHub PR 记录状态。
+
+## Scope and acceptance
+
+- 新增一篇原生 EnergyBook 文章，按“主题—分析结论—厂商照片”组织。
+- 四个主题分别为数字化转型、IEC 61850、华为电力军团与其他；厂商范围限定为 ABB、ETAP、GE Vernova、Hitachi Energy、南瑞继保、SEL、Siemens 和华为。
+- 162 张已优化现场照片全部进入版本库，并按主题、厂商分组展示；图片按需加载且可展开查看。
+- 新文章接入首页、顶部导航和侧边栏，不破坏已有路由或内容。
+- `git diff --check`、自动化测试、VitePress 生产构建、PR/Pages 发布与生产 URL 检查通过。
+- 回滚只需移除新增文章、图库组件、照片资产和三个入口，不影响既有页面。
+
+## Layer and dependency boundaries
+
+- 内容层：Markdown 负责主题与分析结论，不依赖图库实现细节。
+- 展示层：Vue 图库组件只消费版本化照片清单，不修改全站状态。
+- 资产层：静态照片位于 `docs/public/visuals/`，由可复现脚本生成清单；上层只使用公开路径。
+- 禁止依赖：文章不得读取本机路径；图库不得依赖外部运行时、第三方图片服务或私有 API。
+
+## Phases
+
+### Phase 1：固定设计与资产边界
+
+**Status:** complete
+
+### Phase 2：文章、图库与站点入口
+
+**Status:** complete
+
+### Phase 3：构建与验收
+
+**Status:** complete
+
+### Phase 4：发布与生产复验
+
+**Status:** pending
+
+## Errors encountered
+
+| Error | Attempt | Resolution |
+|---|---|---|
+| 本地抽查时手工猜测了一条华为照片文件名，单条请求返回 404 | 1 | 从版本化目录读取真实路径后返回 HTTP 200；随后并行检查全部 162 条实际路径，均可访问 |
+
 # MHS 文章案例增补（2026-08-31）
 
 ## Goal

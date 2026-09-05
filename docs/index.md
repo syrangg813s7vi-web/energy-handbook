@@ -14,6 +14,10 @@ hero:
       link: /roadmap
 
 features:
+  - title: 观察CIGRE厂商技术路线
+    details: 从162张现场照片看传统保护厂商的软件化迁移、IEC 61850主线，以及华为电力军团的纵向协同。
+    link: /insights/cigre-2026-vendor-observer
+    linkText: 阅读CIGRE 2026厂商观察
   - title: 看懂继电保护如何换代
     details: 用五段控制动画理解机电、静态、微机、过程总线和虚拟化保护怎样完成测量、判断与跳闸。
     link: /knowledge/relay-protection-evolution

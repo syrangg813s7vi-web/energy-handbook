@@ -7,6 +7,7 @@ import EnergyManagementDemo from "./components/EnergyManagementDemo.vue";
 import EnergySystemRoles from "./components/EnergySystemRoles.vue";
 import FocusReadingToggle from "./components/FocusReadingToggle.vue";
 import BlackStartDemo from "./components/configurations/BlackStartDemo.vue";
+import CigreVendorGallery from "./components/CigreVendorGallery.vue";
 import FaultRecordDemo from "./components/configurations/FaultRecordDemo.vue";
 import GridConnectedControlDemo from "./components/configurations/GridConnectedControlDemo.vue";
 import GridPointDataSelectionDemo from "./components/configurations/GridPointDataSelectionDemo.vue";
@@ -29,6 +30,7 @@ export default {
     ],
   }),
   enhanceApp({ app }) {
+    app.component("CigreVendorGallery", CigreVendorGallery);
     app.component("EnergyFlowDemo", EnergyFlowDemo);
     app.component("EnergyControllerPanoramaDemo", EnergyControllerPanoramaDemo);
     app.component("EnergyManagementDemo", EnergyManagementDemo);

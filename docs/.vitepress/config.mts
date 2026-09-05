@@ -41,6 +41,7 @@ export default defineConfig({
       {
         text: "行业洞察",
         items: [
+          { text: "CIGRE 2026 厂商观察", link: "/insights/cigre-2026-vendor-observer" },
           { text: "软件定义保护与控制", link: "/insights/software-defined-pac-architecture" },
           { text: "模型硬件标准：AI连接设备", link: "/insights/model-hardware-standard-problem-solution" },
           { text: "构网型微电网控制器", link: "/insights/grid-forming-microgrid-controller-2026" },
@@ -63,6 +64,7 @@ export default defineConfig({
       {
         text: "行业洞察",
         items: [
+          { text: "CIGRE 2026 厂商观察", link: "/insights/cigre-2026-vendor-observer" },
           { text: "软件定义保护与控制", link: "/insights/software-defined-pac-architecture" },
           { text: "模型硬件标准：AI连接设备", link: "/insights/model-hardware-standard-problem-solution" },
           { text: "构网型微电网控制器", link: "/insights/grid-forming-microgrid-controller-2026" },
