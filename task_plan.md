@@ -644,6 +644,22 @@
 |---|---|---|
 | 本地抽查时手工猜测了一条华为照片文件名，单条请求返回 404 | 1 | 从版本化目录读取真实路径后返回 HTTP 200；随后并行检查全部 162 条实际路径，均可访问 |
 | `gh pr merge --delete-branch` 在 GitHub 合并成功后尝试本地切换 `main`，但该分支已被另一工作树占用 | 1 | 通过 PR API 确认合并提交 `9a1ae7c` 已生成；不切换或改写任何已有工作树，继续验证 Pages 部署 |
+| VitePress 把 Markdown 形式的 PPTX 链接判定为死链，尽管文件已在 `docs/public/downloads/` | 1 | 改用带 `download` 属性的原生 HTML 附件链接，使二进制下载资源绕过页面路由检查，并重新执行完整构建 |
+
+## Follow-up: update analysis and attach the presentation
+
+### Scope and acceptance
+
+- Expand the GE Vernova, Siemens, ABB and Huawei conclusions without changing the article route or gallery classification.
+- Remove visible photo-number labels beneath gallery images and in the lightbox.
+- Publish the validated 27-page, 162-photo v4 PPTX as a versioned EnergyBook download.
+- Preserve all 162 photos and pass the existing test, production-build, PR and Pages workflow.
+
+### Phases
+
+- [x] Update the article conclusions and gallery presentation.
+- [x] Add the full-quality PPTX and validate the local production download.
+- [ ] Merge through PR and verify the Pages deployment and production attachment.
 
 # MHS 文章案例增补（2026-08-31）
 

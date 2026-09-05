@@ -85,7 +85,6 @@ onBeforeUnmount(() => window.removeEventListener("keydown", handleKeydown));
             loading="lazy"
             decoding="async"
           />
-          <span>现场照片 {{ photo.number }}</span>
         </button>
       </div>
 
@@ -111,7 +110,6 @@ onBeforeUnmount(() => window.removeEventListener("keydown", handleKeydown));
       <button class="cigre-lightbox-close" type="button" aria-label="关闭大图" @click="closeLightbox">×</button>
       <figure>
         <img :src="imagePath(activePhoto.src)" :alt="activePhoto.alt" />
-        <figcaption>{{ activePhoto.vendorLabel }} · 现场照片 {{ activePhoto.number }}</figcaption>
       </figure>
     </div>
   </div>
@@ -176,12 +174,6 @@ onBeforeUnmount(() => window.removeEventListener("keydown", handleKeydown));
   object-fit: cover;
 }
 
-.cigre-photo-card span {
-  display: block;
-  padding: 0.5rem 0.65rem;
-  font-size: 0.75rem;
-}
-
 .cigre-expand {
   margin-top: 0.85rem;
   padding: 0.48rem 0.8rem;
@@ -219,10 +211,6 @@ onBeforeUnmount(() => window.removeEventListener("keydown", handleKeydown));
   max-height: 80vh;
   border-radius: 8px;
   object-fit: contain;
-}
-
-.cigre-lightbox figcaption {
-  font-size: 0.85rem;
 }
 
 .cigre-lightbox-close {
