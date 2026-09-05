@@ -395,6 +395,17 @@
 - GitHub Pages 工作流 `33353188828` 完成 build/deploy；生产文章、首页入口和 sitemap 均验证为 HTTP 200。本任务完成。
 
 ---
+
+# 2026-09-05 — CIGRE 2026 厂商现场观察
+
+- 已定位 EnergyBook 仓库、发布工作流和行业洞察入口。
+- 已从最新 `origin/main` 建立独立工作树 `/tmp/energybook-cigre.MuJr1k` 与分支 `codex/cigre-2026-vendor-report`，未触碰原工作目录中的用户改动。
+- 已固定四个主题、八个厂商、162 张照片及分层实现方案，进入文章与图库实现阶段。
+- 已新增原生行业洞察文章、分厂商图库与大图查看组件，并接入首页、顶部导航和侧边栏。
+- 162 张 JPEG 已进入 `docs/public/visuals/cigre-2026-vendors/`；主题数量分别为 92、13、9、48。
+- `git diff --check`、23 项自动化测试和 VitePress 生产构建通过。
+- 本地生产预览文章返回 HTTP 200，首页和 sitemap 均包含新路由；并行检查全部 162 条照片路径均可访问。
+
 # 2026-08-31 MHS 文章案例增补
 
 - 启动在现有文章中补充六组 Anthropic 原始发布案例；文章 URL 与导航保持不变。
