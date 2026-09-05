@@ -636,13 +636,14 @@
 
 ### Phase 4：发布与生产复验
 
-**Status:** pending
+**Status:** complete
 
 ## Errors encountered
 
 | Error | Attempt | Resolution |
 |---|---|---|
 | 本地抽查时手工猜测了一条华为照片文件名，单条请求返回 404 | 1 | 从版本化目录读取真实路径后返回 HTTP 200；随后并行检查全部 162 条实际路径，均可访问 |
+| `gh pr merge --delete-branch` 在 GitHub 合并成功后尝试本地切换 `main`，但该分支已被另一工作树占用 | 1 | 通过 PR API 确认合并提交 `9a1ae7c` 已生成；不切换或改写任何已有工作树，继续验证 Pages 部署 |
 
 # MHS 文章案例增补（2026-08-31）
 

@@ -405,6 +405,9 @@
 - 162 张 JPEG 已进入 `docs/public/visuals/cigre-2026-vendors/`；主题数量分别为 92、13、9、48。
 - `git diff --check`、23 项自动化测试和 VitePress 生产构建通过。
 - 本地生产预览文章返回 HTTP 200，首页和 sitemap 均包含新路由；并行检查全部 162 条照片路径均可访问。
+- 发布分支已推送；PR #61 的构建门禁通过并合并为 `9a1ae7c`。
+- GitHub Pages 运行 `33956408906` 的 build 与 deploy 均成功。
+- 正式文章、首页入口、sitemap 和照片资源已验证，本功能完成。
 
 # 2026-08-31 MHS 文章案例增补
 
