@@ -659,7 +659,7 @@
 
 - [x] Update the article conclusions and gallery presentation.
 - [x] Add the full-quality PPTX and validate the local production download.
-- [ ] Merge through PR and verify the Pages deployment and production attachment.
+- [x] Merge through PR and verify the Pages deployment and production attachment.
 
 # MHS 文章案例增补（2026-08-31）
 
