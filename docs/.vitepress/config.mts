@@ -86,6 +86,7 @@ export default defineConfig({
       {
         text: "工业控制",
         items: [
+          { text: "场站 V/F/P/Q 闭环控制", link: "/knowledge/plant-vfpq-control" },
           { text: "能源控制器知识全景", link: "/knowledge/energy-controller-panorama" },
           { text: "常见组态", link: "/knowledge/common-configurations" },
           { text: "柴发的逻辑组态", link: "/knowledge/diesel-generator-logic-configuration" },
