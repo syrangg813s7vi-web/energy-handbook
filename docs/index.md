@@ -30,6 +30,18 @@ features:
     details: 从接口碎片化、物理语义、多设备状态和安全控制出发，看MHS如何在Agent与硬件之间建立统一层。
     link: /insights/model-hardware-standard-problem-solution
     linkText: 阅读MHS问题与解决方案
+  - title: 拆解HubPort系统集成
+    details: 从接口解析、能力建模到驱动生成，看AI怎样把异构系统转化为可追溯、可调用的统一能力。
+    link: /insights/hubport-system-integration
+    linkText: 阅读系统集成分析
+  - title: 评估HubPort工业软网关
+    details: 搞清AI数采盒的驱动、点表、Runtime和控制边界，判断它离电站关键控制还有多远。
+    link: /insights/hubport-industrial-soft-gateway
+    linkText: 阅读工业软网关分析
+  - title: 看懂HubPort设备集成
+    details: 分析协议驱动如何嵌入设备产品，以及“一次调通、批量复用”成立所需的版本与验证条件。
+    link: /insights/hubport-device-integration
+    linkText: 阅读设备集成分析
   - title: 判断构网型微电网竞争焦点
     details: 交叉分析250项厂商、采购和独立测试证据，看控制器竞争为何从“能构网”转向“可验证交付”。
     link: /insights/grid-forming-microgrid-controller-2026
