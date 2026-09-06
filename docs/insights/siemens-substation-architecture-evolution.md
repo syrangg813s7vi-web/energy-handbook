@@ -277,26 +277,7 @@ Noedra SCADA 由加固 Linux/Windows 与工业硬件构成基础层，中间是 
 - **保护软件化线**：SIPROTEC V 主/备服务器；
 - **工程与安全线**：DIGSI 5、System Configurator、iPA Suite、Digital Twin、Secure Substation Blueprint。
 
-更进一步的产品判断、虚拟化技术原理和业主验收问题，可继续阅读《[软件定义保护与控制：变电站 PAC 如何摆脱专用硬件](/insights/software-defined-pac-architecture)》。
-
-## 12. 资料分类与本地归档
-
-本文引用尽量指向 Siemens 或 Siemens Energy 的官方网页和官方 PDF。为防止官方链接迁移、版本覆盖或下载限制，本次研究实际使用的原件、原图、现场照片与阶段性成果，已分类保存到此前指定的 [Google Drive：Siemens_西门子资料归档](https://drive.google.com/drive/folders/16HaDKX0tzsud5e5QSc2SQvwhDoV82AxM)。该目录是本研究的本地归档，不是 Siemens 官方发布站；产品选型、兼容性和硬件白名单仍应以目标版本的官方页面与手册为准。
-
-| 归档分类 | 主要内容 | 官方在线入口 |
-|---|---|---|
-| 01 变电站自动化总览 | *The Digital Substation*、Substation Automation Catalog、CIGRE 2025 虚拟化演示 | [Catalog Edition 8.1](https://cache.industry.siemens.com/dl/files/152/109801152/att_1353758/v1/Substation_and_Automation_Catalog_Edition_8.1_.pdf?download=true)、[Siemens CIGRE 2026](https://www.siemens.com/en-gb/events/cigre/) |
-| 02 SICAM PAS 与 SCC | PAS 总览、安装手册、SCC 产品与操作资料 | [SICAM PAS Overview](https://cache.industry.siemens.com/dl/files/076/109758076/att_1143897/v1/pas_overview_b.pdf)、[SICAM SCC](https://www.siemens.com/en-us/products/sicam/hmi-human-machine-interface/) |
-| 03 SICAM 8、S8000 与 GridEdge | SICAM S8000 平台、A8000 RTU、GridEdge 网关与部署要求 | [SICAM S8000](https://www.siemens.com/en-us/products/sicam/s8000/)、[SICAM A8000](https://www.siemens.com/en-us/products/sicam/a8000-cp-8050/)、[SICAM GridEdge V25.30 手册](https://cache.industry.siemens.com/dl/files/895/109954895/att_1351697/v1/SICAM_GridEdge_IoT_Monitoring_and_Control_V25.30_enUS1.pdf) |
-| 04 SIPROTEC 5、SIPROTEC V 与过程层 | SIPROTEC 5 系列目录、6MU85、SIPROTEC V 软件化保护 | [SIPROTEC 5 Catalog](https://cache.industry.siemens.com/dl/files/143/109792143/att_1051200/v1/SIDG-C10059-00-7600_SIPROTEC_5_Catalog_EN.pdf)、[SIPROTEC V](https://www.siemens.com/en-us/products/siprotec/siprotec-v/)、[SIPROTEC V 发布信息](https://press.siemens.com/global/en/pressrelease/siemens-virtualized-protection-power-grids-cuts-costs-saves-space-digital-substations) |
-| 05 工程、测试与网络安全 | SIMIT、数字孪生测试、安全蓝图与工程闭环 | [SIMIT](https://www.siemens.com/en-gb/products/simit/)、[Siemens CIGRE 2026](https://www.siemens.com/en-gb/events/cigre/) |
-| 06 发电与电站控制 | Omnivise T3000、仿真、同步调相机、小水电与设备保护 | [Omnivise T3000](https://www.siemens-energy.com/global/en/home/products-services/product/omnivise-t3000.html) |
-| 07 Siemens Energy PAC 与 CIGRE | 变电站 EPC/PAC、Noedra SCADA、Blue GIS 与展会材料 | [Substation EPC / PAC brochure](https://assets.siemens-energy.com/dam/ada384fe-5ee9-4bfb-aa17-b3e200747aeb/2026_01_27_Substation_EPC_brochure_v02-pdf_Original%20file.pdf)、[Siemens Energy CIGRE](https://www.siemens-energy.com/global/en/home/events/cigre.html) |
-| 08 历史资料 | SICAM PAS 2005/2007 系统说明与演示资料 | 历史镜像不是当前 Siemens 官方托管，仅用于追溯架构演进 |
-| 09 图像与现场资料 | 官方架构图原页、CIGRE 2026 现场照片、官方视觉素材 | 官方出处分别记录在压缩包内的来源说明和本页图片说明中 |
-| 10 研究索引与成果 | 对比 PPT、专题报告、交互解说与本文归档副本 | [本篇 EnergyBook 文章](/insights/siemens-substation-architecture-evolution) |
-
-归档根目录中的 `README_归档索引.md` 给出逐文件说明、来源边界和官方入口，`SHA256SUMS.txt` 用于检查本地归档文件在传输后是否保持一致。`SICAM 8 Application Group Visualization & Operation` 手册的官方附件可在线读取，但其下载端点拒绝自动归档，因此资料库只记录[官方手册入口](https://support.industry.siemens.com/cs/attachments/109963293/SICAM_8_Visualization__Operation_enEN.pdf)，未保存本地副本。
+更进一步的产品判断、虚拟化技术原理和业主验收问题，可继续阅读《[软件定义保护与控制：变电站 PAC 如何摆脱专用硬件](/insights/software-defined-pac-architecture)》。本轮搜集的原始材料、官方链接和本地归档说明，另见独立文章《[西门子电力自动化资料库](/insights/siemens-power-automation-source-library)》。
 
 ## 来源索引与证据等级
 
