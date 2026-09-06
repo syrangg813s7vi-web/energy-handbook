@@ -14,6 +14,10 @@ hero:
       link: /roadmap
 
 features:
+  - title: 看懂RTU如何连接现场与调度
+    details: 从I/O信号、南北向通信和远程控制闭环出发，理解RTU的功能、结构及其与数采和PLC的关系。
+    link: /knowledge/rtu-overview
+    linkText: 阅读RTU基础
   - title: 观察CIGRE厂商技术路线
     details: 从162张现场照片看传统保护厂商的软件化迁移、IEC 61850主线，以及华为电力军团的纵向协同。
     link: /insights/cigre-2026-vendor-observer
