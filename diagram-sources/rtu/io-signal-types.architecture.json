@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "一个I/O通道对应一个信号",
+    "locale": "zh-CN",
+    "output": "io-signal-types.html",
+    "quality_profile": "showcase",
+    "viewBox": [1200, 720],
+    "views": [
+      {
+        "id": "inputs",
+        "label": "三类输入",
+        "focus": ["di", "ai", "pi", "io"],
+        "note": "DI看状态，AI测幅值，PI数跳变。"
+      },
+      {
+        "id": "outputs",
+        "label": "两类输出",
+        "focus": ["io", "do", "ao"],
+        "note": "DO执行开关动作，AO给出连续设定值。"
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "di",
+      "type": "external",
+      "label": "DI 数字量输入",
+      "sublabel": "分位 · 合位 · 故障",
+      "pos": [70, 115],
+      "size": [220, 76],
+      "tag": "0 / 1"
+    },
+    {
+      "id": "ai",
+      "type": "external",
+      "label": "AI 模拟量输入",
+      "sublabel": "4–20 mA · 0–10 V",
+      "pos": [70, 300],
+      "size": [220, 76],
+      "tag": "幅值"
+    },
+    {
+      "id": "pi",
+      "type": "external",
+      "label": "PI 脉冲量输入",
+      "sublabel": "电能 · 流量 · 转速",
+      "pos": [70, 485],
+      "size": [220, 76],
+      "tag": "次数 / 频率"
+    },
+    {
+      "id": "io",
+      "type": "backend",
+      "label": "RTU I/O模块",
+      "sublabel": "隔离 · 采样 · 转换 · 输出",
+      "pos": [475, 290],
+      "size": [250, 96],
+      "tag": "一个通道 = 一个信号点"
+    },
+    {
+      "id": "do",
+      "type": "messagebus",
+      "label": "DO 数字量输出",
+      "sublabel": "分合闸 · 启停 · 复归",
+      "pos": [910, 205],
+      "size": [220, 76],
+      "tag": "开 / 关"
+    },
+    {
+      "id": "ao",
+      "type": "messagebus",
+      "label": "AO 模拟量输出",
+      "sublabel": "功率 · 电压 · 阀位给定",
+      "pos": [910, 405],
+      "size": [220, 76],
+      "tag": "连续设定值"
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "输入：现场 → RTU",
+      "wraps": ["di", "ai", "pi"]
+    },
+    {
+      "kind": "region",
+      "label": "输出：RTU → 现场",
+      "wraps": ["do", "ao"]
+    }
+  ],
+  "connections": [
+    {
+      "id": "di-to-io",
+      "from": "di",
+      "to": "io",
+      "label": "读取当前状态"
+    },
+    {
+      "id": "ai-to-io",
+      "from": "ai",
+      "to": "io",
+      "label": "采样并换算幅值",
+      "variant": "emphasis",
+      "labelDx": -50
+    },
+    {
+      "id": "pi-to-io",
+      "from": "pi",
+      "to": "io",
+      "label": "检测边沿并计数"
+    },
+    {
+      "id": "io-to-do",
+      "from": "io",
+      "to": "do",
+      "label": "输出开关动作"
+    },
+    {
+      "id": "io-to-ao",
+      "from": "io",
+      "to": "ao",
+      "label": "输出连续设定值",
+      "variant": "emphasis"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "DI",
+      "items": ["判断0或1", "关注当前状态"]
+    },
+    {
+      "dot": "violet",
+      "title": "AI",
+      "items": ["测量电流或电压幅值", "经ADC转换为工程量"]
+    },
+    {
+      "dot": "amber",
+      "title": "PI",
+      "items": ["统计跳变次数或频率", "使用计数器避免漏脉冲"]
+    }
+  ]
+}

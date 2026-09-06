@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "一次遥控怎样形成闭环",
+    "locale": "zh-CN",
+    "output": "remote-control-loop.html",
+    "quality_profile": "showcase",
+    "column_fit": "spread",
+    "viewBox": [1200, 620],
+    "views": [
+      {
+        "id": "command-down",
+        "label": "命令下行",
+        "focus": ["dispatch", "rtu", "io", "breaker"],
+        "note": "命令经RTU校验后到达现场控制回路。"
+      },
+      {
+        "id": "state-up",
+        "label": "状态回传",
+        "focus": ["breaker", "io", "rtu", "dispatch"],
+        "note": "设备实际状态和SOE沿原路径返回主站。"
+      }
+    ]
+  },
+  "participants": [
+    {
+      "id": "dispatch",
+      "type": "cloud",
+      "label": "站控 / 调度主站"
+    },
+    {
+      "id": "rtu",
+      "type": "backend",
+      "label": "RTU"
+    },
+    {
+      "id": "io",
+      "type": "messagebus",
+      "label": "I/O或测控装置"
+    },
+    {
+      "id": "breaker",
+      "type": "external",
+      "label": "断路器"
+    }
+  ],
+  "segments": [
+    {
+      "from": 150,
+      "to": 335,
+      "label": "命令下行"
+    },
+    {
+      "from": 350,
+      "to": 400,
+      "label": "现场动作"
+    },
+    {
+      "from": 415,
+      "to": 560,
+      "label": "状态上行"
+    }
+  ],
+  "messages": [
+    {
+      "id": "issue-close",
+      "from": "dispatch",
+      "to": "rtu",
+      "y": 190,
+      "label": "下发合闸命令",
+      "variant": "emphasis"
+    },
+    {
+      "id": "output-close",
+      "from": "rtu",
+      "to": "io",
+      "y": 255,
+      "label": "校验通过，输出合闸",
+      "variant": "security",
+      "note": "目标、权限、联锁与通道状态符合执行条件"
+    },
+    {
+      "id": "drive-coil",
+      "from": "io",
+      "to": "breaker",
+      "y": 315,
+      "label": "驱动合闸回路",
+      "variant": "default"
+    },
+    {
+      "id": "breaker-action",
+      "from": "breaker",
+      "to": "io",
+      "y": 375,
+      "label": "合位触点闭合",
+      "variant": "return"
+    },
+    {
+      "id": "state-feedback",
+      "from": "io",
+      "to": "rtu",
+      "y": 455,
+      "label": "合位遥信 + 时间戳",
+      "variant": "return"
+    },
+    {
+      "id": "soe-upload",
+      "from": "rtu",
+      "to": "dispatch",
+      "y": 525,
+      "label": "上送状态与SOE",
+      "variant": "emphasis"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "rtu",
+      "from": 185,
+      "to": 540,
+      "type": "backend"
+    },
+    {
+      "participant": "io",
+      "from": 250,
+      "to": 470,
+      "type": "messagebus"
+    },
+    {
+      "participant": "breaker",
+      "from": 310,
+      "to": 390,
+      "type": "external"
+    }
+  ]
+}
