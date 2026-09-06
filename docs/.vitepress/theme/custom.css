@@ -257,6 +257,26 @@
   background: var(--vp-c-bg-soft);
 }
 
+/* RTU diagrams are designed as desktop canvases and should fit without inner panning. */
+@media (min-width: 960px) {
+  .VPDoc.has-aside:has(.vp-doc._knowledge_rtu-overview) .aside {
+    display: none;
+  }
+
+  .VPDoc.has-aside:has(.vp-doc._knowledge_rtu-overview) .container {
+    max-width: 1200px;
+  }
+
+  .VPDoc.has-aside:has(.vp-doc._knowledge_rtu-overview) .content {
+    width: 100%;
+    max-width: 1024px;
+  }
+
+  .VPDoc.has-aside:has(.vp-doc._knowledge_rtu-overview) .content-container {
+    max-width: 960px;
+  }
+}
+
 .vp-doc .mhs-demo-video {
   display: block;
   width: 100%;

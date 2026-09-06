@@ -8,7 +8,8 @@ description: 用三张图理解RTU是什么、做什么、怎样连接现场设�
 <iframe
   src="/demos/rtu/architecture.html"
   width="100%"
-  height="780"
+  height="854"
+  scrolling="no"
   allow="fullscreen"
   sandbox="allow-scripts"
   referrerpolicy="no-referrer"
@@ -25,7 +26,8 @@ description: 用三张图理解RTU是什么、做什么、怎样连接现场设�
 <iframe
   src="/demos/rtu/remote-control-loop.html"
   width="100%"
-  height="620"
+  height="650"
+  scrolling="no"
   loading="lazy"
   allow="fullscreen"
   sandbox="allow-scripts"
@@ -53,7 +55,8 @@ description: 用三张图理解RTU是什么、做什么、怎样连接现场设�
 <iframe
   src="/demos/rtu/io-signal-types.html"
   width="100%"
-  height="650"
+  height="850"
+  scrolling="no"
   loading="lazy"
   allow="fullscreen"
   sandbox="allow-scripts"
