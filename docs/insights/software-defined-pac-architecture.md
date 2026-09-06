@@ -11,6 +11,8 @@ description: 从功能独立于硬件、虚拟化平台到工程验证，解析 
 
 软件定义保护、自动化与控制（Protection, Automation and Control，PAC）试图改变的，是功能与计算硬件之间的关系：应用不再必须依附某一台专用设备，而能在满足约束的通用平台上部署和迁移。CIGRE 将这种方向讨论为虚拟 IED 和虚拟化 PAC，并特别把接口、服务器结构、配置、测试和维护列为需要共同解决的问题。
 
+若要沿着 Siemens 产品和原始架构图阅读这条路线，可先看《[西门子变电站自动化架构图谱：从 SICAM PAS 到 SIPROTEC V](/insights/siemens-substation-architecture-evolution)》。
+
 ## 一、先分清目标和手段
 
 现场材料反复出现 **FIH（Function Independent from Hardware，功能独立于硬件）**。它描述的是目标状态，不是一种具体产品：
