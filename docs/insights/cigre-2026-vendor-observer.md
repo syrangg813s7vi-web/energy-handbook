@@ -9,6 +9,8 @@ description: 从162张现场照片观察ABB、ETAP、GE Vernova、Hitachi Energy
 
 本文聚焦 ABB、ETAP、GE Vernova、Hitachi Energy、南瑞继保、SEL、Siemens 与华为，按四个主题整理 162 张 CIGRE 2026 现场照片。同一厂商可以出现在多个主题中；分类依据是照片所展示的方案重点，而不是对厂商全部业务的划分。
 
+Siemens 相关架构原图、历史产品映射和来源核验已另行整理为《[西门子变电站自动化架构图谱：从 SICAM PAS 到 SIPROTEC V](/insights/siemens-substation-architecture-evolution)》。
+
 ::: tip 配套附件
 <a href="/downloads/cigre-2026-vendor-observer-v4.pptx" download="CIGRE_2026_厂商现场观察.pptx">下载《CIGRE 2026 厂商现场观察》PPTX（27 页，162 张现场照片，约 58 MB）</a>
 :::
