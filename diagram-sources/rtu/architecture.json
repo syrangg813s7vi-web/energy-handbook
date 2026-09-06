@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "电站 RTU 输入、输出与南北向连接",
+    "locale": "zh-CN",
+    "output": "rtu_architecture.html",
+    "quality_profile": "showcase",
+    "viewBox": [1360, 820],
+    "views": [
+      {
+        "id": "southbound",
+        "label": "南向现场侧",
+        "focus": ["primary-equipment", "sensors", "ieds", "io-module", "south-comm"],
+        "note": "查看硬接线和数字通信两类现场接入。"
+      },
+      {
+        "id": "rtu-core",
+        "label": "RTU 核心",
+        "focus": ["io-module", "south-comm", "rtu-cpu", "north-comm"],
+        "note": "查看数据采集、处理、SOE、遥控校验和协议转换。"
+      },
+      {
+        "id": "northbound",
+        "label": "北向主站侧",
+        "focus": ["north-comm", "station-control", "dispatch-master"],
+        "note": "查看RTU向站控与调度上送数据、接收控制命令。"
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "dispatch-master",
+      "type": "cloud",
+      "label": "电网调度主站",
+      "sublabel": "SCADA / EMS / DMS",
+      "pos": [600, 35],
+      "size": [200, 72]
+    },
+    {
+      "id": "station-control",
+      "type": "frontend",
+      "label": "站控系统 / 集控中心",
+      "sublabel": "监视、告警与操作",
+      "pos": [600, 155],
+      "size": [200, 72]
+    },
+    {
+      "id": "north-comm",
+      "type": "messagebus",
+      "label": "北向通信模块",
+      "sublabel": "IEC 101/104 · DNP3",
+      "pos": [600, 300],
+      "size": [200, 76],
+      "tag": "双向通信"
+    },
+    {
+      "id": "rtu-cpu",
+      "type": "backend",
+      "label": "RTU 主控 CPU",
+      "sublabel": "数据处理 · SOE · 遥控校验",
+      "pos": [555, 435],
+      "size": [290, 82],
+      "tag": "核心"
+    },
+    {
+      "id": "io-module",
+      "type": "backend",
+      "label": "I/O 模块",
+      "sublabel": "DI · AI · PI / DO · AO",
+      "pos": [260, 435],
+      "size": [210, 82]
+    },
+    {
+      "id": "south-comm",
+      "type": "messagebus",
+      "label": "南向通信模块",
+      "sublabel": "以太网 · RS-485 · 串口",
+      "pos": [930, 435],
+      "size": [220, 82]
+    },
+    {
+      "id": "primary-equipment",
+      "type": "external",
+      "label": "一次设备",
+      "sublabel": "断路器 · 刀闸 · 变压器",
+      "pos": [90, 650],
+      "size": [220, 76]
+    },
+    {
+      "id": "sensors",
+      "type": "external",
+      "label": "传感器与辅助设备",
+      "sublabel": "温度 · 压力 · 门禁 · 消防",
+      "pos": [360, 650],
+      "size": [230, 76]
+    },
+    {
+      "id": "ieds",
+      "type": "external",
+      "label": "智能设备 / IED",
+      "sublabel": "保护 · 电表 · 逆变器 · PCS/BMS",
+      "pos": [930, 650],
+      "size": [250, 76]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "北向：站控与调度侧",
+      "wraps": ["dispatch-master", "station-control"]
+    },
+    {
+      "kind": "region",
+      "label": "RTU 内部",
+      "wraps": ["north-comm", "rtu-cpu", "io-module", "south-comm"]
+    },
+    {
+      "kind": "region",
+      "label": "南向：生产现场侧",
+      "wraps": ["primary-equipment", "sensors", "ieds"]
+    }
+  ],
+  "connections": [
+    {
+      "id": "dispatch-station",
+      "from": "station-control",
+      "to": "dispatch-master",
+      "label": "数据上送 ↑ · 调度命令 ↓",
+      "variant": "emphasis"
+    },
+    {
+      "id": "station-rtu",
+      "from": "north-comm",
+      "to": "station-control",
+      "label": "遥测/遥信/SOE ↑ · 遥控/遥调 ↓",
+      "variant": "emphasis"
+    },
+    {
+      "id": "cpu-north",
+      "from": "rtu-cpu",
+      "to": "north-comm",
+      "label": "规约数据双向交换",
+      "variant": "emphasis"
+    },
+    {
+      "id": "io-cpu",
+      "from": "io-module",
+      "to": "rtu-cpu",
+      "label": "采集值 → · ← 控制量",
+      "labelDy": 72
+    },
+    {
+      "id": "south-cpu",
+      "from": "south-comm",
+      "to": "rtu-cpu",
+      "label": "设备数据 → · ← 控制指令",
+      "labelDy": 65
+    },
+    {
+      "id": "equipment-io",
+      "from": "primary-equipment",
+      "to": "io-module",
+      "label": "DI状态/AI测量 ↑ · DO/AO控制 ↓",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "sensors-io",
+      "from": "sensors",
+      "to": "io-module",
+      "label": "开关量、模拟量、脉冲量",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "ieds-south",
+      "from": "ieds",
+      "to": "south-comm",
+      "label": "IEC 61850 · Modbus · IEC 103",
+      "fromSide": "top",
+      "toSide": "bottom"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "南向输入",
+      "items": ["遥测：电压、电流、功率、温度", "遥信：位置、告警、保护动作", "遥脉：电能与累计量"]
+    },
+    {
+      "dot": "amber",
+      "title": "南向输出",
+      "items": ["遥控：分合闸、启停、复归", "遥调：功率、电压、无功设定值"]
+    },
+    {
+      "dot": "emerald",
+      "title": "北向双向通信",
+      "items": ["向上送遥测、遥信、SOE和告警", "向下接收遥控、遥调、召唤和对时"]
+    }
+  ]
+}
