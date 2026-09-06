@@ -59,6 +59,7 @@ export default defineConfig({
       { text: "能量管理", link: "/knowledge/energy-management" },
       { text: "车桩协议", link: "/knowledge/ev-charging-protocols" },
       { text: "IEC 104", link: "/knowledge/iec104-design-intent" },
+      { text: "RTU", link: "/knowledge/rtu-overview" },
       { text: "继电保护", link: "/knowledge/relay-protection-evolution" },
       { text: "建设指南", link: "/guides/content-and-animation" },
       { text: "在线批阅", link: "/guides/online-review" },
@@ -94,6 +95,7 @@ export default defineConfig({
         items: [
           { text: "场站 V/F/P/Q 闭环控制", link: "/knowledge/plant-vfpq-control" },
           { text: "能源控制器知识全景", link: "/knowledge/energy-controller-panorama" },
+          { text: "RTU远动终端", link: "/knowledge/rtu-overview" },
           { text: "常见组态", link: "/knowledge/common-configurations" },
           { text: "柴发的逻辑组态", link: "/knowledge/diesel-generator-logic-configuration" },
           { text: "FBD与SFC", link: "/knowledge/fbd-sfc" },
