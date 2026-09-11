@@ -14,6 +14,10 @@ hero:
       link: /roadmap
 
 features:
+  - title: 看懂一次设备与二次系统
+    details: 先从全站理解“能量通道 + 神经系统”，再分别认识一次设备、二次系统，以及保护判断如何变成断路器动作。
+    link: /knowledge/primary-and-secondary-systems
+    linkText: 阅读一次与二次
   - title: 看懂一座变电站的“间隔”
     details: 从一次功率、保护动作和站控通信三条链出发，理解断路器、刀闸、CT/VT、保护测控及西门子产品如何协同。
     link: /knowledge/electrical-bay
