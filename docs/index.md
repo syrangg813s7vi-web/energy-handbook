@@ -14,6 +14,10 @@ hero:
       link: /roadmap
 
 features:
+  - title: 看懂一座变电站的“间隔”
+    details: 从一次功率、保护动作和站控通信三条链出发，理解断路器、刀闸、CT/VT、保护测控及西门子产品如何协同。
+    link: /knowledge/electrical-bay
+    linkText: 阅读电气间隔
   - title: 看懂RTU如何连接现场与调度
     details: 从I/O信号、南北向通信和远程控制闭环出发，理解RTU的功能、结构及其与数采和PLC的关系。
     link: /knowledge/rtu-overview
