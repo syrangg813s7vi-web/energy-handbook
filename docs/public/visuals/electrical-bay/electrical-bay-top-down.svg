@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">电气间隔与站控、调度和一次设备的关系</title>
+  <desc id="desc">图中自上而下展示调度与站控层、间隔层、过程层和一次设备层。绿色线表示一次功率，蓝色线表示监视与控制，红色线表示保护跳闸，紫色线表示采样值和快速过程通信。</desc>
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#1d6fdc"/></marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#d33b3b"/></marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#7b4bd2"/></marker>
+    <style>
+      .bg{fill:#f7fafc}.layer{fill:#fff;stroke:#ccd7e1;stroke-width:2}.station{fill:#eef5ff;stroke:#79a7e8}.bay{fill:#fff7e6;stroke:#d9a441}.process{fill:#f3edff;stroke:#9b78d2}.primary{fill:#edf9f3;stroke:#63aa82}.node{fill:#fff;stroke:#73879a;stroke-width:1.6}.t{font:600 20px system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;fill:#183044}.s{font:15px system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;fill:#385064}.small{font:13px system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;fill:#556b7c}.label{font:600 14px system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}.power{stroke:#1e9a61;stroke-width:7;fill:none}.control{stroke:#1d6fdc;stroke-width:3;fill:none;marker-end:url(#arrow-blue)}.control2{stroke:#1d6fdc;stroke-width:3;fill:none;marker-start:url(#arrow-blue);marker-end:url(#arrow-blue)}.trip{stroke:#d33b3b;stroke-width:3.5;fill:none;marker-end:url(#arrow-red)}.processline{stroke:#7b4bd2;stroke-width:3;fill:none;marker-start:url(#arrow-purple);marker-end:url(#arrow-purple)}
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="760" rx="24"/>
+  <text class="t" x="42" y="45">一个间隔：把一条电气连接变成可监视、可操作、可保护、可检修的对象</text>
+
+  <rect class="layer station" x="35" y="70" width="1130" height="150" rx="18"/>
+  <text class="label" x="55" y="98" fill="#1d5da9">调度与站控层</text>
+  <rect class="node" x="70" y="120" width="205" height="72" rx="12"/>
+  <text class="t" x="172" y="150" text-anchor="middle">电网调度</text><text class="small" x="172" y="174" text-anchor="middle">遥测、遥信、遥控</text>
+  <rect class="node" x="390" y="120" width="250" height="72" rx="12"/>
+  <text class="t" x="515" y="150" text-anchor="middle">站控/远动平台</text><text class="small" x="515" y="174" text-anchor="middle">全站模型、跨间隔协调、网关</text>
+  <rect class="node" x="755" y="120" width="200" height="72" rx="12"/>
+  <text class="t" x="855" y="150" text-anchor="middle">操作员 HMI</text><text class="small" x="855" y="174" text-anchor="middle">画面、告警、操作</text>
+  <rect class="node" x="990" y="120" width="135" height="72" rx="12"/>
+  <text class="t" x="1057" y="150" text-anchor="middle">PPC</text><text class="small" x="1057" y="174" text-anchor="middle">全站功率闭环</text>
+  <path class="control2" d="M275 156 H390"/><text class="small" x="333" y="145" text-anchor="middle">IEC 104等</text>
+  <path class="control2" d="M640 156 H755"/><text class="small" x="697" y="145" text-anchor="middle">站内数据</text>
+
+  <rect class="layer bay" x="250" y="250" width="700" height="165" rx="18"/>
+  <text class="label" x="270" y="279" fill="#8b5b00">间隔层：本地自治的保护与开关操作闭环</text>
+  <rect class="node" x="290" y="305" width="250" height="82" rx="12"/>
+  <text class="t" x="415" y="337" text-anchor="middle">保护 IED</text><text class="small" x="415" y="361" text-anchor="middle">故障判据、跳闸、录波</text>
+  <rect class="node" x="660" y="305" width="250" height="82" rx="12"/>
+  <text class="t" x="785" y="337" text-anchor="middle">间隔控制器</text><text class="small" x="785" y="361" text-anchor="middle">联锁、分合闸、位置确认</text>
+  <path class="control2" d="M515 220 V250"/><text class="small" x="532" y="241">IEC 61850 MMS/GOOSE</text>
+  <path class="control" d="M1057 192 V235 H925"/><text class="small" x="1045" y="226" text-anchor="end">运行条件/状态，非间隔功率闭环</text>
+
+  <rect class="layer process" x="250" y="445" width="700" height="105" rx="18"/>
+  <text class="label" x="270" y="473" fill="#6841a8">过程层：把现场量送给算法，把命令送回现场</text>
+  <rect class="node" x="300" y="490" width="235" height="42" rx="10"/><text class="s" x="417" y="517" text-anchor="middle">合并单元 / CT、VT 接口</text>
+  <rect class="node" x="665" y="490" width="235" height="42" rx="10"/><text class="s" x="782" y="517" text-anchor="middle">远程 I/O / 跳合闸回路</text>
+  <path class="processline" d="M415 387 V490"/><text class="small" x="428" y="439">SV/GOOSE或硬接线</text>
+  <path class="trip" d="M500 387 V425 H782 V490"/><text class="small" x="635" y="418" text-anchor="middle" fill="#b52b2b">保护跳闸</text>
+  <path class="control2" d="M785 387 V490"/>
+
+  <rect class="layer primary" x="35" y="565" width="1130" height="155" rx="18"/>
+  <text class="label" x="55" y="593" fill="#24744b">一次设备层：真正承载并切断电流</text>
+  <text class="small" x="1135" y="593" text-anchor="end">接地刀闸是对地支路；设备顺序与共享方式随接线方案变化</text>
+  <path class="power" d="M80 635 H1115"/>
+  <rect class="node" x="75" y="606" width="150" height="58" rx="10"/><text class="s" x="150" y="641" text-anchor="middle">母线</text>
+  <rect class="node" x="275" y="606" width="150" height="58" rx="10"/><text class="s" x="350" y="631" text-anchor="middle">隔离开关</text><text class="small" x="350" y="651" text-anchor="middle">检修隔离</text>
+  <rect class="node" x="475" y="606" width="150" height="58" rx="10"/><text class="s" x="550" y="631" text-anchor="middle">CT / VT</text><text class="small" x="550" y="651" text-anchor="middle">测量与保护取样</text>
+  <rect class="node" x="675" y="606" width="150" height="58" rx="10"/><text class="s" x="750" y="631" text-anchor="middle">断路器</text><text class="small" x="750" y="651" text-anchor="middle">开断负荷/故障电流</text>
+  <rect class="node" x="1010" y="606" width="115" height="58" rx="10"/><text class="s" x="1067" y="631" text-anchor="middle">线路/主变</text><text class="small" x="1067" y="651" text-anchor="middle">连接对象</text>
+  <path d="M915 635 V668" stroke="#1e9a61" stroke-width="4" fill="none"/>
+  <rect class="node" x="850" y="668" width="130" height="36" rx="9"/><text class="s" x="915" y="691" text-anchor="middle">接地刀闸</text>
+  <path d="M915 704 V712 M895 712 H935 M901 717 H929" stroke="#24744b" stroke-width="2" fill="none"/>
+  <path class="processline" d="M550 606 V550"/>
+  <path class="trip" d="M782 550 V590 H750 V606"/>
+
+  <line x1="65" y1="735" x2="115" y2="735" class="power"/><text class="small" x="125" y="740">一次功率</text>
+  <line x1="280" y1="735" x2="330" y2="735" class="control"/><text class="small" x="340" y="740">监视/控制</text>
+  <line x1="480" y1="735" x2="530" y2="735" class="trip"/><text class="small" x="540" y="740">保护跳闸</text>
+  <line x1="675" y1="735" x2="725" y2="735" class="processline"/><text class="small" x="735" y="740">采样值/过程通信</text>
+</svg>
