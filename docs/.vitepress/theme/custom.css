@@ -257,123 +257,59 @@
   background: var(--vp-c-bg-soft);
 }
 
-/* Electrical-bay primer: large, glanceable concepts before technical detail. */
-.vp-doc .bay-simple-flow {
+/* Electrical-bay primer: one stateful story first, dense architecture on demand. */
+.vp-doc .bay-state-story-frame { height: 690px; }
+.vp-doc .bay-overview-frame { height: 720px; }
+
+.vp-doc .bay-component-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(118px, 1fr) 28px) minmax(132px, 1.15fr);
-  align-items: stretch;
-  margin: 1.4rem 0 0.8rem;
-}
-
-.vp-doc .bay-flow-node {
-  display: flex;
-  min-height: 86px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  padding: 12px 10px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
-  background: var(--vp-c-bg-soft);
-  text-align: center;
-}
-
-.vp-doc .bay-flow-node--key {
-  border: 2px solid var(--vp-c-danger-1);
-  background: color-mix(in srgb, var(--vp-c-danger-soft) 70%, var(--vp-c-bg));
-}
-
-.vp-doc .bay-flow-node strong {
-  color: var(--vp-c-text-1);
-  font-size: 15px;
-}
-
-.vp-doc .bay-flow-node span {
-  color: var(--vp-c-text-2);
-  font-size: 12px;
-  line-height: 1.35;
-}
-
-.vp-doc .bay-flow-arrow {
-  display: grid;
-  place-items: center;
-  color: var(--vp-c-brand-1);
-  font-size: 23px;
-  font-weight: 700;
-}
-
-.vp-doc .bay-flow-arrow::before { content: "→"; }
-
-.vp-doc .bay-ground-note {
-  margin: 0 0 1rem;
-  padding: 11px 14px;
-  border-left: 4px solid var(--vp-c-warning-1);
-  border-radius: 6px;
-  background: var(--vp-c-warning-soft);
-}
-
-.vp-doc .bay-state-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
   margin: 1.25rem 0;
 }
 
-.vp-doc .bay-state-card {
+.vp-doc .bay-component-grid section {
   padding: 16px;
   border: 1px solid var(--vp-c-divider);
-  border-top-width: 4px;
   border-radius: 12px;
   background: var(--vp-c-bg-soft);
 }
 
-.vp-doc .bay-state-card--run { border-top-color: var(--vp-c-brand-1); }
-.vp-doc .bay-state-card--fault { border-top-color: var(--vp-c-danger-1); }
-.vp-doc .bay-state-card--work { border-top-color: var(--vp-c-warning-1); }
-
-.vp-doc .bay-state-label {
-  margin-bottom: 12px;
+.vp-doc .bay-component-grid strong {
+  display: block;
+  margin-bottom: 10px;
   color: var(--vp-c-text-1);
-  font-size: 17px;
-  font-weight: 700;
+  font-size: 16px;
 }
 
-.vp-doc .bay-state-switches {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.vp-doc .bay-state-switches b {
-  padding: 3px 7px;
-  border-radius: 999px;
-  background: var(--vp-c-bg);
-  color: var(--vp-c-text-2);
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.vp-doc .bay-state-card p {
-  margin: 12px 0 0;
+.vp-doc .bay-component-grid p {
+  margin: 7px 0 0;
   color: var(--vp-c-text-2);
   font-size: 14px;
   line-height: 1.65;
 }
 
-.vp-doc .bay-overview-frame { height: 720px; }
+.vp-doc .bay-advanced {
+  margin: 1.5rem 0;
+  padding: 0 16px 16px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  background: var(--vp-c-bg-soft);
+}
+
+.vp-doc .bay-advanced summary {
+  padding: 15px 0;
+  color: var(--vp-c-text-1);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.vp-doc .bay-advanced[open] summary { border-bottom: 1px solid var(--vp-c-divider); }
 
 @media (max-width: 700px) {
-  .vp-doc .bay-simple-flow {
-    grid-template-columns: 1fr;
-    gap: 6px;
-  }
-
-  .vp-doc .bay-flow-node { min-height: 70px; }
-  .vp-doc .bay-flow-arrow { min-height: 18px; }
-  .vp-doc .bay-flow-arrow::before { content: "↓"; }
-  .vp-doc .bay-state-grid { grid-template-columns: 1fr; }
+  .vp-doc .bay-state-story-frame { height: 1340px; }
   .vp-doc .bay-overview-frame { height: 760px; }
+  .vp-doc .bay-component-grid { grid-template-columns: 1fr; }
 }
 
 /* RTU diagrams are designed as desktop canvases and should fit without inner panning. */
