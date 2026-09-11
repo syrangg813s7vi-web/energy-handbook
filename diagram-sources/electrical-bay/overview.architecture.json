@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "一个35 kV集电线路间隔，怎样把线路接入母线",
+    "locale": "zh-CN",
+    "output": "docs/public/demos/electrical-bay/overview.html",
+    "quality_profile": "showcase",
+    "legend": {
+      "mode": "all",
+      "entries": {
+        "cloud": { "label": "上级系统" },
+        "frontend": { "label": "操作界面" },
+        "backend": { "label": "控制装置" },
+        "security": { "label": "保护与安全" },
+        "messagebus": { "label": "过程接口" },
+        "database": { "label": "测量来源" },
+        "external": { "label": "一次设备" }
+      }
+    },
+    "viewBox": [1240, 730]
+  },
+  "components": [
+    { "id": "dispatch", "type": "cloud", "label": "电网调度", "sublabel": "遥测 · 遥信 · 遥控", "pos": [60, 50], "size": [160, 64] },
+    { "id": "station", "type": "backend", "label": "站控 / 远动", "sublabel": "全站模型 · 跨间隔协调", "pos": [355, 50], "size": [190, 64] },
+    { "id": "hmi", "type": "frontend", "label": "操作员 HMI", "sublabel": "画面 · 告警 · 操作", "pos": [680, 50], "size": [170, 64] },
+    { "id": "bayctrl", "type": "backend", "label": "间隔控制器", "sublabel": "联锁 · 分合闸 · 位置确认", "pos": [355, 185], "size": [190, 68] },
+    { "id": "protection", "type": "security", "label": "保护 IED", "sublabel": "故障判断 · 跳闸 · 录波", "pos": [680, 185], "size": [170, 68] },
+    { "id": "processio", "type": "messagebus", "label": "合并单元 / I/O", "sublabel": "采样上送 · 命令落地", "pos": [510, 315], "size": [190, 68] },
+    { "id": "busbar", "type": "external", "label": "35 kV母线", "sublabel": "公共电能通道", "pos": [55, 465], "size": [145, 62] },
+    { "id": "disconnector", "type": "external", "label": "隔离开关", "sublabel": "建立检修断口", "pos": [265, 465], "size": [145, 62] },
+    { "id": "ctvt", "type": "database", "label": "CT / VT", "sublabel": "让二次系统看见一次量", "pos": [475, 465], "size": [160, 62] },
+    { "id": "breaker", "type": "security", "label": "断路器", "sublabel": "开断负荷与故障电流", "pos": [730, 465], "size": [160, 62] },
+    { "id": "feeder", "type": "external", "label": "光伏 / 储能集电线路", "sublabel": "本间隔的连接对象", "pos": [950, 465], "size": [190, 62] },
+    { "id": "earthswitch", "type": "security", "label": "接地刀闸", "sublabel": "停电验电后检修接地", "pos": [957.5, 570], "size": [175, 56] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "站控层：看全站、做协调", "wraps": ["dispatch", "station", "hmi"], "pad": 26 },
+    { "kind": "region", "label": "间隔层：本地保护与开关操作闭环", "wraps": ["bayctrl", "protection"], "pad": 28 },
+    { "kind": "region", "label": "过程层：连接算法与现场", "wraps": ["processio"], "pad": 24 },
+    { "kind": "region", "label": "一次系统：真正承载与切断电流", "wraps": ["busbar", "disconnector", "ctvt", "breaker", "feeder", "earthswitch"], "pad": 26 }
+  ],
+  "connections": [
+    { "id": "dispatch-station", "from": "dispatch", "to": "station", "label": "IEC 104等 · 目标/状态", "variant": "dashed" },
+    { "id": "station-hmi", "from": "station", "to": "hmi", "label": "站内数据与操作", "variant": "default" },
+    { "id": "station-bay", "from": "station", "to": "bayctrl", "fromSide": "bottom", "toSide": "top", "route": "orthogonal-v", "label": "IEC 61850 · 命令/反馈", "labelDx": -132, "variant": "emphasis" },
+    { "id": "bay-process", "from": "bayctrl", "to": "processio", "fromSide": "bottom", "toSide": "top", "route": "orthogonal-v", "label": "联锁通过后执行", "variant": "emphasis" },
+    { "id": "ct-process", "from": "ctvt", "to": "processio", "fromSide": "top", "toSide": "bottom", "route": "orthogonal-v", "label": "SV或模拟量", "labelDx": -82, "variant": "dashed" },
+    { "id": "process-protection", "from": "processio", "to": "protection", "fromSide": "top", "toSide": "bottom", "route": "orthogonal-v", "label": "电流/电压/状态", "variant": "dashed" },
+    { "id": "protection-breaker", "from": "protection", "to": "breaker", "fromSide": "bottom", "toSide": "top", "route": "orthogonal-v", "label": "故障时直接跳闸", "variant": "security" },
+    { "id": "process-breaker", "from": "processio", "to": "breaker", "fromSide": "bottom", "toSide": "top", "route": "orthogonal-v", "label": "跳合闸与位置反馈", "variant": "emphasis" },
+    { "id": "power-1", "from": "busbar", "to": "disconnector", "label": "连接顺序", "variant": "default", "width": 4 },
+    { "id": "power-2", "from": "disconnector", "to": "ctvt", "label": "运行时接通", "variant": "default", "width": 4 },
+    { "id": "power-3", "from": "ctvt", "to": "breaker", "label": "测量但不改变功率流", "labelDy": -40, "variant": "default", "width": 4 },
+    { "id": "power-4", "from": "breaker", "to": "feeder", "label": "合闸运行 / 分闸切除", "labelDy": -44, "variant": "default", "width": 4 },
+    { "id": "ground-branch", "from": "feeder", "to": "earthswitch", "fromSide": "bottom", "toSide": "top", "route": "orthogonal-v", "label": "检修时接地", "variant": "security" }
+  ]
+}
