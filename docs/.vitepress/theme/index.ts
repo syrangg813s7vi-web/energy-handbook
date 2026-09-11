@@ -5,6 +5,7 @@ import EnergyFlowDemo from "./components/EnergyFlowDemo.vue";
 import EnergyControllerPanoramaDemo from "./components/EnergyControllerPanoramaDemo.vue";
 import EnergyManagementDemo from "./components/EnergyManagementDemo.vue";
 import EnergySystemRoles from "./components/EnergySystemRoles.vue";
+import PrimarySecondaryOverview from "./components/PrimarySecondaryOverview.vue";
 import FocusReadingToggle from "./components/FocusReadingToggle.vue";
 import BlackStartDemo from "./components/configurations/BlackStartDemo.vue";
 import CigreVendorGallery from "./components/CigreVendorGallery.vue";
@@ -35,6 +36,7 @@ export default {
     app.component("EnergyControllerPanoramaDemo", EnergyControllerPanoramaDemo);
     app.component("EnergyManagementDemo", EnergyManagementDemo);
     app.component("EnergySystemRoles", EnergySystemRoles);
+    app.component("PrimarySecondaryOverview", PrimarySecondaryOverview);
     app.component("GridPointDataSelectionDemo", GridPointDataSelectionDemo);
     app.component("PhotovoltaicBalancingDemo", PhotovoltaicBalancingDemo);
     app.component("PerUnitValueDemo", PerUnitValueDemo);
