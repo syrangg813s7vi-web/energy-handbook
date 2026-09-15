@@ -62,6 +62,7 @@ export default defineConfig({
       { text: "车桩协议", link: "/knowledge/ev-charging-protocols" },
       { text: "IEC 104", link: "/knowledge/iec104-design-intent" },
       { text: "RTU", link: "/knowledge/rtu-overview" },
+      { text: "变电站入门", link: "/knowledge/substation-basics" },
       { text: "一次与二次", link: "/knowledge/primary-and-secondary-systems" },
       { text: "电气间隔", link: "/knowledge/electrical-bay" },
       { text: "继电保护", link: "/knowledge/relay-protection-evolution" },
@@ -91,6 +92,8 @@ export default defineConfig({
         text: "能源基础",
         items: [
           { text: "能量、功率与效率", link: "/knowledge/energy-basics" },
+          { text: "3分钟看懂变电站", link: "/knowledge/substation-basics" },
+          { text: "变电站完整指南", link: "/knowledge/substation-complete-guide" },
           { text: "从决策树到LightGBM", link: "/knowledge/lightgbm-load-forecasting" },
           { text: "能量管理是在做什么", link: "/knowledge/energy-management" },
           { text: "车桩协议：从第一性原理出发", link: "/knowledge/ev-charging-protocols" },
