@@ -14,6 +14,14 @@ hero:
       link: /roadmap
 
 features:
+  - title: 3分钟看懂变电站
+    details: 沿着发电、升压、输电、降压和配电的路径，理解高电压为何能降低线路损耗，以及站内一次、二次设备怎样协同。
+    link: /knowledge/substation-basics
+    linkText: 阅读变电站入门
+  - title: 从设备到数字化，完整认识变电站
+    details: 系统拆解升压、输电、配电、开关和集电站，以及变压器、开关、母线、保护控制、AIS、GIS与新能源接入。
+    link: /knowledge/substation-complete-guide
+    linkText: 阅读完整指南
   - title: 看懂一次设备与二次系统
     details: 先从全站理解“能量通道 + 神经系统”，再分别认识一次设备、二次系统，以及保护判断如何变成断路器动作。
     link: /knowledge/primary-and-secondary-systems
