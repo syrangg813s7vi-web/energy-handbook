@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">变电站的一次能量链与二次保护控制闭环</title><desc id="desc">上层一次系统从进线主变经过母线、断路器到出线负荷；下层二次系统从互感器和合并单元采样，经过保护测控、站控远动到运行人员。保护向断路器发送跳闸命令，断路器返回位置和电流反馈。</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f6fbfa"/><stop offset="1" stop-color="#f4f7fb"/></linearGradient><marker id="greenArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#118675"/></marker><marker id="blueArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#357eac"/></marker><marker id="redArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#dc4f63"/></marker><filter id="shadow"><feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#143a45" flood-opacity=".09"/></filter><style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;fill:#183640}.title{font-size:30px;font-weight:760}.band{font-size:18px;font-weight:760}.node-title{font-size:19px;font-weight:750}.node-sub{font-size:13px;fill:#566d76}.edge{font-size:13px;font-weight:700}.note-title{font-size:20px;font-weight:760}.note{font-size:15px;fill:#526a74}</style></defs>
+  <rect width="1200" height="720" rx="28" fill="url(#bg)"/><text x="54" y="64" class="title">一条支路怎样完成“感知—判断—执行—反馈”</text>
+  <g transform="translate(54 102)"><rect width="1092" height="220" rx="24" fill="#fffaf2" stroke="#eca64a" stroke-width="2" stroke-dasharray="8 7"/><rect x="20" y="18" width="240" height="36" rx="18" fill="#fff0d6"/><text x="38" y="42" class="band" fill="#a85d00">一次系统｜承载并开断电能</text>
+    <g filter="url(#shadow)">
+      <g transform="translate(70 82)"><rect width="190" height="94" rx="17" fill="#fff" stroke="#7f929b" stroke-width="2"/><text x="95" y="40" text-anchor="middle" class="node-title">进线 / 主变</text><text x="95" y="68" text-anchor="middle" class="node-sub">电能进入</text></g>
+      <g transform="translate(330 82)"><rect width="190" height="94" rx="17" fill="#fff3ed" stroke="#e87745" stroke-width="2"/><text x="95" y="40" text-anchor="middle" class="node-title">母线</text><text x="95" y="68" text-anchor="middle" class="node-sub">汇集与分配</text></g>
+      <g transform="translate(590 82)"><rect width="190" height="94" rx="17" fill="#fff0f3" stroke="#df5268" stroke-width="2"/><text x="95" y="40" text-anchor="middle" class="node-title">断路器</text><text x="95" y="68" text-anchor="middle" class="node-sub">开合与切除故障</text></g>
+      <g transform="translate(850 82)"><rect width="190" height="94" rx="17" fill="#fff" stroke="#7f929b" stroke-width="2"/><text x="95" y="40" text-anchor="middle" class="node-title">出线 / 负荷</text><text x="95" y="68" text-anchor="middle" class="node-sub">电能送出</text></g>
+    </g>
+    <g stroke="#118675" stroke-width="4" marker-end="url(#greenArrow)"><path d="M260 129H322"/><path d="M520 129H582"/><path d="M780 129H842"/></g>
+    <g class="edge" fill="#118675" text-anchor="middle"><text x="291" y="113">一次电能</text><text x="551" y="113">一次电能</text><text x="811" y="113">一次电能</text></g>
+  </g>
+  <g transform="translate(54 378)"><rect width="1092" height="200" rx="24" fill="#f3f9fc" stroke="#5c9fc5" stroke-width="2" stroke-dasharray="8 7"/><rect x="20" y="18" width="300" height="36" rx="18" fill="#e1f1f8"/><text x="38" y="42" class="band" fill="#1c719d">二次系统｜传递信息与控制命令</text>
+    <g filter="url(#shadow)">
+      <g transform="translate(70 76)"><rect width="190" height="94" rx="17" fill="#f4efff" stroke="#8b5de5" stroke-width="2"/><text x="95" y="40" text-anchor="middle" class="node-title">CT / VT / MU</text><text x="95" y="68" text-anchor="middle" class="node-sub">采集电流、电压与状态</text></g>
+      <g transform="translate(330 76)"><rect width="190" height="94" rx="17" fill="#e9f8f3" stroke="#13977f" stroke-width="2"/><text x="95" y="40" text-anchor="middle" class="node-title">保护与测控</text><text x="95" y="68" text-anchor="middle" class="node-sub">判断故障、执行联锁</text></g>
+      <g transform="translate(590 76)"><rect width="190" height="94" rx="17" fill="#e7f5fb" stroke="#2096bd" stroke-width="2"/><text x="95" y="40" text-anchor="middle" class="node-title">站控与远动</text><text x="95" y="68" text-anchor="middle" class="node-sub">监视、操作、上送调度</text></g>
+      <g transform="translate(850 76)"><rect width="190" height="94" rx="17" fill="#fff" stroke="#7f929b" stroke-width="2"/><text x="95" y="40" text-anchor="middle" class="node-title">运行人员 / 调度</text><text x="95" y="68" text-anchor="middle" class="node-sub">运行决策与许可</text></g>
+    </g>
+    <g stroke="#357eac" stroke-width="3.5" marker-end="url(#blueArrow)"><path d="M260 123H322"/><path d="M520 123H582"/><path d="M780 123H842"/></g>
+    <g class="edge" fill="#357eac" text-anchor="middle"><text x="291" y="107">采样值 / 状态</text><text x="551" y="107">告警 / 事件</text><text x="811" y="107">画面 / 远动</text></g>
+  </g>
+  <g fill="none" stroke-width="4">
+    <path d="M479 378V342H479V322" stroke="#357eac" marker-end="url(#blueArrow)"/><text x="490" y="354" class="edge" fill="#357eac">测量</text>
+    <path d="M479 378V350H739V322" stroke="#dc4f63" stroke-dasharray="7 6" marker-end="url(#redArrow)"/><text x="593" y="343" class="edge" fill="#dc4f63">跳合闸命令</text>
+    <path d="M759 322V362H529V378" stroke="#8b5de5" stroke-dasharray="4 6" marker-end="url(#blueArrow)"/><text x="620" y="374" class="edge" fill="#7651c7">位置 / 电流反馈</text>
+  </g>
+  <g transform="translate(54 614)"><rect width="1092" height="70" rx="20" fill="#fff" stroke="#d7e3e7"/><circle cx="34" cy="35" r="8" fill="#118675"/><text x="54" y="29" class="note-title">保护负责判断，断路器负责执行</text><text x="54" y="54" class="note">命令已发出不等于设备已动作；必须用真实位置、电流和状态反馈完成闭环确认。</text></g>
+</svg>

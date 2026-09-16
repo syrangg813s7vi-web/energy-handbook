@@ -71,13 +71,13 @@ description: 系统解释变电站的工作原理、常见类型、关键设备�
 
 保护装置依据电流、电压和开关状态识别故障，测控装置执行正常操作与状态采集，站控系统汇总告警、事件和趋势，并与调度系统通信。整个闭环可以概括为：
 
-```text
-CT / VT 或传感器感知
-  → 保护与控制装置判断
-  → 跳合闸命令下发
-  → 断路器或调节设备执行
-  → 位置、电流和状态反馈确认
-```
+<figure class="substation-figure">
+  <picture>
+    <source media="(max-width: 640px)" srcset="/visuals/substation/protection-control-loop-mobile.svg">
+    <img src="/visuals/substation/protection-control-loop.svg" alt="变电站一次系统承载电能，二次系统从互感器采样，经保护测控判断并命令断路器动作，再由位置和电流反馈确认">
+  </picture>
+  <figcaption>一次系统负责承载和开断电能；二次系统完成感知、判断、命令与反馈确认。</figcaption>
+</figure>
 
 想进一步理解支路级协同，可阅读 [电气间隔](/knowledge/electrical-bay)。
 
