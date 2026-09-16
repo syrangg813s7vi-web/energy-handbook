@@ -14,10 +14,10 @@ hero:
       link: /roadmap
 
 features:
-  - title: 西门子电站产品清单
-    details: 从燃气轮机、汽轮机和风机，到光伏场站控制、储能、保护和升压并网，按电站环节查找产品与官方入口。
+  - title: 西门子新能源电站方案矩阵
+    details: 从风、光、储、氢设备到场站控制、站控保护与升压并网，理解西门子体系的硬件和软件怎样组成完整方案。
     link: /insights/siemens-power-plant-product-list
-    linkText: 查看产品清单
+    linkText: 查看方案矩阵
   - title: 3分钟看懂变电站
     details: 沿着发电、升压、输电、降压和配电的路径，理解高电压为何能降低线路损耗，以及站内一次、二次设备怎样协同。
     link: /knowledge/substation-basics
