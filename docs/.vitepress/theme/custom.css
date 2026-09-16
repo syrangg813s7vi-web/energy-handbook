@@ -409,6 +409,32 @@
   fill: currentcolor;
 }
 
+.substation-figure {
+  margin: 1.5rem 0 1.75rem;
+}
+
+.substation-figure picture,
+.substation-figure img {
+  display: block;
+  width: 100%;
+}
+
+.substation-figure img {
+  height: auto;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 18px;
+  background: #f7fbfa;
+  box-shadow: 0 14px 36px rgb(16 55 63 / 8%);
+}
+
+.substation-figure figcaption {
+  margin-top: 0.65rem;
+  color: var(--vp-c-text-2);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
 @media (min-width: 960px) {
   .focus-reading-toggle {
     display: inline-flex;

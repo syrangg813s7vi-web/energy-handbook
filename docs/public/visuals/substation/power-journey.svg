@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">电力从发电侧到用户的旅程</title>
+  <desc id="desc">电能依次经过发电侧、升压变电站、高压输电网、降压变电站、中低压配电，到达终端用户。升压可在相同功率下降低电流和线路损耗。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f3fbf9"/><stop offset="1" stop-color="#eef5fb"/></linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#12847a"/></marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#143a45" flood-opacity=".10"/></filter>
+    <style>
+      text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;fill:#17343e}.title{font-size:30px;font-weight:750}.eyebrow{font-size:15px;font-weight:700;letter-spacing:2px;fill:#12847a}.node-title{font-size:19px;font-weight:750}.node-sub{font-size:13px;fill:#536a73}.edge{font-size:13px;font-weight:700;fill:#12847a}.formula{font-size:24px;font-weight:760}.formula-sub{font-size:15px;fill:#526a74}.step{font-size:13px;font-weight:750;fill:#fff}
+    </style>
+  </defs>
+  <rect width="1200" height="560" rx="28" fill="url(#bg)"/>
+  <text x="54" y="54" class="eyebrow">ELECTRICITY JOURNEY</text>
+  <text x="54" y="92" class="title">电力为什么要“先升压，再降压”</text>
+  <text x="54" y="120" class="node-sub">同样功率下，提高电压可以降低电流，让电能更高效地走得更远。</text>
+
+  <g stroke="#12847a" stroke-width="4" fill="none" marker-end="url(#arrow)">
+    <path d="M214 232H252"/><path d="M404 232H442"/><path d="M594 232H632"/><path d="M784 232H822"/><path d="M974 232H1012"/>
+  </g>
+  <g class="edge" text-anchor="middle">
+    <text x="233" y="210">汇集</text><text x="423" y="210">升压</text><text x="613" y="210">远送</text><text x="803" y="210">降压</text><text x="993" y="210">配用</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <g transform="translate(54 172)"><rect width="160" height="120" rx="18" fill="#fff" stroke="#78909a" stroke-width="2"/><circle cx="80" cy="34" r="18" fill="#e9f1f4"/><path d="M67 40c10-19 20-19 27 0" fill="none" stroke="#526b75" stroke-width="3"/><text x="80" y="76" text-anchor="middle" class="node-title">发电侧</text><text x="80" y="100" text-anchor="middle" class="node-sub">火电 / 水电 / 风光</text></g>
+    <g transform="translate(252 172)"><rect width="152" height="120" rx="18" fill="#e7f8f3" stroke="#0e9b82" stroke-width="2"/><circle cx="76" cy="34" r="18" fill="#c9efe4"/><path d="M66 28c7 0 7 12 14 12s7-12 14-12" fill="none" stroke="#0e8c75" stroke-width="3"/><text x="76" y="76" text-anchor="middle" class="node-title">升压变电站</text><text x="76" y="100" text-anchor="middle" class="node-sub">高电压 · 低电流</text></g>
+    <g transform="translate(442 172)"><rect width="152" height="120" rx="18" fill="#fff8e7" stroke="#e69a18" stroke-width="2"/><circle cx="76" cy="34" r="18" fill="#ffe7b5"/><path d="M76 20v30M64 32h24M60 50h32" stroke="#c47b08" stroke-width="3" fill="none"/><text x="76" y="76" text-anchor="middle" class="node-title">高压输电网</text><text x="76" y="100" text-anchor="middle" class="node-sub">远距离 · 大容量</text></g>
+    <g transform="translate(632 172)"><rect width="152" height="120" rx="18" fill="#e7f8f3" stroke="#0e9b82" stroke-width="2"/><circle cx="76" cy="34" r="18" fill="#c9efe4"/><path d="M62 26h28M66 34h20M71 42h10" stroke="#0e8c75" stroke-width="3" fill="none"/><text x="76" y="76" text-anchor="middle" class="node-title">降压变电站</text><text x="76" y="100" text-anchor="middle" class="node-sub">逐级降低电压</text></g>
+    <g transform="translate(822 172)"><rect width="152" height="120" rx="18" fill="#fff3ed" stroke="#eb7543" stroke-width="2"/><circle cx="76" cy="34" r="18" fill="#ffdaca"/><path d="M64 27h24M64 34h24M64 41h24" stroke="#d65d2e" stroke-width="3"/><text x="76" y="76" text-anchor="middle" class="node-title">中低压配电</text><text x="76" y="100" text-anchor="middle" class="node-sub">馈线 · 配电变压器</text></g>
+    <g transform="translate(1012 172)"><rect width="134" height="120" rx="18" fill="#fff" stroke="#78909a" stroke-width="2"/><circle cx="67" cy="34" r="18" fill="#e9f1f4"/><path d="M55 38v-10l12-9 12 9v10M61 38v-8h12v8" stroke="#526b75" stroke-width="3" fill="none"/><text x="67" y="76" text-anchor="middle" class="node-title">终端用户</text><text x="67" y="100" text-anchor="middle" class="node-sub">常见 220/380 V</text></g>
+  </g>
+
+  <g transform="translate(54 340)">
+    <rect width="520" height="164" rx="22" fill="#fff" stroke="#cce6df" stroke-width="2"/>
+    <circle cx="32" cy="32" r="17" fill="#12847a"/><text x="32" y="37" text-anchor="middle" class="step">1</text>
+    <text x="64" y="40" class="node-title">为什么升压</text>
+    <text x="28" y="86" class="formula">P = U × I</text><text x="190" y="86" class="formula-sub">功率不变时：U ↑，I ↓</text>
+    <text x="28" y="126" class="formula">P<tspan baseline-shift="sub" font-size="15">损耗</tspan> = I² × R</text><text x="250" y="126" class="formula-sub">电流下降，线路发热损耗更快下降</text>
+  </g>
+  <g transform="translate(596 340)">
+    <rect width="550" height="164" rx="22" fill="#fff" stroke="#c9ddea" stroke-width="2"/>
+    <circle cx="32" cy="32" r="17" fill="#1687ad"/><text x="32" y="37" text-anchor="middle" class="step">2</text>
+    <text x="64" y="40" class="node-title">为什么还要降压</text>
+    <text x="28" y="84" class="formula-sub">适配不同输配电设备和绝缘水平</text>
+    <text x="28" y="116" class="formula-sub">靠近负荷中心逐级降低电压</text>
+    <text x="28" y="148" class="formula-sub">最终形成家庭和工商业可用的电压等级</text>
+  </g>
+</svg>

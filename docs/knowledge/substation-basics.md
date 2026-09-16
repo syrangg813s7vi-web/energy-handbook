@@ -13,9 +13,13 @@ description: 面向初学者，从发电、输电、变电到配电，解释变�
 
 一度电到达插座，通常要经过这条路径：
 
-```text
-发电 → 升压变电 → 高压输电 → 降压变电 → 中低压配电 → 用户
-```
+<figure class="substation-figure">
+  <picture>
+    <source media="(max-width: 640px)" srcset="/visuals/substation/power-journey-mobile.svg">
+    <img src="/visuals/substation/power-journey.svg" alt="电能从发电侧经过升压、高压输电、降压和配电到达终端用户；升压通过降低电流减少线路损耗">
+  </picture>
+  <figcaption>电力旅程：升压服务于高效远距离输送，降压服务于分配与安全使用。</figcaption>
+</figure>
 
 发电机或新能源场站产生的电，先经过变压器升高电压，再进入远距离输电网。到达城市、工业园区或其他负荷中心后，电压会逐级降低，最后由配电变压器变为常见的 220/380 V，送入家庭和工商业用户。
 
