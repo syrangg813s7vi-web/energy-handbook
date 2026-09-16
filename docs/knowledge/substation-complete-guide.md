@@ -7,6 +7,11 @@ description: 系统解释变电站的工作原理、常见类型、关键设备�
 
 变电站不是一台大型变压器，而是一整套电力设施。它把不同电压等级和输配电线路连接起来，让电能能够高效输送、灵活分配，并在故障发生时快速隔离问题区域。
 
+<figure class="substation-figure">
+  <img src="/visuals/substation/originals/huyu/What-Is-an-Electrical-Substation.webp" alt="从高处俯瞰一座露天变电站，可见进出线、构架、开关设备和变压器区域" loading="lazy" decoding="async">
+  <figcaption>露天变电站全貌。进出线、开关场、主变和辅助设施协同工作，不能只把它理解成一台变压器。</figcaption>
+</figure>
+
 理解一座变电站，可以抓住四个动作：
 
 ```text
@@ -25,13 +30,28 @@ description: 系统解释变电站的工作原理、常见类型、关键设备�
 
 它通常紧邻发电厂、光伏电站或风电场，把发电侧电压升至输电或集电送出所需的等级。对于新能源场站，多台逆变器或风机产生的电能会先被汇集，再通过主变压器升压并网。
 
+<figure class="substation-figure">
+  <img src="/visuals/substation/originals/huyu/Step-Up-Substations.webp" alt="露天升压站内的电力变压器及高压进出线构架" loading="lazy" decoding="async">
+  <figcaption>升压站中的主变压器与高压连接设施。升压降低同等功率下的线路电流，便于后续输送。</figcaption>
+</figure>
+
 ### 2. 输电变电站
 
 它位于主干电网节点，连接多条高压或超高压线路，负责大容量电能交换、潮流分配和电压等级转换。它更像电力高速公路的枢纽，而不是面向单个用户的出口。
 
+<figure class="substation-figure">
+  <img src="/visuals/substation/originals/huyu/Transmission-Substations.webp" alt="多条高压线路接入大型变电站的鸟瞰图" loading="lazy" decoding="async">
+  <figcaption>主干电网节点常有多条高压线路接入。线路、母线和开关共同决定电能如何进入或离开各个回路。</figcaption>
+</figure>
+
 ### 3. 配电变电站
 
 它靠近城市和负荷中心，把输电网电压降低到中压配电等级，再由本地馈线送往社区、园区和工厂。线路末端的配电变压器继续把中压电变为常见的 220/380 V。
+
+<figure class="substation-figure">
+  <img src="/visuals/substation/originals/huyu/Distribution-Substations.webp" alt="配电变电站的露天开关设备与母线构架" loading="lazy" decoding="async">
+  <figcaption>配电侧变电设施把电能分配到各条馈线；图中的设备布置只是一个实例，实际站型和绝缘方式会随场地而变化。</figcaption>
+</figure>
 
 ### 4. 开关站
 
@@ -49,15 +69,30 @@ description: 系统解释变电站的工作原理、常见类型、关键设备�
 
 变压器通过电磁感应改变交流电压等级，是站内最醒目的设备之一。除容量和变比外，工程还要关注接线组别、阻抗、冷却方式、绝缘水平、有载调压范围、噪声和防火要求。
 
+<figure class="substation-figure">
+  <img src="/visuals/substation/originals/huyu/Power-Transformers.webp" alt="带散热器、套管和储油柜的油浸式电力变压器外观" loading="lazy" decoding="async">
+  <figcaption>油浸式变压器的典型外观：散热器帮助带走热量，顶部套管连接外部导体；不同容量和绝缘方案的外形并不相同。</figcaption>
+</figure>
+
 ### 断路器与隔离开关：一个断流，一个隔离
 
 断路器能够开合正常电流，并在额定能力范围内切断故障电流。保护装置检测到故障后，最终要靠断路器执行跳闸。
 
 隔离开关则用于在电流已经切断后建立可确认的电气隔离。它通常不承担切断故障电流的任务。检修还需按规程完成验电、接地和防误闭锁，不能把“断路器分闸”直接等同于“已经可以作业”。
 
+<figure class="substation-figure">
+  <img src="/visuals/substation/originals/huyu/Circuit-Breakers-Disconnect-Switches.webp" alt="左侧三相断路器与右侧敞开式隔离开关的设备对照" loading="lazy" decoding="async">
+  <figcaption>左侧是三相断路器，右侧是隔离开关。前者负责开断电流，后者在符合操作条件时形成可见断口；两者不能互相替代。</figcaption>
+</figure>
+
 ### 母线：站内的公共电能通道
 
 母线接收来自线路或变压器的电能，再分配给其他回路。单母线、双母线、分段或环形等接线方式，会影响可靠性、灵活性、投资和检修安排。
+
+<figure class="substation-figure">
+  <img src="/visuals/substation/originals/huyu/Busbars.webp" alt="成组母排在柜体内并行布置与连接的近景" loading="lazy" decoding="async">
+  <figcaption>柜内母排近景。母线既可以是室外软导线或管形导体，也可以是图中这样的柜内导体，承担汇集与分配电能的任务。</figcaption>
+</figure>
 
 ### 互感器与过程接口：把一次量变成可用信息
 
@@ -121,6 +156,11 @@ description: 系统解释变电站的工作原理、常见类型、关键设备�
 智能化不意味着把所有决策交给算法。保护动作的确定性、通信冗余、网络安全、时间同步、版本兼容和失联降级策略，仍必须通过设计、试验和运维制度保证。
 
 新能源接入还带来功率波动、双向潮流和电力电子设备增多等变化。现代变电站需要协调无功、电压、储能与并网控制，并把场站侧快速控制和电网侧调度要求连接起来。
+
+<figure class="substation-figure">
+  <img src="/visuals/substation/originals/huyu/The-Future-Digital-Smart-and-Green-Substations.webp" alt="风机、光伏板和储能设备共同构成的新能源场站场景" loading="lazy" decoding="async">
+  <figcaption>风、光、储协同接入的场景示意。图中重点是电源与储能，不能仅凭外观判断站内是否采用了数字化保护和过程总线。</figcaption>
+</figure>
 
 ## 运维人员每天关注什么
 
