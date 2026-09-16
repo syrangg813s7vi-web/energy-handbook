@@ -528,3 +528,9 @@
 - 生产文章、原创图、首页和 sitemap 均返回 HTTP 200；生产浏览器确认标题、正文、iframe、canonical 正确，390 px 视口无页面级横向溢出。本功能完成。
 
 ---
+# 西门子电站产品列表发布进度
+
+- 2026-09-16：从 EnergyBook 最新 origin/main 建立独立工作树和分支；核对站点导航、首页及既有西门子文章。
+- 2026-09-16：官方来源已覆盖 Siemens Energy 发电产品、Siemens Gamesa 风机和 Siemens AG SICAM PPC；进入产品列表编写。
+- 2026-09-16：完成 19 条产品/方案清单、业务主体标注、官方入口和站内互链，并接入首页、顶部导航、侧栏；首次 `npm run check` 的 23 项测试通过，构建因工作树依赖未安装而中断。
+- 2026-09-16：按锁文件 `npm ci` 后，`npm run check` 通过（23 项测试及 VitePress 生产构建）；17 个官方链接 HEAD 均返回 200；生成 HTML 含核心产品名，sitemap 含新路由。

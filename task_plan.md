@@ -989,3 +989,18 @@
 - 通过 PR 合并并确认 GitHub Pages、canonical 和 sitemap。
 
 ---
+# 西门子电站产品列表发布（2026-09-16）
+
+- 目标：基于厂商官方资料，将 Siemens Energy、Siemens Gamesa 和 Siemens AG 的电站相关产品整理成一篇 EnergyBook 中文列表并发布。
+- 范围：发电主机、风电、光伏场站控制、储能、混合电站控制、升压并网。区分产品、系统方案与服务，不把第三方组件视作西门子自产。
+- 依赖：官方产品页可访问；EnergyBook 主线和 GitHub Pages 发布链路可用。
+- 验收：每条产品线有作用、示例及官方入口；与现有西门子资料文章互链；构建和现有测试通过；正式页面可访问。
+- 回退：独立分支经单一 PR 发布，如需撤回则回滚该 PR。
+- [complete] 官方产品线核对与条目定稿。
+- [complete] 记录内容分层和编写页面，接入首页与导航。
+- [complete] 构建、链接和页面验证。
+- [in_progress] 合并发布并核验线上页面。
+
+### 错误记录
+
+- 独立工作树首次执行 `npm run check` 时，23 项测试通过，但未安装依赖导致 `vitepress: command not found`。按锁文件执行 `npm ci` 后重跑。
