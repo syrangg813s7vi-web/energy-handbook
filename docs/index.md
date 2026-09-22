@@ -54,6 +54,10 @@ features:
     details: 从接口碎片化、物理语义、多设备状态和安全控制出发，看MHS如何在Agent与硬件之间建立统一层。
     link: /insights/model-hardware-standard-problem-solution
     linkText: 阅读MHS问题与解决方案
+  - title: 看懂RK3588 AI边缘计算盒
+    details: 用三张表了解硬件配置、6 TOPS NPU适合部署的模型，以及厂家宣称支持的AI应用。
+    link: /insights/rk3588-ai-edge-box
+    linkText: 阅读RK3588边缘计算盒简介
   - title: 拆解HubPort系统集成
     details: 从接口解析、能力建模到驱动生成，看AI怎样把异构系统转化为可追溯、可调用的统一能力。
     link: /insights/hubport-system-integration
